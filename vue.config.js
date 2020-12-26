@@ -26,8 +26,6 @@ module.exports = {
         `,
       }
     },
-    sourceMap: true,
-    extract: false,
-    requireModuleExtension: false
+    sourceMap: true
   }
 }

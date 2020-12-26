@@ -1,5 +1,5 @@
 <template>
-  <header id="or__header" class="bg_red">
+  <header id="or__header">
     <h1 class="logo">
       <a href="/">
         <img :src="require('@images/logo.png')" :srcset="`${require('@images/logo.png')} 1x, ${require('@images/logo@2x.png')} 2x`" alt="wellcome to whw" />
