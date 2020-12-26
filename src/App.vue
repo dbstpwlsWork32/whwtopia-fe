@@ -14,7 +14,9 @@
     <div class="profile">
     </div>
   </header>
-  <router-view/>
+  <main>
+    <router-view/>
+  </main>
 </template>
 
 <script lang="ts">
@@ -35,7 +37,7 @@ export default defineComponent({
   height: 60px;
   align-items: center;
   justify-content: space-between;
-  background: var(--bg-primary);
+  background: var(--bg-header);
   .search-box {
     display: flex;
     align-items: center;
@@ -45,8 +47,8 @@ export default defineComponent({
     margin: 0 12px;
     font-weight: 700;
     overflow: hidden;
-    background-color: #DCD9F8;
-    color: #4E41DB;
+    background-color: var(--purple-1);
+    color: var(--ft-cl-blue);
     input {
       padding: 0 10px;
     }
@@ -55,7 +57,7 @@ export default defineComponent({
       align-self: stretch;
       text-align: center;
       color: var(--ft-cl-white);
-      background: #8F75D9;
+      background: var(--purple-2);
     }
   }
   .profile {
@@ -63,7 +65,7 @@ export default defineComponent({
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 1px solid var(--ft-cl-white);
+    border: 1px solid var(--white);
     img {
       object-fit: cover;
       width: 100%;
