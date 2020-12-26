@@ -17,14 +17,19 @@ export default defineComponent({
     rippleEffect(e) {
       const nowLength = this.willRemove.length + 1
       const { clientWidth, clientHeight, offsetTop, offsetLeft } = e.currentTarget
-      const diameter = Math.max(clientWidth, clientHeight)
+      const radius = Math.max(clientWidth, clientHeight) / 2
 
       const rippleDom = document.createElement('div')
       rippleDom.classList.add('js_ripple')
-      rippleDom.style.width = rippleDom.style.height = `${diameter}px`
+      rippleDom.style.width = rippleDom.style.height = `${radius * 2}px`
 
-      rippleDom.style.top = `${(e.pageY - offsetTop - diameter / 2)}px`
-      rippleDom.style.left = `${(e.pageX - offsetLeft - diameter / 2)}px`
+      const relativeOffest = {
+        x: (e.pageX) ?  e.pageX - offsetLeft : clientWidth / 2,
+        y: (e.pageY) ?  e.pageY - offsetTop : clientHeight / 2
+      }
+
+      rippleDom.style.top = `${(relativeOffest.y - radius)}px`
+      rippleDom.style.left = `${(relativeOffest.x - radius)}px`
 
       const rippleEvent = () => {
         if (nowLength === this.willRemove.length) {
