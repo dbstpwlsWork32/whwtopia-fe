@@ -1,0 +1,41 @@
+@import './reset.scss';
+
+:root {
+  --black: #000;
+  --primary: #7776FF;
+  --primary-1: #4E41DB;
+  --white: #fff;
+  --white-1: #E5E5E5;
+  --white-2: #999;
+
+  --bg-base: var(--white-1);
+  --bg-primary: var(--primary-1);
+  --ft-cl-base: var(--black);
+  --ft-cl-primary: var(--primary);
+  --ft-cl-sub: var(--white-2);
+  --ft-cl-white: var(--white);
+}
+
+html {
+  font-size: $root * 1px;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: rem(16);
+  font-weight: 400;
+  line-height: 1.4em;
+  color: var(--ft-cl-base);
+  background: var(--white-2);
+}
+
+.s_radius-4 {
+  border-radius: 4px;
+}
+.s_radius-10 {
+  border-radius: 10px;
+}
+
+.bg_red {
+  background: red;
+}
