@@ -1,19 +1,21 @@
 <template>
-  <header id="or__header">
-    <h1 class="logo">
-      <a href="/">
-        <img :src="require('@images/logo.png')" :srcset="`${require('@images/logo.png')} 1x, ${require('@images/logo@2x.png')} 2x`" alt="wellcome to whw" />
-      </a>
-    </h1>
-    <div class="search-box s_radius-4">
-      <input class="search" type="text" placeholder="Search" />
-      <Button>
-        <font-awesome-icon icon="search" />
-      </Button>
-    </div>
-    <div class="profile">
-    </div>
-  </header>
+  <div id="or__header__wrap">
+    <header id="or__header">
+      <h1 class="logo">
+        <a href="/">
+          <img :src="require('@images/logo.png')" :srcset="`${require('@images/logo.png')} 1x, ${require('@images/logo@2x.png')} 2x`" alt="wellcome to whw" />
+        </a>
+      </h1>
+      <div class="search-box s_radius-4">
+        <input class="search" type="text" placeholder="Search" />
+        <Button>
+          <font-awesome-icon icon="search" />
+        </Button>
+      </div>
+      <div class="profile">
+      </div>
+    </header>
+  </div>
   <main>
     <router-view/>
   </main>
@@ -31,13 +33,19 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+
+#or__header__wrap {
+  background: var(--bg-header);
+}
 #or__header {
-  padding: 0 var(--content-gap);
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1920px;
+  padding: 0 var(--content-indent);
   display: flex;
   height: 60px;
   align-items: center;
   justify-content: space-between;
-  background: var(--bg-header);
   .search-box {
     display: flex;
     align-items: center;
