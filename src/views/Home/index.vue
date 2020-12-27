@@ -41,7 +41,7 @@ const sample = [
           date: new Date(),
           gallary: '존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리',
           writer: '존나긴 작성자존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리',
-          tags: ['태그1', '태그2', '태그3', 'tag4'],
+          tags: ['태그1', '태그2', '태그3', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4'],
           detail: {
             like: 2000,
             view: 2000
@@ -64,8 +64,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 #view-home {
-  // display: grid;
-  // grid-template-columns: 1fr 1fr;
-  // column-gap: var(--content-gap);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: var(--content-gap);
+  & > div {
+    min-width: 0;
+  }
 }
 </style>
