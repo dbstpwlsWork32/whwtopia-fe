@@ -38,8 +38,9 @@
   }
   &__top, &__bottom {
     & > {
-      ._left {
-        margin-right: 1ch;
+      ._right {
+        margin-left: 1ch;
+        max-width: 100%;
       }
       ._left, ._right {
         @include text-ellipsis;
@@ -54,11 +55,13 @@
   }
   &__footer {
     font-size: var(--ft-si-sub);
-    & > p {
-      margin-right: 10px;
+    & > ._details {
+      display: flex;
       flex-shrink: 0;
-      &:last-child {
-        margin-right: none;
+      max-width: 100%;
+      p {
+        margin-right: 10px;
+        @include text-ellipsis;
       }
     }
     & > ._tags {

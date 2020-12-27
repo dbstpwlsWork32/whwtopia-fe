@@ -13,8 +13,10 @@
           <p class="s_cl-sub _right">{{ post.writer }}</p>
         </div>
         <div class="s_cl-sub atom_list__footer">
-          <p><font-awesome-icon icon="eye" aria-label="view :" /> {{post.detail.view}}</p>
-          <p><font-awesome-icon icon="thumbs-up" aria-label="like :" /> {{post.detail.like}}</p>
+          <div class="_details">
+            <p><font-awesome-icon icon="eye" aria-label="view :" /> {{post.detail.view}}</p>
+            <p><font-awesome-icon icon="thumbs-up" aria-label="like :" /> {{post.detail.like}}</p>
+          </div>
           <div class="_tags">
             <p
               v-for="(tag, index) in post.tags" :key="`post-${post.id}-tag${index}`"
