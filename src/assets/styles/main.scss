@@ -24,13 +24,19 @@
   --ft-cl-purple: var(--purple);
 
   --st-shadow: 0px 2px 30px rgba(0, 0, 0, 0.06);
+  --st-boarder: 1px solid #cccccc;
 
   --content-gap: 20px;
-  --content-width: 1800px;
+  --content-gap-vertical: 20px;
+  --content-gap-vertical-1: 10px;
   --content-indent: 20px;
+  --content-indent-2: 10px;
+  --content-width: 1800px;
 
   --ft-si-base: #{rem(14)};
   --ft-si-title-1: #{rem(18)};
+  --ft-si-title-2: #{rem(16)};
+  --ft-si-sub: #{rem(12)};
 
   --bg-header: var(--blue-1);
 }
@@ -66,6 +72,9 @@ h1, h2, h3, .s_ft-bold {
 h2 {
   font-size: var(--ft-si-title-1);
 }
+h3 {
+  font-size: var(--ft-si-title-2);
+}
 a, .s_cl-blue {
   color: var(--ft-cl-blue);
 }
@@ -78,16 +87,10 @@ a:visited, .s-cl-purple {
 .s_cl-sub {
   color: var(--ft-cl-sub);
 }
-
-// atmoic class
-.atom_content {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: var(--content-width);
-  padding: var(--content-indent);
-
-  @media all and (max-width: 1840px) {
-    margin-left: var(--content-gap);
-    margin-right: var(--content-gap);
-  }
+.s_cl-base {
+  color: var(--ft-cl-base);
 }
+
+// global class modules
+@import './atom.scss';
+@import './molecule.scss';

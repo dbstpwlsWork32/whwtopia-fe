@@ -8,10 +8,15 @@ import router from './router'
 import store from './store'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import {
+  faSearch,
+  faFire,
+  faEye,
+  faThumbsUp
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faSearch)
+library.add(faSearch, faFire, faEye, faThumbsUp)
 
 const app = createApp(App)
 app.use(store).use(router)
