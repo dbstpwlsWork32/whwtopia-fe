@@ -23,11 +23,6 @@
   margin-right: auto;
   max-width: var(--content-width);
   padding: var(--content-indent);
-
-  @media all and (max-width: var(--content-width)) {
-    margin-left: var(--content-gap);
-    margin-right: var(--content-gap);
-  }
 }
 
 .atom_list {
