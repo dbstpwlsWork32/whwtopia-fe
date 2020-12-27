@@ -32,7 +32,7 @@ export default defineComponent({
 
 <style lang="scss">
 #or__header {
-  padding: 0 20px;
+  padding: 0 var(--content-gap);
   display: flex;
   height: 60px;
   align-items: center;

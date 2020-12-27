@@ -2,7 +2,7 @@
   atom_name = atom_${atom_name}
 
   write all use atom class name
-  m__${molecule name}_${atom_name}_${atom_name}...
+  m__${molecule name}_${atom_name}-${atom_name}...
 
   do not apply deep selector like .foo { .paa { ... } } // bad...
   use "_" prefix as child, example .foo { & > .paa { ... } } // not bad
@@ -11,7 +11,7 @@
   if you need deep selector you must write class name as bem class naming
 */
 
-.m__card__list {
+.m__card_list {
   & > ._title {
     margin-bottom: var(--content-gap-vertical);
   }

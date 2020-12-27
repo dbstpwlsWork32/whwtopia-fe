@@ -12,11 +12,12 @@ import {
   faSearch,
   faFire,
   faEye,
-  faThumbsUp
+  faThumbsUp,
+  faStopwatch
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faSearch, faFire, faEye, faThumbsUp)
+library.add(faSearch, faFire, faEye, faThumbsUp, faStopwatch)
 
 const app = createApp(App)
 app.use(store).use(router)

@@ -2,7 +2,7 @@
   atom_name = atom_${atom_name}
 
   write all use atom class name
-  ${molecule name}_${atom_name}_${atom_name}
+  m__${molecule name}_${atom_name}-${atom_name}...
 
   do not apply deep selector like .foo { .paa { ... } } // bad...
   use "_" prefix as child, example .foo { & > .paa { ... } } // not bad
@@ -11,13 +11,20 @@
   if you need deep selector you must write class name as bem class naming
 */
 
+.atom_card {
+  padding: var(--content-indent);
+  background: var(--white);
+  box-shadow: var(--st-shadow);
+  @extend .s_radius-10;
+}
+
 .atom_content {
   margin-left: auto;
   margin-right: auto;
   max-width: var(--content-width);
   padding: var(--content-indent);
 
-  @media all and (max-width: 1840px) {
+  @media all and (max-width: var(--content-width)) {
     margin-left: var(--content-gap);
     margin-right: var(--content-gap);
   }
@@ -59,14 +66,12 @@
         margin-right: none;
       }
     }
-    & ._tags {
-      flex-shrink: 1;
+    & > ._tags {
+      display: flex;
       @include text-ellipsis;
-      a {
+      p {
         margin-right: 1ch;
-        &:visited {
-          color: var(--ft-cl-blue);
-        }
+        color: var(--ft-cl-blue);
       }
     }
   }

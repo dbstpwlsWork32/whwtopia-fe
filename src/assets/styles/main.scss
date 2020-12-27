@@ -31,7 +31,7 @@
   --content-gap-vertical-1: 10px;
   --content-indent: 20px;
   --content-indent-2: 10px;
-  --content-width: 1800px;
+  --content-width: 1920px;
 
   --ft-si-base: #{rem(14)};
   --ft-si-title-1: #{rem(18)};
@@ -59,11 +59,6 @@ body {
 }
 .s_radius-10 {
   border-radius: 10px;
-}
-.s_shadow {
-  background: var(--white);
-  box-shadow: var(--st-shadow);
-  @extend .s_radius-10;
 }
 
 h1, h2, h3, .s_ft-bold {
