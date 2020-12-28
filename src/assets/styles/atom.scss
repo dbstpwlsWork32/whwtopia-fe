@@ -12,17 +12,24 @@
 */
 
 .atom_card {
-  padding: var(--content-indent);
-  background: var(--white);
-  box-shadow: var(--st-shadow);
-  @extend .s_radius-10;
+  &, &_indent-small {
+    background: var(--white);
+    box-shadow: var(--st-shadow);
+    @extend .s_radius-10;
+  }
+  & {
+    padding: var(--content-indent);
+  }
+  &_indent-small {
+    padding: var(--content-indent-15);
+  }
 }
 
 .atom_content {
   margin-left: auto;
   margin-right: auto;
   max-width: var(--content-width);
-  padding: var(--content-indent);
+  padding: 0 var(--content-indent);
 }
 
 .atom_list {
@@ -30,6 +37,10 @@
   border-bottom: var(--st-boarder);
   &:last-child {
     border: none;
+  }
+
+  & > a:visited &__top > ._left {
+    @extend .s-cl-purple;
   }
 
   &__top, &__bottom, &__footer {

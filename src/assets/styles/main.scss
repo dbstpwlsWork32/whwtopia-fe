@@ -24,13 +24,18 @@
   --ft-cl-purple: var(--purple);
 
   --st-shadow: 0px 2px 30px rgba(0, 0, 0, 0.06);
+  --border-cl: #ccc;
   --st-boarder: 1px solid #cccccc;
 
   --content-gap: 20px;
-  --content-gap-vertical: 20px;
+  --content-gap-vert: 20px;
+  --content-gap-vert-15: 15px;
   --content-indent: 20px;
   --content-indent-2: 10px;
+  --content-indent-15: 15px;
   --content-width: 1600px;
+
+  --article-gap-vert: 40px;
 
   --ft-si-base: #{rem(14)};
   --ft-si-title-1: #{rem(18)};
@@ -83,6 +88,25 @@ a:visited, .s-cl-purple {
 }
 .s_cl-base {
   color: var(--ft-cl-base);
+}
+.s_cl-reset {
+  &, a, a:visited {
+    color: inherit
+  }
+}
+
+.s_ft-si-title-2 {
+  font-size: var(--ft-si-title-2)
+}
+
+.s_mb-content {
+  margin-bottom: var(--content-gap-vert);
+}
+.s_mt-content {
+  margin-top: var(--content-gap-vert);
+}
+.s_mt-article {
+  margin-top: var(--article-gap-vert);
 }
 
 // global class modules

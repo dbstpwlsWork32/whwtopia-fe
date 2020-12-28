@@ -1,6 +1,6 @@
 <template>
 <div class="atom_card m__card_list">
-  <h2 class="_title"><slot name="title"></slot></h2>
+  <h2 class="s_mb-content"><slot name="title"></slot></h2>
   <ol v-if="posts.length">
     <li v-for="post in posts" :key="`post-${post.id}`" class="atom_list">
       <router-link :to="`/post/${post.id}`">
