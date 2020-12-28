@@ -5,14 +5,14 @@
       :posts="posts"
     >
       <template v-slot:title>
-        <font-awesome-icon icon="fire" class="s_cl-red" /> 뜨거운 WHW
+        <font-awesome-icon icon="fire" class="s_cl-red" /> 뜨거운 글
       </template>
     </card-list>
     <card-list
       :posts="posts"
     >
       <template v-slot:title>
-        <font-awesome-icon icon="stopwatch" class="s_cl-blue" /> 실시간 WHW
+        <font-awesome-icon icon="stopwatch" class="s_cl-blue" /> 실시간 글
       </template>
     </card-list>
   </div>
@@ -21,9 +21,10 @@
     <h2 class="_title s_mb-content">순위</h2>
 
     <div class="_content">
-      <card-rank :ranks="ranks" title="갤러리" />
+      <card-rank :ranks="ranks" title="WHW" />
       <card-rank :ranks="ranks" title="검색어" />
       <card-rank :ranks="ranks" title="Tag" />
+      <card-rank :ranks="ranks" title="위키" />
     </div>
   </section>
 </div>
@@ -112,12 +113,9 @@ export default defineComponent({
 #view-home__ranks {
   & > ._content {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: var(--content-gap);
 
-    @include media(until-t) {
-      grid-template-columns: 1fr 1fr;
-    }
     @include media(until-m) {
       grid-template-columns: 1fr;
     }

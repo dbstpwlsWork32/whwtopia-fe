@@ -7,6 +7,8 @@ import '@assets/styles/main.scss'
 import router from './router'
 import store from './store'
 
+import RippleBtn from '@/globalComponents/RippleBtn.vue'
+
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faFire,
@@ -25,4 +27,5 @@ library.add(faFire, faEye, faThumbsUp, faStopwatch, faCaretUp, faCaretDown, faBe
 const app = createApp(App)
 app.use(store).use(router)
 app.component('font-awesome-icon', FontAwesomeIcon)
+app.component('ripple-btn', RippleBtn)
 app.mount('#app')

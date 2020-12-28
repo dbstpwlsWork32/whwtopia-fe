@@ -12,25 +12,24 @@
         <button @click="searchOpen">검색</button>
         <router-link to="/">둘러보기</router-link>
       </div>
-      <div class="search-box s_radius-4" v-if="isSearchOpen">
-        <Button>
+      <div class="search-box s_radius-4" v-if="isSearchOpen" @click="e => e.stopPropagation()">
+        <button @click="searchClose">
           <font-awesome-icon icon="arrow-left" />
-        </Button>
+        </button>
         <input
           class="search"
           type="text"
           placeholder="Search"
           v-model="searchValue"
-          @click="e => e.stopPropagation()"
           @keydown.esc="searchClose"
           ref="searchDom"
         />
       </div>
 
       <div class="_right">
-        <Button aria-label="notify" class="notify">
+        <ripple-btn aria-label="notify" class="notify">
           <font-awesome-icon icon="bell"></font-awesome-icon>
-        </Button>
+        </ripple-btn>
         <div class="profile">
         </div>
       </div>
@@ -43,7 +42,6 @@
 
 <script lang="ts">
 import { defineComponent, ref, nextTick } from 'vue'
-import Button from '@/components/RippleEffect.vue'
 
 const isSearchOpen = ref(false)
 const searchValue = ref('')
@@ -54,6 +52,7 @@ export default defineComponent({
     const searchClose = () => {
       isSearchOpen.value = false
       document.removeEventListener('click', searchClose)
+      if (searchValue.value) searchValue.value = ''
     }
     const searchOpen = (e: MouseEvent) => {
       e.stopPropagation()
@@ -70,9 +69,6 @@ export default defineComponent({
       searchValue,
       searchDom
     }
-  },
-  components: {
-    Button
   }
 })
 </script>
