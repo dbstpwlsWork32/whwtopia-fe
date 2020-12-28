@@ -9,8 +9,14 @@
       </h1>
 
       <div class="s_cl-reset _center">
-        <button @click="searchOpen">검색</button>
-        <router-link to="/">둘러보기</router-link>
+        <button @click="searchOpen">
+          <span class="s_hidden-m">검색</span>
+          <font-awesome-icon icon="search" class="s_hidden-t s_hidden-pc" />
+        </button>
+        <router-link to="/" aria-label="gallery tour">
+          <span class="s_hidden-m">둘러보기</span>
+          <font-awesome-icon icon="compass" class="s_hidden-t s_hidden-pc" />
+        </router-link>
       </div>
       <div class="search-box s_radius-4" v-if="isSearchOpen" @click="e => e.stopPropagation()">
         <button @click="searchClose">
@@ -123,6 +129,10 @@ $height: 60px;
       width: 100%;
       height: 100%;
     }
+    @include media(until-m) {
+      width: 30px;
+      height: 30px;
+    }
   }
 
   & > ._right {
@@ -138,11 +148,28 @@ $height: 60px;
       height: 40px;
       margin-right: 1em;
       font-size: 20px;
+      
+      @include media(until-m) {
+        margin-right: 5px;
+      }
     }
   }
 
   & > ._center {
-    margin: 0 12px;
+    margin-left: 12px;
+    margin-right: 10px;
+    font-size: var(--ft-si-title-18);
+    color: var(--ft-cl-white);
+    & > button {
+      margin-right: 30px;
+    }
+
+    @include media(until-m) {
+      font-size: 20px;
+      & > button {
+        margin-right: 20px;
+      }
+    }
   }
 }
 </style>

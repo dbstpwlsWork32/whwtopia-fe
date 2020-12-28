@@ -107,15 +107,26 @@ a:visited, .s-cl-purple {
   margin-top: var(--article-gap-vert);
 }
 
+.s_hidden-t, .s_hidden-m {
+  display: initial;
+}
 .s_hidden-pc {
   display: none;
 }
 @include media(until-t) {
-  .s_hidden-not-pc {
-    display: none;
+  .s_hidden-pc, .s_hidden-m {
+    display: initial;
   }
-  .s_hidden-pc {
-    display: block;
+  .s_hidden-t, .s_hidden-not-pc {
+    display: none
+  }
+}
+@include media(until-m) {
+  .s_hidden-pc, .s_hidden-t {
+    display: initial;
+  }
+  .s_hidden-m {
+    display: none;
   }
 }
 
