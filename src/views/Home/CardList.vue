@@ -28,8 +28,8 @@
   </ol>
   <div style="text-align: center; padding-top: .5rem" v-else>
     <img
-      :src="require('@assets/images/empty.png')"
-      :srcset="`${require('@assets/images/empty.png')} 1x, ${require('@assets/images/empty@2x.png')} 2x`"
+      :src="require('@assets/images/char/empty.png')"
+      :srcset="`${require('@assets/images/char/empty.png')} 1x, ${require('@assets/images/char/empty@2x.png')} 2x`"
       alt="empty content"
     />
   </div>
