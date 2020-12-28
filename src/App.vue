@@ -2,9 +2,9 @@
   <div id="or__header__wrap">
     <header id="or__header">
       <h1 class="logo">
-        <a href="/">
+        <router-link to="/">
           <img :src="require('@images/logo.png')" :srcset="`${require('@images/logo.png')} 1x, ${require('@images/logo@2x.png')} 2x`" alt="wellcome to whw" />
-        </a>
+        </router-link>
       </h1>
       <div class="search-box s_radius-4">
         <input class="search" type="text" placeholder="Search" />
