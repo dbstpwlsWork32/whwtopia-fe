@@ -109,6 +109,18 @@ a:visited, .s-cl-purple {
   margin-top: var(--article-gap-vert);
 }
 
+.s_hidden-pc {
+  display: none;
+}
+@include media(until-t) {
+  .s_hidden-not-pc {
+    display: none;
+  }
+  .s_hidden-pc {
+    display: block;
+  }
+}
+
 // global class modules
 @import './atom.scss';
 @import './molecule.scss';
