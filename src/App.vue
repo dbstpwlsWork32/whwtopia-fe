@@ -8,8 +8,14 @@
         </router-link>
       </h1>
 
-      <button @click="searchOpen">검색</button>
+      <div class="s_cl-reset _center">
+        <button @click="searchOpen">검색</button>
+        <router-link to="/">둘러보기</router-link>
+      </div>
       <div class="search-box s_radius-4" v-if="isSearchOpen">
+        <Button>
+          <font-awesome-icon icon="arrow-left" />
+        </Button>
         <input
           class="search"
           type="text"
@@ -19,9 +25,6 @@
           @keydown.esc="searchClose"
           ref="searchDom"
         />
-        <Button>
-          <font-awesome-icon icon="search" />
-        </Button>
       </div>
 
       <div class="_right">
@@ -57,7 +60,7 @@ export default defineComponent({
       isSearchOpen.value = true
       document.addEventListener('click', searchClose)
       nextTick(() => {
-        searchDom.value!.focus()
+        (searchDom.value as HTMLInputElement).focus()
       })
     }
     return {
@@ -76,6 +79,7 @@ export default defineComponent({
 
 <style lang="scss">
 
+$height: 60px;
 #or__header__wrap {
   background: var(--bg-header);
 }
@@ -85,29 +89,32 @@ export default defineComponent({
   max-width: 1920px;
   padding: 0 var(--content-indent);
   display: flex;
-  height: 60px;
+  height: $height;
   align-items: center;
   justify-content: space-between;
+  position: relative;
   .search-box {
     display: flex;
-    align-items: center;
-    flex-grow: 1;
-    max-width: 486px;
-    height: 32px;
-    margin: 0 12px;
-    font-weight: 700;
     overflow: hidden;
-    background-color: var(--purple-1);
-    color: var(--ft-cl-blue);
+    position: absolute;
+    z-index: 10;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: var(--st-border);
+    width: 100%;
+    max-width: 700px;
+    height: $height;
+    font-weight: 700;
+    background-color: var(--white);
+    align-items: center;
     input {
-      padding: 0 10px;
+      padding-right: 10px;
     }
     button {
-      width: 80px;
+      width: 50px;
       align-self: stretch;
       text-align: center;
-      color: var(--ft-cl-white);
-      background: var(--purple-2);
     }
   }
   .profile {
@@ -136,6 +143,10 @@ export default defineComponent({
       margin-right: 1em;
       font-size: 20px;
     }
+  }
+
+  & > ._center {
+    margin: 0 12px;
   }
 }
 </style>
