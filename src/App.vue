@@ -7,13 +7,29 @@
           <img class="s_hidden-pc" :src="require('@images/m_logo.png')" :srcset="`${require('@images/m_logo.png')} 1x, ${require('@images/m_logo@2x.png')} 2x`" alt="wellcome to whw" />
         </router-link>
       </h1>
-      <div class="search-box s_radius-4">
-        <input class="search" type="text" placeholder="Search" />
+
+      <button @click="searchOpen">검색</button>
+      <div class="search-box s_radius-4" v-if="isSearchOpen">
+        <input
+          class="search"
+          type="text"
+          placeholder="Search"
+          v-model="searchValue"
+          @click="e => e.stopPropagation()"
+          @keydown.esc="searchClose"
+          ref="searchDom"
+        />
         <Button>
           <font-awesome-icon icon="search" />
         </Button>
       </div>
-      <div class="profile">
+
+      <div class="_right">
+        <Button aria-label="notify" class="notify">
+          <font-awesome-icon icon="bell"></font-awesome-icon>
+        </Button>
+        <div class="profile">
+        </div>
       </div>
     </header>
   </div>
@@ -23,10 +39,35 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, nextTick } from 'vue'
 import Button from '@/components/RippleEffect.vue'
 
+const isSearchOpen = ref(false)
+const searchValue = ref('')
+const searchDom = ref<HTMLInputElement>()
+
 export default defineComponent({
+  setup() {
+    const searchClose = () => {
+      isSearchOpen.value = false
+      document.removeEventListener('click', searchClose)
+    }
+    const searchOpen = (e: MouseEvent) => {
+      e.stopPropagation()
+      isSearchOpen.value = true
+      document.addEventListener('click', searchClose)
+      nextTick(() => {
+        searchDom.value!.focus()
+      })
+    }
+    return {
+      isSearchOpen,
+      searchOpen,
+      searchClose,
+      searchValue,
+      searchDom
+    }
+  },
   components: {
     Button
   }
@@ -70,7 +111,6 @@ export default defineComponent({
     }
   }
   .profile {
-    flex-shrink: 0;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -79,6 +119,22 @@ export default defineComponent({
       object-fit: cover;
       width: 100%;
       height: 100%;
+    }
+  }
+
+  & > ._right {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+
+    button {
+      padding: 10px;
+      color: #fff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin-right: 1em;
+      font-size: 20px;
     }
   }
 }
