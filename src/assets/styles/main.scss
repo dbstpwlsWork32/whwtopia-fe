@@ -31,15 +31,15 @@
   --content-gap-vert: 20px;
   --content-gap-vert-15: 15px;
   --content-indent: 20px;
-  --content-indent-2: 10px;
+  --content-indent-10: 10px;
   --content-indent-15: 15px;
   --content-width: 1600px;
 
   --article-gap-vert: 40px;
 
   --ft-si-base: #{rem(14)};
-  --ft-si-title-1: #{rem(18)};
-  --ft-si-title-2: #{rem(16)};
+  --ft-si-title-18: #{rem(18)};
+  --ft-si-title-16: #{rem(16)};
   --ft-si-sub: #{rem(12)};
 
   --bg-header: var(--blue-1);
@@ -69,10 +69,10 @@ h1, h2, h3, .s_ft-bold {
   font-weight: 700;
 }
 h2 {
-  font-size: var(--ft-si-title-1);
+  font-size: var(--ft-si-title-18);
 }
 h3 {
-  font-size: var(--ft-si-title-2);
+  font-size: var(--ft-si-title-16);
 }
 a, .s_cl-blue {
   color: var(--ft-cl-blue);
@@ -96,7 +96,7 @@ a:visited, .s-cl-purple {
 }
 
 .s_ft-si-title-2 {
-  font-size: var(--ft-si-title-2)
+  font-size: var(--ft-si-title-16)
 }
 
 .s_mb-content {
