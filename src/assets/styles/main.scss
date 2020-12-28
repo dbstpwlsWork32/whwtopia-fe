@@ -35,6 +35,8 @@
   --content-indent-15: 15px;
   --content-width: 1600px;
 
+  --article-gap-vert: 40px;
+
   --ft-si-base: #{rem(14)};
   --ft-si-title-18: #{rem(18)};
   --ft-si-title-16: #{rem(16)};
@@ -84,7 +86,7 @@ a:visited, .s-cl-purple {
 .s_cl-sub {
   color: var(--ft-cl-sub);
 }
-.s_cl-base {
+.s_cl-base, a.s_cl-base:visited {
   color: var(--ft-cl-base);
 }
 .s_cl-reset {
@@ -102,6 +104,9 @@ a:visited, .s-cl-purple {
 }
 .s_mt-content {
   margin-top: var(--content-gap-vert);
+}
+.s_mt-article {
+  margin-top: var(--article-gap-vert);
 }
 
 // global class modules

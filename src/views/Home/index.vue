@@ -17,26 +17,15 @@
     </card-list>
   </div>
 
-  <div id="view-home__sub">
-    <article class="_rank atom_card_indent-small s_mt-content s_cl-reset">
-      <h2 class="_rank__title s_mb-content s_ft-si-title-2">잘팔리는 갤러리</h2>
-      <ul>
-        <li v-for="(rank, index) in ranks" :key="`rank-${rank.id}`">
-          <router-link to="/" class="_rank__li">
-            <div class="_rank">{{ index + 1 }}</div>
-            <div class="_text">{{ rank.title }}</div>
-            <div class="_change" :class="{'up': rank.change > 0, 'down': rank.change < 0}">
-              <template v-if="rank.change">
-                <font-awesome-icon :icon="rank.change > 0 ? 'caret-up' : 'caret-down'"></font-awesome-icon>
-                {{rank.change.toString().replace('-', '')}}
-              </template>
-              <template v-else>-</template>
-            </div>
-          </router-link>
-        </li>
-      </ul>
-    </article>
-  </div>
+  <section id="view-home__ranks" class="s_mt-article">
+    <h2 class="_title s_mb-content">순위</h2>
+
+    <div class="_content">
+      <card-rank :ranks="ranks" title="갤러리" />
+      <card-rank :ranks="ranks" title="검색어" />
+      <card-rank :ranks="ranks" title="Tag" />
+    </div>
+  </section>
 </div>
 </template>
 
@@ -44,6 +33,7 @@
 import { defineComponent } from 'vue'
 import { formatDate } from '@/utils/moment'
 import CardList from './CardList.vue'
+import CardRank from './CardRank.vue'
 
 const sample = [
         {
@@ -99,7 +89,8 @@ export default defineComponent({
     }
   },
   components: {
-    CardList
+    CardList,
+    CardRank
   }
 })
 </script>
@@ -118,41 +109,17 @@ export default defineComponent({
   }
 }
 
-#view-home__sub {
-  display: grid;
-  grid-template-columns: repeat(3, 200px);
+#view-home__ranks {
+  & > ._content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--content-gap);
 
-  ._rank {
-    &__title {
-      padding-bottom: var(--content-gap-vert-15);
-      border-bottom: 1px dashed var(--border-cl);
+    @include media(until-t) {
+      grid-template-columns: 1fr 1fr;
     }
-    &__li {
-      margin-top: .4rem;
-      display: flex;
-      ._rank {
-        width: 15px;
-        text-align: center;
-        background: var(--blue-1);
-        color: var(--white);
-      }
-      ._text {
-        @include text-ellipsis;
-        margin: 0 .4em;
-      }
-      ._change {
-        font-size: var(--ft-si-sub);
-        margin-left: auto;
-        &.up {
-          color: var(--ft-cl-red);
-        }
-        &.down {
-          color: var(--ft-cl-blue);
-        }
-      }
-      ._rank, ._change {
-        flex-shrink: 0;
-      }
+    @include media(until-m) {
+      grid-template-columns: 1fr;
     }
   }
 }
