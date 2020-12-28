@@ -18,7 +18,7 @@
   </div>
 
   <div id="view-home__sub">
-    <article class="_rank atom_card_indent-small s_mt-article s_cl-reset">
+    <article class="_rank atom_card_indent-small s_mt-content s_cl-reset">
       <h2 class="_rank__title s_mb-content s_ft-si-title-2">잘팔리는 갤러리</h2>
       <ul>
         <li v-for="(rank, index) in ranks" :key="`rank-${rank.id}`">
