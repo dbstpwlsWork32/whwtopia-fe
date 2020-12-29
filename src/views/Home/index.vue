@@ -33,8 +33,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { formatDate } from '@/utils/moment'
-import CardList from './CardList.vue'
-import CardRank from './CardRank.vue'
+import CardList from './atoms/CardList.vue'
+import CardRank from './atoms/CardRank.vue'
 
 const sample = [
         {
