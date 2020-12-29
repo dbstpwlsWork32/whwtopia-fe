@@ -112,7 +112,7 @@ $height: 60px;
     width: 100%;
     max-width: 700px;
     height: $height;
-    font-weight: 700;
+    font-weight: $ft-bold;
     background-color: var(--white);
     align-items: center;
     input {

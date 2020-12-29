@@ -56,7 +56,7 @@ html {
 body {
   font-family: 'Noto Sans KR', sans-serif;
   font-size: var(--ft-si-base);
-  font-weight: 400;
+  font-weight: $ft-normal;
   line-height: 1.4em;
   color: var(--ft-cl-base);
   background: var(--white-2);
@@ -70,7 +70,7 @@ body {
 }
 
 h1, h2, h3, .s_ft-bold {
-  font-weight: 700;
+  font-weight: $ft-bold;
 }
 h2 {
   font-size: var(--ft-si-title-18);
