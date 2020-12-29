@@ -15,8 +15,8 @@
           </div>
           <div class="s_cl-sub atom_list__footer">
             <div class="_details">
-              <p><font-awesome-icon icon="eye" aria-label="view :" /> {{post.detail.view}}</p>
-              <p><font-awesome-icon icon="heart" aria-label="like :" /> {{post.detail.like}}</p>
+              <p><font-awesome-icon icon="eye" aria-label="view :" /> {{ $formatNumberFlag(post.view) }}</p>
+              <p><font-awesome-icon icon="heart" aria-label="like :" /> {{ $formatNumberFlag(post.like) }}</p>
             </div>
             <div class="_tags">
               <p
