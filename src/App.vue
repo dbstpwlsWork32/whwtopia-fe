@@ -1,14 +1,14 @@
 <template>
   <div id="or__header__wrap">
     <header id="or__header">
-      <h1 class="logo">
+      <h1>
         <router-link to="/">
           <img class="s_hidden-not-pc" :src="require('@images/logo.png')" :srcset="`${require('@images/logo.png')} 1x, ${require('@images/logo@2x.png')} 2x`" alt="wellcome to whw" />
           <img class="s_hidden-pc" :src="require('@images/m_logo.png')" :srcset="`${require('@images/m_logo.png')} 1x, ${require('@images/m_logo@2x.png')} 2x`" alt="wellcome to whw" />
         </router-link>
       </h1>
 
-      <div class="s_cl-reset _center">
+      <nav class="s_cl-reset _center">
         <button @click="searchOpen">
           <span class="s_hidden-m">검색</span>
           <font-awesome-icon icon="search" class="s_hidden-t s_hidden-pc" />
@@ -17,7 +17,7 @@
           <span class="s_hidden-m">둘러보기</span>
           <font-awesome-icon icon="compass" class="s_hidden-t s_hidden-pc" />
         </router-link>
-      </div>
+      </nav>
       <div class="search-box s_radius-4" v-if="isSearchOpen" @click="e => e.stopPropagation()">
         <button @click="searchClose">
           <font-awesome-icon icon="arrow-left" />
@@ -167,6 +167,10 @@ $height: 60px;
     color: var(--ft-cl-white);
     & > button {
       margin-right: 30px;
+    }
+
+    .router-link-exact-active {
+      opacity: .7;
     }
 
     @include media(until-m) {
