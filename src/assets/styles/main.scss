@@ -41,6 +41,12 @@
   --ft-si-sub: #{rem(12)};
 
   --bg-header: var(--blue-1);
+
+  @include media(until-t) {
+    --content-indent: 12px;
+    --content-indent-10: 5px;
+    --content-indent-15: 10px;
+  }
 }
 
 html {
