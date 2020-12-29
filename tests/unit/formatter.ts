@@ -6,7 +6,7 @@ describe('number flag Format', () => {
     expect(formatNumber(0)).to.equal('0')
   })
   it('9999 to 9999', () => {
-    expect(formatNumber(9999)).to.equal('9999')
+    expect(formatNumber(9999)).to.equal('9,999')
   })
   it('10000 to 1만', () => {
     expect(formatNumber(10000)).to.equal('1만')
@@ -15,7 +15,7 @@ describe('number flag Format', () => {
     expect(formatNumber(100000)).to.equal('10만')
   })
   it('10000000 to 1000만', () => {
-    expect(formatNumber(10000000)).to.equal('1000만')
+    expect(formatNumber(10000000)).to.equal('1,000만')
   })
   it('100000100 to 1억', () => {
     expect(formatNumber(100000000)).to.equal('1억')
