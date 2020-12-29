@@ -61,7 +61,7 @@ ul, ol {
 }
 
 a, button {
-	&:focus {
+	&:focus-visible {
 		outline: auto;
 	}
 }
