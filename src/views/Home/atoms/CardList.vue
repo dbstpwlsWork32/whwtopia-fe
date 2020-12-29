@@ -65,10 +65,10 @@ export default defineComponent({
   color: var(--ft-cl-white);
   line-height: rem(36);
   background: var(--blue);
-  width: calc(100% + var(--content-gap) * 2);
+  width: calc(100% + var(--content-indent) * 2);
   text-align: center;
   position: relative;
-  left: calc(-1 * var(--content-gap));
+  left: calc(-1 * var(--content-indent));
   border-radius: 0 0 10px 10px;
 }
 </style>
