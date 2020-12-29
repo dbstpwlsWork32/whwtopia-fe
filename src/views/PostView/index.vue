@@ -7,10 +7,10 @@
       <ripple-btn class="atom_profile" aria-label="view writer's profile"></ripple-btn>
       <div class="_desc__right">
         <p>작성자</p>
-        <p>{{ $formatDate(new Date()) }}</p>
+        <p>{{ $formatDate(date) }}</p>
       </div>
     </div>
-    <p class="s_cl-sub s_mt-content">조회: {{ $formatNumber(99) }}</p>
+    <p class="s_cl-sub s_mt-content">조회: {{ $formatNumberFlag(99) }}</p>
   </div>
 
   <div id="view-post__content">
@@ -24,7 +24,7 @@
   <div id="view-post__action">
     <ripple-btn class="_heart">
       <font-awesome-icon icon="heart" />
-      <p>1111111111</p>
+      <p>{{$formatNumberFlag(1000)}}</p>
     </ripple-btn>
     <ripple-btn>
       <font-awesome-icon icon="save" />
@@ -42,6 +42,11 @@
 import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'viewPost',
+  data() {
+    return {
+      date: new Date()
+    }
+  }
 })
 </script>
 
