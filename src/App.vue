@@ -33,7 +33,7 @@
       </div>
 
       <div class="_right">
-        <ripple-btn aria-label="notify" class="notify">
+        <ripple-btn aria-label="notify" class="_notify">
           <font-awesome-icon icon="bell"></font-awesome-icon>
         </ripple-btn>
         <div class="profile">
@@ -157,6 +157,10 @@ $height: 60px;
       @include media(until-m) {
         margin-right: 5px;
       }
+    }
+
+    ._notify svg {
+      transform: translateY(-4px);
     }
   }
 
