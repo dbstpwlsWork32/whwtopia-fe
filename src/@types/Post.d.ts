@@ -1,7 +1,7 @@
 type displayHomePost = {
   id: number;
   title: string;
-  date: string;
+  date: Date;
   gallary: string;
   writer: string;
   tags: string[]

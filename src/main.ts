@@ -7,27 +7,30 @@ import '@assets/styles/main.scss'
 import router from './router'
 import store from './store'
 
-import RippleBtn from '@/globalComponents/RippleBtn.vue'
+import RippleBtn from '@/globals/RippleBtn.vue'
+import formatter from '@/globals/pluginFormatter'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faFire,
   faEye,
-  faThumbsUp,
   faStopwatch,
   faCaretUp,
   faCaretDown,
   faBell,
   faArrowLeft,
   faSearch,
-  faCompass
+  faCompass,
+  faHeart,
+  faFlag,
+  faSave
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faFire, faEye, faThumbsUp, faStopwatch, faCaretUp, faCaretDown, faBell, faArrowLeft, faSearch, faCompass)
+library.add(faFire, faEye, faStopwatch, faCaretUp, faCaretDown, faBell, faArrowLeft, faSearch, faCompass, faHeart, faFlag, faSave)
 
 const app = createApp(App)
-app.use(store).use(router)
+app.use(store).use(router).use(formatter)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.component('ripple-btn', RippleBtn)
 app.mount('#app')

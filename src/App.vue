@@ -36,7 +36,7 @@
         <ripple-btn aria-label="notify" class="_notify">
           <font-awesome-icon icon="bell"></font-awesome-icon>
         </ripple-btn>
-        <ripple-btn class="atom_profile">
+        <ripple-btn class="atom_profile" aria-label="view profile">
         </ripple-btn>
       </div>
     </header>
@@ -164,7 +164,7 @@ $height: 60px;
 
     @include media(until-m) {
       font-size: 20px;
-      & > button {
+      & > a {
         margin-right: 20px;
       }
     }

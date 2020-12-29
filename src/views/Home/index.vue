@@ -32,7 +32,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { formatDate } from '@/utils/moment'
 import CardList from './atoms/CardList.vue'
 import CardRank from './atoms/CardRank.vue'
 
@@ -85,7 +84,7 @@ export default defineComponent({
   name: 'viewsHome',
   data(): { posts: displayHomePost[]; ranks: typeof sampleRank } {
     return {
-      posts: sample.map(e => ({ ...e, date: formatDate(e.date) })),
+      posts: sample,
       ranks: sampleRank
     }
   },

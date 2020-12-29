@@ -7,7 +7,7 @@
         <router-link :to="`/post/${post.id}`">
           <div class="atom_list__top">
             <h3 class="s_cl-base _left">{{ post.title }}</h3>
-            <p class="s_cl-sub _right">{{ post.date }}</p>
+            <p class="s_cl-sub _right">{{ $formatDate(post.date) }}</p>
           </div>
           <div class="atom_list__bottom">
             <p class="_left">{{ post.gallary }}</p>
