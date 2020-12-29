@@ -3,8 +3,9 @@
    License: none (public domain)
 */
 
-%font-color {
+%font-reset {
 	font: inherit;
+	line-height: inherit;
 	color: inherit;
 }
 
@@ -29,14 +30,12 @@ time, mark, audio, video, input, button, select {
 	padding: 0;
 	border: 0;
 	box-sizing: border-box;
-	font-size: 100%;
 	vertical-align: baseline;
-	line-height: inherit;
-	@extend %font-color;
+	@extend %font-reset;
 }
 
 svg {
-	@extend %font-color;
+	@extend %font-reset;
 }
 
 button {
@@ -47,7 +46,7 @@ button {
 input, select {
 	width: 100%;
 	&::placeholder {
-		@extend %font-color;
+		@extend %font-reset;
 		opacity: .7;
 	}
 }
@@ -55,4 +54,14 @@ input, select {
 input, select, button {
 	background: none;
 	outline: none;
+}
+
+ul, ol {
+	list-style: none;
+}
+
+a, button {
+	&:focus-visible {
+		outline: auto;
+	}
 }

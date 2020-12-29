@@ -16,7 +16,8 @@ export default defineComponent({
   methods: {
     rippleEffect(e) {
       const nowLength = this.willRemove.length + 1
-      const { clientWidth, clientHeight, offsetTop, offsetLeft } = e.currentTarget
+      const { clientWidth, clientHeight } = e.currentTarget
+      const { x: offsetLeft, y: offsetTop } = e.currentTarget.getBoundingClientRect()
       const radius = Math.max(clientWidth, clientHeight) / 2
 
       const rippleDom = document.createElement('div')

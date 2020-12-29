@@ -1,0 +1,92 @@
+/*
+  atom_name = atom_${atom_name}
+
+  write all use atom class name
+  m__${molecule name}_${atom_name}-${atom_name}...
+
+  do not apply deep selector like .foo { .paa { ... } } // bad...
+  use "_" prefix as child, example .foo { & > .paa { ... } } // not bad
+  or use bem class naming .foo { .foo__paa { ... } } // good!
+
+  if you need deep selector you must write class name as bem class naming
+*/
+
+.atom_card {
+  &, &_indent-small {
+    background: var(--white);
+    box-shadow: var(--st-shadow);
+    @extend .s_radius-10;
+  }
+  & {
+    padding: var(--content-indent);
+    @include media (until-t) {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+  }
+  &_indent-small {
+    padding: var(--content-indent-15);
+    @include media (until-t) {
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+  }
+}
+
+.atom_content {
+  @extend %atom-content;
+}
+
+.atom_list {
+  padding: 8px var(--content-indent-10);
+  border-bottom: var(--st-border);
+  &:last-child {
+    border: none;
+  }
+
+  & > a:visited &__top > ._left {
+    @extend .s-cl-purple;
+  }
+
+  &__top, &__bottom, &__footer {
+    display: flex;
+    align-items: baseline;
+  }
+  &__top, &__bottom {
+    & > {
+      ._right {
+        margin-left: 1ch;
+        max-width: 100%;
+      }
+      ._left, ._right {
+        @include text-ellipsis;
+      }
+    }
+  }
+  &__top {
+    margin-bottom: .1em;
+    & > ._right {
+      flex-shrink: 0;
+    }
+  }
+  &__footer {
+    font-size: var(--ft-si-sub);
+    & > ._details {
+      display: flex;
+      flex-shrink: 0;
+      max-width: 100%;
+      p {
+        margin-right: 10px;
+        @include text-ellipsis;
+      }
+    }
+    & > ._tags {
+      display: flex;
+      @include text-ellipsis;
+      p {
+        margin-right: 1ch;
+        color: var(--ft-cl-blue);
+      }
+    }
+  }
+}
