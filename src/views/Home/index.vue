@@ -1,6 +1,6 @@
 <template>
 <div class="atom_content">
-  <div id="view-home__notify" class="s_mt-content">
+  <div id="view-home__notify">
     <card-list
       :posts="posts"
     >
