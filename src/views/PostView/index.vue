@@ -4,7 +4,7 @@
     <h2 class="_title">{{postInfo.title}}</h2>
 
     <div class="s_cl-sub _desc">
-      <ripple-btn class="atom_profile" aria-label="view writer's profile"></ripple-btn>
+      <ripple-btn class="atom_profile" :aria-label="`${postInfo.writer} profile`"></ripple-btn>
       <div class="_desc__right">
         <p>{{postInfo.writer}}</p>
         <p>{{ $formatDate(postInfo.date) }}</p>
@@ -13,13 +13,7 @@
     <p class="s_cl-sub s_mt-content">조회: {{ $formatNumberFlag(postInfo.view) }}</p>
   </div>
 
-  <div id="view-post__content">
-    ㅁㅇㄴㅇㄴㅁ
-    ㅁㅇㄴㅇㄴㅁㅁㄴㅇ
-    ㅁㄴㅇ
-    ㅁㄴㅇ
-    ㅁㅇㄴㅇㄴㅁ
-  </div>
+  <div id="view-post__content">{{postInfo.content}}</div>
 
   <div id="view-post__action">
     <ripple-btn class="_heart" :class="{ 'sc_active': userActive.isLiked }" @click="toggleLike">
@@ -34,10 +28,36 @@
       <font-awesome-icon icon="flag" />
       <p>신고</p>
     </ripple-btn>
+    <ripple-btn class="_emotion">
+      <font-awesome-icon icon="lungs" />
+      <p>감정</p>
+    </ripple-btn>
   </div>
 
   <article id="view-post__comments">
-    <h3>댓글</h3>
+    <h3 class="s_mt-content s_mb-content">댓글</h3>
+    <ul class="a_comment-wrap">
+      <li class="a_comment">
+        <ripple-btn class="atom_profile" aria-label="someone profile"></ripple-btn>
+        <div class="a_comment__right">
+          <div class="_top">
+            <p>작성자</p>
+            <p class="_date">2020.12.25 12:00</p>
+          </div>
+          <p class="a_comment">댓글내용</p>
+        </div>
+      </li>
+      <li class="a_comment">
+        <ripple-btn class="atom_profile" aria-label="someone profile"></ripple-btn>
+        <div class="a_comment__right">
+          <div class="_top">
+            <p>작성자</p>
+            <p class="_date">2020.12.25 12:00</p>
+          </div>
+          <p class="a_comment">댓글내용</p>
+        </div>
+      </li>
+    </ul>
   </article>
 </section>
 </template>
@@ -53,8 +73,18 @@ const postInfo = reactive<displayViewPost>({
   date: new Date(),
   tags: ['태그1', '태그2'],
   like: 1000,
-  view: 1000
+  view: 1000,
+  content: ' asddas asdasd sad asd  sadsdaads sad sad '
 })
+
+const smapleComments = [
+  {
+    id: 1,
+    user: '작성자',
+    date: new Date(),
+    comment: ''
+  }
+]
 
 export default defineComponent({
   name: 'viewPost',
@@ -73,6 +103,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 #view-post {
+  .atom_profile {
+    flex-shrink: 0;
+    border-color: var(--border-cl);
+    color: var(--border-cl);
+  }
   &__header {
     padding-bottom: .8em;
     border-bottom: var(--st-border);
@@ -86,11 +121,6 @@ export default defineComponent({
       font-size: var(--ft-si-sub-13);
       display: flex;
       align-items: center;
-      .atom_profile {
-        flex-shrink: 0;
-        border-color: var(--border-cl);
-        color: var(--border-cl);
-      }
       ._desc__right {
         margin-left: .7em;
       }
@@ -110,6 +140,12 @@ export default defineComponent({
         font-size: 25px;
         margin-bottom: .2em;
       }
+      &:not(._emotion) {
+        color: var(--ft-cl-sub);
+      }
+      &:hover {
+        color: var(--ft-cl-base);
+      }
     }
     ._heart {
       flex-shrink: 0;
@@ -118,10 +154,10 @@ export default defineComponent({
       }
     }
     ._save.sc_active {
-      color: var(--blue)
+      color: var(--ft-cl-blue)
     }
     ._report.sc_active {
-      color: var(--purple)
+      color: var(--ft-cl-purple)
     }
     @include media(until-m) {
       column-gap: 10px;
@@ -129,6 +165,30 @@ export default defineComponent({
         padding: 10px;
         svg {
           font-size: 20px;
+        }
+      }
+    }
+  }
+
+  &__comments {
+    .a_comment-wrap {
+      & > .a_comment {
+        margin-bottom: 10px;
+      }
+    }
+    .a_comment {
+      display: flex;
+      align-items: center;
+      .a_comment__right {
+        margin-left: 10px;
+        & > ._top {
+          display: flex;
+          align-items: center;
+          & > ._date {
+            margin: 4px;
+            color: var(--ft-cl-sub);
+            font-size: var(--ft-si-sub);
+          }
         }
       }
     }

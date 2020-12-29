@@ -23,11 +23,12 @@ import {
   faCompass,
   faHeart,
   faFlag,
-  faSave
+  faSave,
+  faLungs
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faFire, faEye, faStopwatch, faCaretUp, faCaretDown, faBell, faArrowLeft, faSearch, faCompass, faHeart, faFlag, faSave)
+library.add(faFire, faEye, faStopwatch, faCaretUp, faCaretDown, faBell, faArrowLeft, faSearch, faCompass, faHeart, faFlag, faSave, faLungs)
 
 const app = createApp(App)
 app.use(store).use(router).use(formatter)

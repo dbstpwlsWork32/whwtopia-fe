@@ -16,4 +16,5 @@ type displayViewPost = {
   tags: string[];
   view: number;
   like: number;
+  content: string;
 }
