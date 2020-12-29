@@ -41,7 +41,7 @@ export default defineComponent({
       width: 15px;
       text-align: center;
       background: var(--blue-1);
-      color: var(--white);
+      color: var(--ft-cl-white-stance);
     }
     ._text {
       @include text-ellipsis;

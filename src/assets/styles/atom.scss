@@ -13,7 +13,7 @@
 
 .atom_card {
   &, &_indent-small {
-    background: var(--white);
+    background: var(--bg-base);
     box-shadow: var(--st-shadow);
     @extend .s_radius-10;
   }

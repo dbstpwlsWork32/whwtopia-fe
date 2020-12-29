@@ -4,25 +4,25 @@
   --black: #000;
   --blue: #4846e6;
   --blue-1: #4E41DB;
-  --white: #fff;
-  --white-1: #F8F9FD;
-  --white-2: #E5E5E5;
-  --white-3:#808080;
+  --grey-1: #F8F9FD;
+  --grey-2: #E5E5E5;
+  --grey-3:#808080;
   --red: #C4314B;
   --purple:#9026c5;
 
-  --bg-base: var(--white-1);
+  --bg-base: var(--grey-1);
   --bg-blue: var(--blue-1);
   --ft-cl-base: var(--black);
   --ft-cl-blue: var(--blue);
   --ft-cl-blue-1: var(--blue-1);
-  --ft-cl-sub: var(--white-3);
-  --ft-cl-white: var(--white);
+  --ft-cl-sub: var(--grey-3);
+  --ft-cl-white-stance: #fff;
   --ft-cl-red: var(--red);
   --ft-cl-purple: var(--purple);
 
   --st-shadow: 0px 2px 30px rgba(0, 0, 0, 0.06);
   --border-cl: #ccc;
+  --border-cl-white-stance: #fff;
   --st-border: 1px solid #cccccc;
 
   --content-gap: 20px;
@@ -61,7 +61,7 @@ body {
   font-weight: $ft-normal;
   line-height: 1.4;
   color: var(--ft-cl-base);
-  background: var(--white-2);
+  background: var(--grey-2);
 }
 
 .s_radius-4 {

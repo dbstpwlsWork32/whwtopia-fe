@@ -113,7 +113,7 @@ $height: 60px;
     max-width: 700px;
     height: $height;
     font-weight: $ft-bold;
-    background-color: var(--white);
+    background-color: var(--bg-base);
     align-items: center;
     input {
       padding-right: 10px;
@@ -128,7 +128,7 @@ $height: 60px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 1px solid var(--white);
+    border: 1px solid var(--border-cl-white-stance);
     img {
       object-fit: cover;
       width: 100%;
@@ -147,7 +147,7 @@ $height: 60px;
 
     button {
       padding: 10px;
-      color: #fff;
+      color: var(--ft-cl-white-stance);
       border-radius: 50%;
       width: 40px;
       height: 40px;
@@ -168,7 +168,7 @@ $height: 60px;
     margin-left: 12px;
     margin-right: 10px;
     font-size: var(--ft-si-title-18);
-    color: var(--ft-cl-white);
+    color: var(--ft-cl-white-stance);
     & > a {
       margin-right: 30px;
     }

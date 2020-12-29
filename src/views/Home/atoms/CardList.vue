@@ -16,7 +16,7 @@
           <div class="s_cl-sub atom_list__footer">
             <div class="_details">
               <p><font-awesome-icon icon="eye" aria-label="view :" /> {{post.detail.view}}</p>
-              <p><font-awesome-icon icon="thumbs-up" aria-label="like :" /> {{post.detail.like}}</p>
+              <p><font-awesome-icon icon="heart" aria-label="like :" /> {{post.detail.like}}</p>
             </div>
             <div class="_tags">
               <p
@@ -62,7 +62,7 @@ export default defineComponent({
 }
 .a_more {
   display: block;
-  color: var(--ft-cl-white);
+  color: var(--ft-cl-white-stance);
   line-height: rem(36);
   background: var(--blue);
   width: calc(100% + var(--content-indent) * 2);
