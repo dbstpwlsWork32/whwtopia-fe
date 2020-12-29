@@ -27,7 +27,7 @@
         </router-link>
       </li>
     </ol>
-    <router-link to="/" class="_more s_mt-content">더보기</router-link>
+    <router-link to="/" class="a_more s_mt-content">더보기</router-link>
   </template>
   <div style="text-align: center; padding-top: .5rem" v-else>
     <img
@@ -54,14 +54,13 @@ export default defineComponent({
 .atom_card {
   min-width: 0;
   padding-bottom: 0;
-  overflow: hidden;
 }
 ._title {
   svg {
     margin-right: .1em;
   }
 }
-._more {
+.a_more {
   display: block;
   color: var(--ft-cl-white);
   line-height: rem(36);
@@ -70,5 +69,6 @@ export default defineComponent({
   text-align: center;
   position: relative;
   left: calc(-1 * var(--content-gap));
+  border-radius: 0 0 10px 10px;
 }
 </style>

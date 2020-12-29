@@ -59,3 +59,9 @@ input, select, button {
 ul, ol {
 	list-style: none;
 }
+
+a, button {
+	&:focus {
+		outline: auto;
+	}
+}
