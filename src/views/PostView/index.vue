@@ -15,6 +15,12 @@
 
   <div id="view-post__content">{{postInfo.content}}</div>
 
+  <div id="view-post__tags" class="s_mt-content">
+    <p
+      v-for="(tag, index) in postInfo.tags" :key="`tag-${index}`"
+    >#{{tag}}</p>
+  </div>
+
   <div id="view-post__action">
     <ripple-btn class="_heart" :class="{ 'sc_active': userActive.isLiked }" @click="toggleLike">
       <font-awesome-icon icon="heart" />
@@ -35,35 +41,67 @@
   </div>
 
   <article id="view-post__comments">
-    <h3 class="s_mt-content s_mb-content">댓글</h3>
-    <ul class="a_comment-wrap">
-      <li class="a_comment">
+    <h3 class="s_mt-content s_mb-content">댓글 <span class="s_cl-red">({{comments.length}})</span></h3>
+
+    <div class="_write-comment">
+      <div class="atom_user-text-input" contenteditable></div>
+      <ripple-btn class="_register">작성</ripple-btn>
+    </div>
+
+    <ul class="a_comment-wrap" v-if="comments.length">
+      <li class="a_comment" v-for="comment in comments" :key="`comment-${comment.id}`">
         <ripple-btn class="atom_profile" aria-label="someone profile"></ripple-btn>
         <div class="a_comment__right">
           <div class="_top">
-            <p>작성자</p>
-            <p class="_date">2020.12.25 12:00</p>
+            <p>{{comment.user}}</p>
+            <p class="_date">{{$formatDate(comment.date)}}</p>
           </div>
-          <p class="a_comment">댓글내용</p>
-        </div>
-      </li>
-      <li class="a_comment">
-        <ripple-btn class="atom_profile" aria-label="someone profile"></ripple-btn>
-        <div class="a_comment__right">
-          <div class="_top">
-            <p>작성자</p>
-            <p class="_date">2020.12.25 12:00</p>
-          </div>
-          <p class="a_comment">댓글내용</p>
+          <p class="a_comment">{{comment.comment}}</p>
         </div>
       </li>
     </ul>
+    <div style="text-align: center; padding-top: .5rem" v-else>
+      <img
+        :src="require('@assets/images/char/empty.png')"
+        :srcset="`${require('@assets/images/char/empty.png')} 1x, ${require('@assets/images/char/empty@2x.png')} 2x`"
+        alt="empty content"
+      />
+    </div>
+  </article>
+
+  <article id="view-post__more" class="atom_card__divide">
+    <h2 class="_title">다른글 보기</h2>
+    <post-li :posts="posts" />
   </article>
 </section>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
+import PostLi from '@/components/atoms/PostLi.vue'
+
+const sample = [
+        {
+          id: 0,
+          title: '제목',
+          date: new Date(),
+          gallary: '갤러리',
+          writer: '작성자',
+          tags: ['태그1', '태그2', '태그3'],
+          like: 1000,
+          view: 1000
+        },
+        {
+          id: 1,
+          title: '존나긴 제목 존나긴제목존나긴 제목 존나긴제목존나긴 제목 존나긴제목존나긴 제목 존나긴제목존나긴 제목 존나긴제목존나긴 제목 존나긴제목존나긴 제목 존나긴제목존나긴 제목 존나긴제목',
+          date: new Date(),
+          gallary: '존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리',
+          writer: '존나긴 작성자존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리',
+          tags: ['태그1', '태그2', '태그3', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4'],
+          like: 2000,
+          view: 2000
+        }
+      ]
 
 import useUserActive from './hooks/UserActive'
 
@@ -82,7 +120,7 @@ const smapleComments = [
     id: 1,
     user: '작성자',
     date: new Date(),
-    comment: ''
+    comment: 'asdasdasd'
   }
 ]
 
@@ -95,8 +133,13 @@ export default defineComponent({
       userActive,
       toggleReport,
       toggleLike,
-      toggleSave
+      toggleSave,
+      comments: smapleComments,
+      posts: sample
     }
+  },
+  components: {
+    PostLi
   }
 })
 </script>
@@ -125,6 +168,13 @@ export default defineComponent({
         margin-left: .7em;
       }
     }
+  }
+
+  #view-post__tags {
+    display: flex;
+    gap: 5px;
+    color: var(--ft-cl-blue);
+    font-size: var(--ft-si-sub);
   }
 
   &__action {
@@ -171,6 +221,17 @@ export default defineComponent({
   }
 
   &__comments {
+    & > ._write-comment {
+      ._register {
+        margin-bottom: var(--content-gap-vert);
+        margin-top: 5px;
+        width: 80px;
+        line-height: 35px;
+        background: var(--ft-cl-red);
+        color: var(--ft-cl-white-stance);
+      }
+    }
+
     .a_comment-wrap {
       & > .a_comment {
         margin-bottom: 10px;
@@ -191,6 +252,17 @@ export default defineComponent({
           }
         }
       }
+    }
+  }
+
+  &__more {
+    margin-top: var(--article-gap-vert-60);
+    &::before {
+      margin-bottom: var(--article-gap-vert);
+    }
+
+    & > ._title {
+      margin-bottom: 10px;
     }
   }
 }
