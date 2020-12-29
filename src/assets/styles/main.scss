@@ -7,7 +7,7 @@
   --white: #fff;
   --white-1: #F8F9FD;
   --white-2: #E5E5E5;
-  --white-3: #999;
+  --white-3:#808080;
   --red: #C4314B;
   --purple:#9026c5;
 
@@ -57,7 +57,7 @@ body {
   font-family: 'Noto Sans KR', sans-serif;
   font-size: var(--ft-si-base);
   font-weight: $ft-normal;
-  line-height: 1.4em;
+  line-height: 1.4;
   color: var(--ft-cl-base);
   background: var(--white-2);
 }
