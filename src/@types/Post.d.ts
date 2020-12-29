@@ -4,9 +4,16 @@ type displayHomePost = {
   date: Date;
   gallary: string;
   writer: string;
-  tags: string[]
-  detail: {
-    view: number,
-    like: number
-  }
+  tags: string[];
+  view: number;
+  like: number;
+}
+
+type displayViewPost = {
+  title: string;
+  date: Date;
+  writer: string;
+  tags: string[];
+  view: number;
+  like: number;
 }
