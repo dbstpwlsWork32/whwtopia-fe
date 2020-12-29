@@ -32,7 +32,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { formatDate } from '@/utils/moment'
 import CardList from './atoms/CardList.vue'
 import CardRank from './atoms/CardRank.vue'
 
@@ -44,10 +43,8 @@ const sample = [
           gallary: '갤러리',
           writer: '작성자',
           tags: ['태그1', '태그2', '태그3'],
-          detail: {
-            like: 1000,
-            view: 1000
-          }
+          like: 1000,
+          view: 1000
         },
         {
           id: 1,
@@ -56,10 +53,8 @@ const sample = [
           gallary: '존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리',
           writer: '존나긴 작성자존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리존나긴 갤러리',
           tags: ['태그1', '태그2', '태그3', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4', 'tag4'],
-          detail: {
-            like: 2000,
-            view: 2000
-          }
+          like: 2000,
+          view: 2000
         }
       ]
 
@@ -85,7 +80,7 @@ export default defineComponent({
   name: 'viewsHome',
   data(): { posts: displayHomePost[]; ranks: typeof sampleRank } {
     return {
-      posts: sample.map(e => ({ ...e, date: formatDate(e.date) })),
+      posts: sample,
       ranks: sampleRank
     }
   },

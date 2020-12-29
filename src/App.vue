@@ -1,23 +1,23 @@
 <template>
   <div id="or__header__wrap">
     <header id="or__header">
-      <h1 class="logo">
+      <h1>
         <router-link to="/">
           <img class="s_hidden-not-pc" :src="require('@images/logo.png')" :srcset="`${require('@images/logo.png')} 1x, ${require('@images/logo@2x.png')} 2x`" alt="wellcome to whw" />
           <img class="s_hidden-pc" :src="require('@images/m_logo.png')" :srcset="`${require('@images/m_logo.png')} 1x, ${require('@images/m_logo@2x.png')} 2x`" alt="wellcome to whw" />
         </router-link>
       </h1>
 
-      <div class="s_cl-reset _center">
-        <button @click="searchOpen">
-          <span class="s_hidden-m">검색</span>
-          <font-awesome-icon icon="search" class="s_hidden-t s_hidden-pc" />
-        </button>
+      <nav class="s_cl-reset _center">
         <router-link to="/" aria-label="gallery tour">
           <span class="s_hidden-m">둘러보기</span>
           <font-awesome-icon icon="compass" class="s_hidden-t s_hidden-pc" />
         </router-link>
-      </div>
+        <button @click="searchOpen">
+          <span class="s_hidden-m">검색</span>
+          <font-awesome-icon icon="search" class="s_hidden-t s_hidden-pc" />
+        </button>
+      </nav>
       <div class="search-box s_radius-4" v-if="isSearchOpen" @click="e => e.stopPropagation()">
         <button @click="searchClose">
           <font-awesome-icon icon="arrow-left" />
@@ -33,11 +33,11 @@
       </div>
 
       <div class="_right">
-        <ripple-btn aria-label="notify" class="notify">
+        <ripple-btn aria-label="notify" class="_notify">
           <font-awesome-icon icon="bell"></font-awesome-icon>
         </ripple-btn>
-        <div class="profile">
-        </div>
+        <ripple-btn class="atom_profile" aria-label="view profile">
+        </ripple-btn>
       </div>
     </header>
   </div>
@@ -113,7 +113,7 @@ $height: 60px;
     max-width: 700px;
     height: $height;
     font-weight: $ft-bold;
-    background-color: var(--white);
+    background-color: var(--bg-base);
     align-items: center;
     input {
       padding-right: 10px;
@@ -124,38 +124,26 @@ $height: 60px;
       text-align: center;
     }
   }
-  .profile {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 1px solid var(--white);
-    img {
-      object-fit: cover;
-      width: 100%;
-      height: 100%;
-    }
-    @include media(until-m) {
-      width: 30px;
-      height: 30px;
-    }
-  }
 
   & > ._right {
     flex-shrink: 0;
     display: flex;
     align-items: center;
 
-    button {
+    ._notify {
       padding: 10px;
-      color: #fff;
+      color: var(--ft-cl-white-stance);
       border-radius: 50%;
       width: 40px;
       height: 40px;
       margin-right: 1em;
       font-size: 20px;
-      
       @include media(until-m) {
         margin-right: 5px;
+      }
+
+      svg {
+        transform: translateY(-4px);
       }
     }
   }
@@ -164,14 +152,19 @@ $height: 60px;
     margin-left: 12px;
     margin-right: 10px;
     font-size: var(--ft-si-title-18);
-    color: var(--ft-cl-white);
-    & > button {
+    color: var(--ft-cl-white-stance);
+    & > a {
       margin-right: 30px;
+    }
+
+    .router-link-exact-active {
+      cursor: default;
+      opacity: .7;
     }
 
     @include media(until-m) {
       font-size: 20px;
-      & > button {
+      & > a {
         margin-right: 20px;
       }
     }
