@@ -19,9 +19,17 @@
   }
   & {
     padding: var(--content-indent);
+    @include media (until-t) {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
   }
   &_indent-small {
     padding: var(--content-indent-15);
+    @include media (until-t) {
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
   }
 }
 
