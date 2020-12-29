@@ -52,6 +52,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .atom_card {
+  min-width: 0;
   padding-bottom: 0;
   overflow: hidden;
 }

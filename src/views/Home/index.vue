@@ -101,9 +101,6 @@ export default defineComponent({
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--content-gap);
-  & > div {
-    min-width: 0;
-  }
 
   @include media(until-m) {
     grid-template-columns: 1fr;
