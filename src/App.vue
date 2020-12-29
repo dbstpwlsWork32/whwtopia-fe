@@ -174,6 +174,7 @@ $height: 60px;
     }
 
     .router-link-exact-active {
+      cursor: default;
       opacity: .7;
     }
 
