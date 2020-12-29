@@ -86,6 +86,7 @@ $height: 60px;
   background: var(--bg-header);
 }
 #or__header {
+  margin-bottom: rem(40);
   margin-left: auto;
   margin-right: auto;
   max-width: 1920px;
@@ -95,6 +96,10 @@ $height: 60px;
   align-items: center;
   justify-content: space-between;
   position: relative;
+
+  @include media(until-m) {
+    margin-bottom: rem(20);
+  }
   .search-box {
     display: flex;
     overflow: hidden;
