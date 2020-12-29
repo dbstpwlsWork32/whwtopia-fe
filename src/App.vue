@@ -36,8 +36,8 @@
         <ripple-btn aria-label="notify" class="_notify">
           <font-awesome-icon icon="bell"></font-awesome-icon>
         </ripple-btn>
-        <div class="profile">
-        </div>
+        <ripple-btn class="atom_profile">
+        </ripple-btn>
       </div>
     </header>
   </div>
@@ -124,28 +124,13 @@ $height: 60px;
       text-align: center;
     }
   }
-  .profile {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 1px solid var(--border-cl-white-stance);
-    img {
-      object-fit: cover;
-      width: 100%;
-      height: 100%;
-    }
-    @include media(until-m) {
-      width: 30px;
-      height: 30px;
-    }
-  }
 
   & > ._right {
     flex-shrink: 0;
     display: flex;
     align-items: center;
 
-    button {
+    ._notify {
       padding: 10px;
       color: var(--ft-cl-white-stance);
       border-radius: 50%;
@@ -153,14 +138,13 @@ $height: 60px;
       height: 40px;
       margin-right: 1em;
       font-size: 20px;
-      
       @include media(until-m) {
         margin-right: 5px;
       }
-    }
 
-    ._notify svg {
-      transform: translateY(-4px);
+      svg {
+        transform: translateY(-4px);
+      }
     }
   }
 

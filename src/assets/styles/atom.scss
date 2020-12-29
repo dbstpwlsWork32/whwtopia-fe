@@ -90,3 +90,20 @@
     }
   }
 }
+
+.atom_profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border-cl-white-stance);
+  color: var(--ft-cl-white-stance);
+  img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+  @include media(until-m) {
+    width: 30px;
+    height: 30px;
+  }
+}
