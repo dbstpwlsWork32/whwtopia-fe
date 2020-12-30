@@ -48,7 +48,7 @@
       <ripple-btn class="_register">작성</ripple-btn>
     </div>
 
-    <ul class="a_comment-wrap" v-if="comments.length">
+    <ul class="a_comment-wrap">
       <li class="a_comment" v-for="comment in comments" :key="`comment-${comment.id}`">
         <ripple-btn class="atom_profile" aria-label="someone profile"></ripple-btn>
         <div class="a_comment__right">
@@ -60,13 +60,6 @@
         </div>
       </li>
     </ul>
-    <div style="text-align: center; padding-top: .5rem" v-else>
-      <img
-        :src="require('@assets/images/char/empty.png')"
-        :srcset="`${require('@assets/images/char/empty.png')} 1x, ${require('@assets/images/char/empty@2x.png')} 2x`"
-        alt="empty content"
-      />
-    </div>
   </article>
 
   <article id="view-post__more" class="atom_card__divide">

@@ -1,17 +1,8 @@
 <template>
 <div class="atom_card">
   <h2 class="s_mb-content"><slot name="title"></slot></h2>
-  <template v-if="posts.length">
-    <post-li :posts="posts" />
-    <router-link to="/" class="a_more s_mt-content">더보기</router-link>
-  </template>
-  <div style="text-align: center; padding-top: .5rem" v-else>
-    <img
-      :src="require('@assets/images/char/empty.png')"
-      :srcset="`${require('@assets/images/char/empty.png')} 1x, ${require('@assets/images/char/empty@2x.png')} 2x`"
-      alt="empty content"
-    />
-  </div>
+  <post-li :posts="posts" />
+  <router-link to="/" class="a_more s_mt-content">더보기</router-link>
 </div>
 </template>
 
