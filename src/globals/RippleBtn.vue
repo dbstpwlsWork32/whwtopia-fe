@@ -56,7 +56,7 @@ export default defineComponent({
     border-radius: 50%;
     position: absolute;
     background: currentcolor;
-    animation: default-ripple .6s both;
+    animation: default-ripple var(--ani-6) both;
     opacity: .6;
   }
 }

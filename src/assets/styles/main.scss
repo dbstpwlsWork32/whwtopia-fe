@@ -43,6 +43,11 @@
   --ft-si-sub-13: #{rem(13)};
 
   --bg-header: var(--blue-1);
+  --bg-body: var(--grey-2);
+
+  --ani-2: .2s;
+  --ani-4: .4s;
+  --ani-6: .6s;
 
   @include media(until-t) {
     --content-indent: 12px;
@@ -62,7 +67,7 @@ body {
   font-weight: $ft-normal;
   line-height: 1.4;
   color: var(--ft-cl-base);
-  background: var(--grey-2);
+  background: var(--bg-body);
 }
 
 .s_radius-4 {

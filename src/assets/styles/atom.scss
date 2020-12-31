@@ -117,10 +117,10 @@
   @extend %img-fit-cover;
 }
 
-.atom_user-text-input {
+.atom_input {
   border-bottom: var(--st-border);
   position: relative;
-  padding: 5px;
+  padding: 10px 5px;
   &::after {
     display: block;
     position: absolute;
@@ -128,9 +128,9 @@
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--blue);
+    background: currentColor;
     content: '';
-    transition: width .2s;
+    transition: width var(--ani-2);
   }
   &:focus {
     outline: none;
