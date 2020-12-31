@@ -91,7 +91,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 #view-home__notify {
   display: grid;
   grid-template-columns: 1fr 1fr;

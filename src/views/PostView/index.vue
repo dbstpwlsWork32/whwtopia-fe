@@ -137,7 +137,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 #view-post {
   .atom_profile {
     flex-shrink: 0;

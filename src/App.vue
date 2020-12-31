@@ -9,7 +9,7 @@
       </h1>
 
       <nav class="s_cl-reset _center">
-        <router-link to="/" aria-label="gallery tour">
+        <router-link to="/whw_list" aria-label="gallery tour">
           <span class="s_hidden-m">둘러보기</span>
           <font-awesome-icon icon="compass" class="s_hidden-t s_hidden-pc" />
         </router-link>
