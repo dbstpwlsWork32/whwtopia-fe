@@ -3,6 +3,7 @@ import type { RouteRecordRaw } from 'vue-router'
 import Home from '@/views/Home/index.vue'
 import PostView from '@/views/PostView/index.vue'
 import WhwList from '@/views/WhwList/index.vue'
+import Whw from '@/views/Whw/index.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -14,6 +15,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/post/:id',
     name: 'PostView',
     component: PostView
+  },
+  {
+    path: '/whw/:id',
+    name: 'WhwView',
+    component: Whw
   },
   {
     path: '/whw_list',

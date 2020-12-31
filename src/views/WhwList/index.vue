@@ -9,7 +9,7 @@
     <div class="atom_input" aria-label="갤러리 검색" contenteditable="true" role="input" @keydown.enter.prevent></div>
   </div>
   <div id="whw_list__wrap" class="s_mt-content">
-    <router-link to="/" v-for="gallery in gallerys" :key="`gal-${gallery.id}`" class="s_cl-reset">
+    <router-link :to="`/whw/${gallery.id}`" v-for="gallery in gallerys" :key="`gal-${gallery.id}`" class="s_cl-reset">
       <article class="whw_list__wrap__card s_radius-10">
         <img :src="gallery.imgUrl" alt="" v-if="gallery.imgUrl">
         <div class="_text">
