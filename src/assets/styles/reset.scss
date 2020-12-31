@@ -43,11 +43,23 @@ button {
 	outline: none;
 }
 
+
+%placeholder {
+	@extend %font-reset;
+	opacity: .7;
+}
 input, select {
 	width: 100%;
 	&::placeholder {
-		@extend %font-reset;
-		opacity: .7;
+		@extend %placeholder;
+	}
+}
+
+[contenteditable="true"] {
+	cursor: text;
+	&:empty:before {
+		content: attr(aria-label);
+		@extend %placeholder;
 	}
 }
 

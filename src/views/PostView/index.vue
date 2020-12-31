@@ -44,7 +44,7 @@
     <h3 class="s_mt-content s_mb-content">댓글 <span class="s_cl-red">({{comments.length}})</span></h3>
 
     <div class="_write-comment">
-      <div class="atom_user-text-input" contenteditable></div>
+      <div class="atom_input" contenteditable="true" aria-multiline="true" role="textbox" aria-label="댓글 작성"></div>
       <ripple-btn class="_register">작성</ripple-btn>
     </div>
 
@@ -223,6 +223,10 @@ export default defineComponent({
         background: var(--ft-cl-red);
         color: var(--ft-cl-white-stance);
       }
+    }
+
+    .atom_input::after {
+      color: var(--ft-cl-blue);
     }
 
     .a_comment-wrap {
