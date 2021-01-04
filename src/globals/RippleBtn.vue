@@ -6,7 +6,6 @@
 
 <script>
 import { defineComponent } from 'vue'
-import isMobile from '@/utils/isMobile'
 
 export default defineComponent({
   data () {
@@ -15,10 +14,10 @@ export default defineComponent({
     }
   },
   mounted() {
-    if (!isMobile()) this.$refs.wrap.addEventListener('mousedown', this.rippleEffect)
+    this.$refs.wrap.addEventListener('mousedown', this.rippleEffect)
   },
   unmounted() {
-    if (!isMobile()) this.$refs.wrap.removeEventListener('mousedown', this.rippleEffect)
+    this.$refs.wrap.removeEventListener('mousedown', this.rippleEffect)
   },
   methods: {
     rippleEffect(e) {
