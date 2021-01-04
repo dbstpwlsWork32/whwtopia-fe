@@ -1,10 +1,20 @@
 <template>
   <header id="or_header" class="atom_ct">
-    <ripple-btn>
+    <ripple-btn class="_nav-btn">
       <font-awesome-icon icon="align-justify" />
     </ripple-btn>
   </header>
-  <navigation v-on:bottomNotify="text => bottomNotify = text" />
+  <nav id="or_nav">
+    <div class="_profile">
+      <ripple-btn>
+        <div class="_profile__img s_img-fit">
+          <img src="https://pbs.twimg.com/profile_images/1297591729218916352/XSeEV90C_normal.jpg" alt="profile image" />
+        </div>
+        <p class="s_ft-si-up-1">프로필 이름</p>
+      </ripple-btn>
+      <button class="s_ft-cl-sub" @mousedown="uidCopy">UID: 1234123</button>
+    </div>
+  </nav>
   <main>
     <router-view/>
   </main>
@@ -20,7 +30,6 @@
 </template>
 
 <script>
-import Navigation from './Nav.vue'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -30,13 +39,40 @@ export default defineComponent({
       bottomNotify: ''
     }
   },
-  components: {
-    Navigation
+  methods: {
+    async uidCopy() {
+      await window.navigator.clipboard.writeText('asdasd')
+      const message = '복사 완료!'
+      if (this.bottomNotify !== message) this.bottomNotify = message
+    }
   }
 })
 </script>
 
 <style lang="scss">
+#or_header {
+  & > ._nav-btn {
+    font-size: rem(40);
+    padding: 0 5px;
+    @include media(until-t) {
+      font-size: rem(34);
+    }
+  }
+}
+#or_nav {
+  & > ._profile {
+    ._profile__img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      @include media(until-m) {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+}
+
 #or_alert_bottom {
   contain: layout paint;
   position: fixed;
