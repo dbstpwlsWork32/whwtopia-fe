@@ -33,3 +33,7 @@ export type Store = Omit<
     options?: CommitOptions
   ): ReturnType<Mutations[K]>;
 }
+
+export function useStore() {
+  return store as Store
+}
