@@ -53,12 +53,12 @@ export default defineComponent({
   overflow: hidden;
   .js_ripple {
     contain: strict;
-    transform: scale(.4);
+    transform: scale(.8);
     border-radius: 50%;
     position: absolute;
     background: currentcolor;
     animation: default-ripple var(--ani-6, .6s) both;
-    opacity: .6;
+    opacity: .4;
   }
 }
 @keyframes default-ripple {
