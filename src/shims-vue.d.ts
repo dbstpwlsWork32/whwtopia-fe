@@ -14,7 +14,7 @@ import type { Store } from 'vuex'
 
 declare module '@vue/runtime-core' {
   interface State {
-    bottomAlert: string
+    bottomAlertText: string
   }
 
   interface ComponentCustomProperties {

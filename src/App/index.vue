@@ -21,14 +21,16 @@
   <div id="or_alert_bottom">
     <transition
       name="fade"
-      v-on:after-enter="() => $store.commit('bottomAlert', '')"
+      v-on:after-enter="() => $store.commit('bottomAlertText', '')"
     >
       <div
         class="_text"
-        v-if="bottomAlert"
-      >{{ bottomAlert }}</div>
+        v-if="bottomAlertText"
+      >{{ bottomAlertText }}</div>
     </transition>
   </div>
+
+  <div class="atom_modal-cover"></div>
 </template>
 
 <script lang="ts">
@@ -37,20 +39,15 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'App',
   computed: {
-    bottomAlert() {
-      return this.$store.state.bottomAlert
-    }
-  },
-  data() {
-    return {
-      bottomNotify: ''
+    bottomAlertText() {
+      return this.$store.state.bottomAlertText
     }
   },
   methods: {
     async uidCopy() {
       await window.navigator.clipboard.writeText('asdasd')
       const message = '복사 완료!'
-      this.$store.commit('bottomAlert', message)
+      this.$store.commit('bottomAlertText', message)
     }
   }
 })

@@ -2,11 +2,11 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    bottomAlert: ''
+    bottomAlertText: ''
   },
   mutations: {
-    bottomAlert (state, p) {
-      if (state.bottomAlert !== p) state.bottomAlert = p
+    bottomAlertText (state, p) {
+      if (state.bottomAlertText !== p) state.bottomAlertText = p
     }
   },
   actions: {
