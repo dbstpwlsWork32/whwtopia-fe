@@ -1,5 +1,5 @@
 <template>
-  <button ref="wrap" class="m__ripple-btn">
+  <button ref="wrap" @mousedown="rippleEffect" class="m__ripple-btn">
     <slot></slot>
   </button>
 </template>
@@ -12,12 +12,6 @@ export default defineComponent({
     return {
       willRemove: []
     }
-  },
-  mounted() {
-    this.$refs.wrap.addEventListener('mousedown', this.rippleEffect)
-  },
-  unmounted() {
-    this.$refs.wrap.removeEventListener('mousedown', this.rippleEffect)
   },
   methods: {
     rippleEffect(e) {
