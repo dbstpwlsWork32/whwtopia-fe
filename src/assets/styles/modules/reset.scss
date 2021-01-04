@@ -62,17 +62,11 @@ input {
 	}
 }
 
-input, button {
+input, button, a {
 	background: none;
 	outline: none;
 }
 
 ul, ol {
 	list-style: none;
-}
-
-a, button {
-	&:focus-visible {
-		outline: auto;
-	}
 }

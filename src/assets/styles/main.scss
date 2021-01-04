@@ -1,0 +1,71 @@
+@import './modules/reset.scss';
+
+@mixin palette-dark {
+  :root {
+    --ft-cl-base: #fff;
+    --ft-cl-sub: #8899a6;
+    --br-cl: #38444d;
+    --bg-base: #16212c;
+    --bg-sub: #192734;
+    --bg-sub-2: #253341;
+  }
+}
+%palette-light {
+  --ft-cl-base: #000;
+  --ft-cl-sub: #5b7083;
+  --br-cl: #ebeef0;
+  --bg-base: #fff;
+  --bg-sub: #f7f9fa;
+  --bg-sub-2: #ebeef0;
+}
+
+:root {
+  --ft-si-root: #{$root * 1px};
+  --ft-si-base: #{rem(15)};
+
+  --ft-cl-primary: #1da1f2;
+  --ft-cl-link: #1b95e0;
+  @extend %palette-light;
+
+  --ct-max-width: 1400px;
+  --ct-indent: 20px;
+
+  --ani-6: .6s;
+
+  @include media(until-m) {
+    --ct-indent: 6px;
+  }
+}
+
+html {
+  font-size: var(--ft-si-root);
+}
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: var(--ft-si-base);
+  line-height: 1.3;
+  font-weight: $ft-normal;
+  color: var(--ft-cl-base);
+
+  background: var(--bg-base);
+}
+a {
+  color: var(--ft-cl-link);
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
+@import './modules/atoms.scss';
+@import './modules/styles.scss';
+
+// user color mode
+@media (prefers-color-scheme: dark) {
+  @include palette-dark;
+}
+html.dark {
+  @include palette-dark;
+}
+html.light {
+  @extend %palette-light;
+}

@@ -1,0 +1,11 @@
+@function rem($px) {
+  @return $px / $root * 1rem;
+}
+
+$root: 20;
+
+$untilMobile: 767px;
+$untilTablet: 1023px;
+
+$ft-normal: 300;
+$ft-bold: 500;

@@ -8,7 +8,7 @@ import router from './router'
 import store from './store'
 
 import RippleBtn from '@/globals/RippleBtn.vue'
-import formatter from '@/globals/pluginFormatter'
+import formatter from '@/globals/formatter'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faFire } from '@fortawesome/free-solid-svg-icons'

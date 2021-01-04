@@ -1,17 +1,24 @@
 <template>
-  <button ref="wrap" @click="rippleEffect" class="m__ripple-btn">
+  <button ref="wrap" class="m__ripple-btn">
     <slot></slot>
   </button>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
+import isMobile from '@/utils/isMobile'
 
 export default defineComponent({
   data () {
     return {
       willRemove: []
     }
+  },
+  mounted() {
+    if (!isMobile()) this.$refs.wrap.addEventListener('mousedown', this.rippleEffect)
+  },
+  unmounted() {
+    if (!isMobile()) this.$refs.wrap.removeEventListener('mousedown', this.rippleEffect)
   },
   methods: {
     rippleEffect(e) {
@@ -52,11 +59,12 @@ export default defineComponent({
   position: relative;
   overflow: hidden;
   .js_ripple {
+    contain: strict;
     transform: scale(.4);
     border-radius: 50%;
     position: absolute;
     background: currentcolor;
-    animation: default-ripple var(--ani-6) both;
+    animation: default-ripple var(--ani-6, .6s) both;
     opacity: .6;
   }
 }
