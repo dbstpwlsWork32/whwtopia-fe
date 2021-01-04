@@ -22,6 +22,7 @@
 :root {
   --ft-si-root: #{$root * 1px};
   --ft-si-base: #{rem(15)};
+  --ft-si-up-1: 1.2em;
 
   --ft-cl-primary: #1da1f2;
   --ft-cl-link: #1b95e0;
@@ -34,6 +35,7 @@
 
   @include media(until-m) {
     --ct-indent: 6px;
+    --ft-si-base: #{rem(14)};
   }
 }
 

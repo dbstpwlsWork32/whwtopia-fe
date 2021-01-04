@@ -11,10 +11,10 @@ import RippleBtn from '@/globals/RippleBtn.vue'
 import formatter from '@/globals/formatter'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faFire } from '@fortawesome/free-solid-svg-icons'
+import { faAlignJustify } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faFire)
+library.add(faAlignJustify)
 
 const app = createApp(App)
 app.use(store).use(router).use(formatter)
