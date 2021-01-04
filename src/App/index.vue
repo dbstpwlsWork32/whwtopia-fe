@@ -21,21 +21,26 @@
   <div id="or_alert_bottom">
     <transition
       name="fade"
-      v-on:after-enter="() => bottomNotify = ''"
+      v-on:after-enter="() => $store.commit('bottomAlert', '')"
     >
       <div
         class="_text"
-        v-if="bottomNotify"
-      >{{ bottomNotify }}</div>
+        v-if="bottomAlert"
+      >{{ bottomAlert }}</div>
     </transition>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'App',
+  computed: {
+    bottomAlert() {
+      return this.$store.state.bottomAlert
+    }
+  },
   data() {
     return {
       bottomNotify: ''
@@ -45,7 +50,7 @@ export default defineComponent({
     async uidCopy() {
       await window.navigator.clipboard.writeText('asdasd')
       const message = '복사 완료!'
-      if (this.bottomNotify != message) this.bottomNotify = message
+      this.$store.commit('bottomAlert', message)
     }
   }
 })
@@ -53,6 +58,10 @@ export default defineComponent({
 
 <style lang="scss">
 #or_header {
+  z-index: 8;
+  background: var(--bg-base);
+  position: sticky;
+  top: 0;
   & > ._nav-btn {
     font-size: rem(40);
     padding: 0 5px;
