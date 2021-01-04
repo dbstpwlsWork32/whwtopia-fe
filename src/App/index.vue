@@ -19,11 +19,13 @@
     <router-view/>
   </main>
   <div id="or_alert_bottom">
-    <transition name="fade">
+    <transition
+      name="fade"
+      v-on:after-enter="() => bottomNotify = ''"
+    >
       <div
         class="_text"
         v-if="bottomNotify"
-        v-on:transitionend="() => bottomNotify = ''"
       >{{ bottomNotify }}</div>
     </transition>
   </div>
@@ -43,7 +45,7 @@ export default defineComponent({
     async uidCopy() {
       await window.navigator.clipboard.writeText('asdasd')
       const message = '복사 완료!'
-      if (this.bottomNotify !== message) this.bottomNotify = message
+      if (this.bottomNotify != message) this.bottomNotify = message
     }
   }
 })
@@ -60,6 +62,12 @@ export default defineComponent({
   }
 }
 #or_nav {
+  z-index: 10;
+  position: fixed;
+  background: var(--bg-base);
+  top: 0;
+  left: 0;
+  bottom: 0;
   & > ._profile {
     ._profile__img {
       width: 60px;
@@ -74,6 +82,7 @@ export default defineComponent({
 }
 
 #or_alert_bottom {
+  z-index: 11;
   contain: layout paint;
   position: fixed;
   bottom: 10%;
@@ -96,8 +105,8 @@ export default defineComponent({
       transform: scale(0);
     }
     &.fade-leave-active {
-      transition: opacity 1s;
-      transition-delay: 1s;
+      transition: opacity .5s;
+      transition-delay: .5s;
     }
     &.fade-leave-to {
       opacity: 0;
