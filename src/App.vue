@@ -134,7 +134,7 @@ export default defineComponent({
 }
 
 .atom_modal {
-  $time: var(--ani-2);
+  $time: var(--ani-4);
   .atom_modal__cover {
     contain: strict;
     transition: opacity $time;
