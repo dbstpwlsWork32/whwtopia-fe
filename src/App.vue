@@ -1,6 +1,6 @@
 <template>
   <header id="or_header" class="atom_ct">
-    <ripple-btn class="_nav-btn" @mousedown="openNav">
+    <ripple-btn class="_nav-btn" @mousedown="openNav" aria-label="open navigation">
       <font-awesome-icon icon="align-justify" />
     </ripple-btn>
   </header>
@@ -39,7 +39,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
+import isMobile from '@/utils/isMobile'
+import { defineComponent, reactive, ref, watch } from 'vue'
 import { useStore } from '@/store'
 
 function useBottomAlert() {
@@ -86,6 +87,26 @@ export default defineComponent({
   setup() {
     const { bottomAlertRemove, uidCopy } = useBottomAlert()
     const { display: navDisplay, openNav, closeNav } = useNavigation()
+
+    if (isMobile()) {
+      const startPos = reactive({
+        x: 0,
+        y: 0
+      })
+      window.addEventListener('touchmove', e => {
+        if (Math.abs(e.touches[0].clientY - startPos.y) > 35) return false
+
+        if (e.touches[0].clientX - startPos.x > 50) {
+          navDisplay.value = true
+        } else if (e.touches[0].clientX - startPos.x < -50) {
+          navDisplay.value = false
+        }
+      })
+      window.addEventListener('touchstart', e => {
+        startPos.x = e.touches[0].clientX
+        startPos.y = e.touches[0].clientY
+      })
+    }
     return {
       bottomAlertRemove,
       uidCopy,
@@ -113,7 +134,7 @@ export default defineComponent({
 }
 
 .atom_modal {
-  $time: var(--ani-3);
+  $time: var(--ani-2);
   .atom_modal__cover {
     contain: strict;
     transition: opacity $time;
