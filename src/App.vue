@@ -113,14 +113,19 @@ export default defineComponent({
 }
 
 .atom_modal {
+  $time: var(--ani-3);
+  .atom_modal__cover {
+    contain: strict;
+    transition: opacity $time;
+    opacity: 1;
+  }
+  #or_nav {
+    contain: strict;
+    transition: transform $time;
+    transform: translateX(0);
+  }
   &.nav-enter-active, &.nav-leave-active {
-    transition: opacity var(--ani-4);
-    .atom_modal__cover {
-      transition: opacity var(--ani-4);
-    }
-    #or_nav {
-      transition: transform var(--ani-4);
-    }
+    transition-duration: $time;
   }
   &.nav-enter-from, &.nav-leave-to {
     .atom_modal__cover {
@@ -137,7 +142,8 @@ export default defineComponent({
   top: 0;
   left: 0;
   padding-right: 20px;
-  max-width: 80%;
+  width: 80%;
+  max-width: 500px;
   height: 100vh;
   z-index: 10;
   & > ._profile {
