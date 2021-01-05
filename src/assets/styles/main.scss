@@ -24,6 +24,7 @@
   --ft-si-base: #{rem(15)};
   --ft-si-sub: #{rem(14)};
   --ft-si-up-1: 1.2em;
+  --ft-si-up-2: 1.4em;
 
   --ft-cl-primary: #1da1f2;
   --ft-cl-link: #1b95e0;
@@ -65,9 +66,6 @@ body {
 }
 a {
   color: var(--ft-cl-link);
-  &:focus {
-    text-decoration: underline;
-  }
 }
 
 @import './modules/atoms.scss';

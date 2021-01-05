@@ -11,10 +11,11 @@ import RippleBtn from '@/globals/RippleBtn.vue'
 import formatter from '@/globals/formatter'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faAlignJustify } from '@fortawesome/free-solid-svg-icons'
+import { faAlignJustify, faCog } from '@fortawesome/free-solid-svg-icons'
+import { faStickyNote, faBookmark, faAddressBook, faPaperPlane, faNewspaper, faImages } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faAlignJustify)
+library.add(faAlignJustify, faStickyNote, faBookmark, faAddressBook, faCog, faPaperPlane, faNewspaper, faImages)
 
 const app = createApp(App)
 app.use(store).use(router).use(formatter)

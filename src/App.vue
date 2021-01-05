@@ -13,9 +13,44 @@
             <div class="_profile__img s_img-fit">
               <img src="https://pbs.twimg.com/profile_images/1297591729218916352/XSeEV90C_normal.jpg" alt="profile image" />
             </div>
-            <p class="s_ft-si-up-1">프로필 이름</p>
+            <p class="s_ft-si-up-2">프로필 이름</p>
           </ripple-btn>
-          <button class="s_ft-cl-sub s_ft-si-sub" @mousedown="uidCopy">UID: 1234123</button>
+          <button class="s_ft-cl-sub" @mousedown="uidCopy">UID: 1234123</button>
+        </div>
+        <div class="_links">
+          <div class="_wrap">
+            <router-link to="/">
+              <font-awesome-icon :icon="['far', 'bookmark']" />
+              <span>즐겨찾기 갤러리</span>
+            </router-link>
+            <router-link to="/">
+              <font-awesome-icon :icon="['far', 'sticky-note']" />
+              <span>내 목록</span>
+            </router-link>
+            <router-link to="/">
+              <font-awesome-icon :icon="['far', 'address-book']" />
+              <span>구독</span>
+            </router-link>
+          </div>
+          <div class="_wrap">
+            <router-link to="/">
+              <font-awesome-icon :icon="['far', 'paper-plane']" />
+              <span>인기글</span>
+            </router-link>
+            <router-link to="/">
+              <font-awesome-icon :icon="['far', 'newspaper']" />
+              <span>인기 갤러리</span>
+            </router-link>
+            <router-link to="/">
+              <font-awesome-icon :icon="['far', 'images']" />
+              <span>짤빵 저장소</span>
+            </router-link>
+          </div>
+        </div>
+        <div class="_footer">
+          <ripple-btn>
+            <font-awesome-icon icon="cog" />
+          </ripple-btn>
         </div>
       </nav>
       <div class="atom_modal__cover" @mousedown="closeNav" aria-label="navigation close" role="button"></div>
@@ -134,7 +169,7 @@ export default defineComponent({
 }
 
 .atom_modal {
-  $time: var(--ani-4);
+  $time: var(--ani-3);
   .atom_modal__cover {
     contain: strict;
     transition: opacity $time;
@@ -162,26 +197,60 @@ export default defineComponent({
   position: fixed;
   top: 0;
   left: 0;
-  padding-right: 20px;
   width: 80%;
   max-width: 500px;
   height: 100vh;
   z-index: 10;
-  padding: var(--ct-indent-vert) var(--ct-indent);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
   & > ._profile {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
+    padding: var(--ct-indent-vert) var(--ct-indent);
+    button {
+      display: block;
+    }
     ._profile__img {
       width: 60px;
       height: 60px;
       border-radius: 50%;
-      margin-bottom: rem(10);
+      margin-bottom: rem(5);
       @include media(until-m) {
         width: 50px;
         height: 50px;
       }
+    }
+  }
+  & > ._links {
+    margin-top: 10px;
+    border-top: 1px solid var(--br-cl);
+    overflow: scroll;
+    & > ._wrap {
+      padding: 20px var(--ct-indent);
+      border-top: 1px solid var(--br-cl);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      &:first-child {
+        border-top: none;
+      }
+      a {
+        font-size: var(--ft-si-up-2);
+        svg {
+          color: var(--ft-cl-sub);
+        }
+        span {
+          color: var(--ft-cl-base);
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+  & > ._footer {
+    border-top: 1px solid var(--br-cl);
+    padding: var(--ct-indent-vert) calc(var(--ct-indent) - 5px);
+    font-size: rem(20);
+    button {
+      padding: 0 5px;
+      border-radius: 5px;
     }
   }
 }
