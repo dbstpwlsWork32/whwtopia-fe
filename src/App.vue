@@ -9,16 +9,16 @@
     <div class="atom_modal" v-show="navDisplay">
       <nav id="or_nav">
         <div class="_profile">
-          <ripple-btn>
+          <ripple-btn aria-label="go my page">
             <div class="_profile__img s_img-fit">
               <img src="https://pbs.twimg.com/profile_images/1297591729218916352/XSeEV90C_normal.jpg" alt="profile image" />
             </div>
             <p class="s_ft-si-up-1">프로필 이름</p>
           </ripple-btn>
-          <button class="s_ft-cl-sub" @mousedown="uidCopy">UID: 1234123</button>
+          <button class="s_ft-cl-sub s_ft-si-sub" @mousedown="uidCopy">UID: 1234123</button>
         </div>
       </nav>
-      <div class="atom_modal__cover" @mousedown="closeNav"></div>
+      <div class="atom_modal__cover" @mousedown="closeNav" aria-label="navigation close" role="button"></div>
     </div>
   </transition>
 
@@ -167,11 +167,17 @@ export default defineComponent({
   max-width: 500px;
   height: 100vh;
   z-index: 10;
+  padding: var(--ct-indent-vert) var(--ct-indent);
   & > ._profile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
     ._profile__img {
       width: 60px;
       height: 60px;
       border-radius: 50%;
+      margin-bottom: rem(10);
       @include media(until-m) {
         width: 50px;
         height: 50px;

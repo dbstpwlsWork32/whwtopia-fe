@@ -22,14 +22,17 @@
 :root {
   --ft-si-root: #{$root * 1px};
   --ft-si-base: #{rem(15)};
+  --ft-si-sub: #{rem(14)};
   --ft-si-up-1: 1.2em;
 
   --ft-cl-primary: #1da1f2;
   --ft-cl-link: #1b95e0;
   @extend %palette-light;
 
+  // content
   --ct-max-width: 1400px;
   --ct-indent: 20px;
+  --ct-indent-vert: 10px;
 
   --ani-6: .6s;
   --ani-4: .4s;
@@ -37,8 +40,10 @@
   --ani-2: .2s;
 
   @include media(until-m) {
-    --ct-indent: 6px;
+    --ct-indent-vert: 10px;
+    --ct-indent: 10px;
     --ft-si-base: #{rem(14)};
+    --ft-si-sub: #{rem(13)};
   }
 }
 
