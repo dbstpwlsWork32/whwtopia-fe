@@ -21,31 +21,37 @@
   <div id="or_alert_bottom">
     <transition
       name="fade"
-      v-on:after-enter="() => $store.commit('bottomAlertText', '')"
+      @after-enter="bottomAlertRemove"
     >
       <div
         class="_text"
-        v-if="bottomAlertText"
-      >{{ bottomAlertText }}</div>
+        v-if="$store.state.bottomAlertText"
+      >{{ $store.state.bottomAlertText }}</div>
     </transition>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useStore } from '@/store'
 
 export default defineComponent({
   name: 'App',
-  computed: {
-    bottomAlertText() {
-      return this.$store.state.bottomAlertText
+  setup() {
+    const store = useStore()
+
+
+    function bottomAlertRemove() {
+      store.commit('bottomAlertText', '')
     }
-  },
-  methods: {
-    async uidCopy() {
+    async function uidCopy() {
       await window.navigator.clipboard.writeText('asdasd')
       const message = '복사 완료!'
-      this.$store.commit('bottomAlertText', message)
+      store.commit('bottomAlertText', message)
+    }
+    return {
+      bottomAlertRemove,
+      uidCopy
     }
   }
 })
@@ -53,7 +59,7 @@ export default defineComponent({
 
 <style lang="scss">
 #or_header {
-  z-index: 8;
+  z-index: 2;
   background: var(--bg-base);
   position: sticky;
   top: 0;
@@ -66,12 +72,9 @@ export default defineComponent({
   }
 }
 #or_nav {
-  z-index: 10;
-  position: fixed;
   background: var(--bg-base);
-  top: 0;
-  left: 0;
-  bottom: 0;
+  max-width: 80%;
+  height: 100vh;
   & > ._profile {
     ._profile__img {
       width: 60px;
