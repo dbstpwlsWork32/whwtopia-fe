@@ -1,5 +1,5 @@
 <template>
-  <header id="or_header" class="m_ct">
+  <header id="or_header" class="atom_ct">
     <ripple-btn class="_nav-btn">
       <font-awesome-icon icon="align-justify" />
     </ripple-btn>
@@ -29,8 +29,6 @@
       >{{ bottomAlertText }}</div>
     </transition>
   </div>
-
-  <div class="atom_modal-cover"></div>
 </template>
 
 <script lang="ts">
