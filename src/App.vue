@@ -1,20 +1,27 @@
 <template>
   <header id="or_header" class="atom_ct">
-    <ripple-btn class="_nav-btn">
+    <ripple-btn class="_nav-btn" @mousedown="openNav">
       <font-awesome-icon icon="align-justify" />
     </ripple-btn>
   </header>
-  <nav id="or_nav">
-    <div class="_profile">
-      <ripple-btn>
-        <div class="_profile__img s_img-fit">
-          <img src="https://pbs.twimg.com/profile_images/1297591729218916352/XSeEV90C_normal.jpg" alt="profile image" />
+
+  <transition name="nav">
+    <div class="atom_modal" v-show="navDisplay">
+      <nav id="or_nav">
+        <div class="_profile">
+          <ripple-btn>
+            <div class="_profile__img s_img-fit">
+              <img src="https://pbs.twimg.com/profile_images/1297591729218916352/XSeEV90C_normal.jpg" alt="profile image" />
+            </div>
+            <p class="s_ft-si-up-1">프로필 이름</p>
+          </ripple-btn>
+          <button class="s_ft-cl-sub" @mousedown="uidCopy">UID: 1234123</button>
         </div>
-        <p class="s_ft-si-up-1">프로필 이름</p>
-      </ripple-btn>
-      <button class="s_ft-cl-sub" @mousedown="uidCopy">UID: 1234123</button>
+      </nav>
+      <div class="atom_modal__cover" @mousedown="closeNav"></div>
     </div>
-  </nav>
+  </transition>
+
   <main>
     <router-view/>
   </main>
@@ -32,26 +39,59 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import { useStore } from '@/store'
+
+function useBottomAlert() {
+  const store = useStore()
+
+  function bottomAlertRemove() {
+    store.commit('bottomAlertText', '')
+  }
+  async function uidCopy() {
+    await window.navigator.clipboard.writeText('asdasd')
+    const message = '복사 완료!'
+    store.commit('bottomAlertText', message)
+  }
+
+  return {
+    bottomAlertRemove,
+    uidCopy
+  }
+}
+
+function useNavigation() {
+  const display = ref(false)
+
+  watch(() => display.value, () => {
+    const _do = display.value ? 'add' : 'remove'
+    document.body.classList[_do]('sc-lock')
+  })
+  function openNav() {
+    display.value = true
+  }
+  function closeNav() {
+    display.value = false
+  }
+
+  return {
+    display,
+    openNav,
+    closeNav
+  }
+}
 
 export default defineComponent({
   name: 'App',
   setup() {
-    const store = useStore()
-
-
-    function bottomAlertRemove() {
-      store.commit('bottomAlertText', '')
-    }
-    async function uidCopy() {
-      await window.navigator.clipboard.writeText('asdasd')
-      const message = '복사 완료!'
-      store.commit('bottomAlertText', message)
-    }
+    const { bottomAlertRemove, uidCopy } = useBottomAlert()
+    const { display: navDisplay, openNav, closeNav } = useNavigation()
     return {
       bottomAlertRemove,
-      uidCopy
+      uidCopy,
+      navDisplay,
+      openNav,
+      closeNav
     }
   }
 })
@@ -71,10 +111,35 @@ export default defineComponent({
     }
   }
 }
+
+.atom_modal {
+  &.nav-enter-active, &.nav-leave-active {
+    transition: opacity var(--ani-4);
+    .atom_modal__cover {
+      transition: opacity var(--ani-4);
+    }
+    #or_nav {
+      transition: transform var(--ani-4);
+    }
+  }
+  &.nav-enter-from, &.nav-leave-to {
+    .atom_modal__cover {
+      opacity: 0;
+    }
+    #or_nav {
+      transform: translateX(-100%);
+    }
+  }
+}
 #or_nav {
   background: var(--bg-base);
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-right: 20px;
   max-width: 80%;
   height: 100vh;
+  z-index: 10;
   & > ._profile {
     ._profile__img {
       width: 60px;
