@@ -1,9 +1,11 @@
 <template>
-  <header id="or_header" class="atom_ct">
-    <button v-ripple-effect class="_nav-btn" v-click-sync="openNav" aria-label="open navigation" aria-haspopup aria-controls="or_nav" :aria-expanded="navDisplay">
-      <font-awesome-icon icon="bars" />
-    </button>
-    <h1 class="s_ft-si-up-2 atom_text-ellipsis">{{headerTitle}}</h1>
+  <header id="or_header">
+    <div class="atom_ct _wrap">
+      <button v-ripple-effect class="_nav-btn" v-click-sync="openNav" aria-label="open navigation" aria-haspopup aria-controls="or_nav" :aria-expanded="navDisplay">
+        <font-awesome-icon icon="bars" />
+      </button>
+      <h1 class="s_ft-si-up-2 atom_text-ellipsis">{{headerTitle}}</h1>
+    </div>
   </header>
 
   <transition name="nav">
@@ -149,29 +151,31 @@ export default defineComponent({
 
 <style lang="scss">
 #or_header {
-  padding-top: 0;
-  padding-bottom: 0;
   border-bottom: 2px solid var(--br-cl);
-  z-index: 2;
-  background: var(--bg-base);
-  position: sticky;
-  top: 0;
-  display: flex;
-  align-items: center;
-  & > ._nav-btn {
-    flex-shrink: 0;
-    font-size: rem(40);
-    @include media(until-t) {
-      font-size: rem(34);
+  & > ._wrap {
+    padding-top: 0;
+    padding-bottom: 0;
+    z-index: 2;
+    background: var(--bg-base);
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    & > ._nav-btn {
+      flex-shrink: 0;
+      font-size: rem(40);
+      @include media(until-t) {
+        font-size: rem(34);
+      }
+      @include media(until-m) {
+        font-size: rem(30);
+      }
     }
-    @include media(until-m) {
-      font-size: rem(30);
+    & > h1 {
+      padding-left: 5px;
+      flex-grow: 1;
+      text-align: center;
     }
-  }
-  & > h1 {
-    padding-left: 5px;
-    flex-grow: 1;
-    text-align: center;
   }
 }
 
