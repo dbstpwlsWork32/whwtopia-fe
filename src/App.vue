@@ -1,6 +1,6 @@
 <template>
   <header id="or_header" class="atom_ct">
-    <ripple-btn class="_nav-btn" @mousedown="openNav" aria-label="open navigation">
+    <ripple-btn class="_nav-btn" @mousedown="openNav" @keypress.enter="openNav" aria-label="open navigation" aria-haspopup aria-controls="or_nav" :aria-expanded="navDisplay">
       <font-awesome-icon icon="align-justify" />
     </ripple-btn>
   </header>
@@ -17,7 +17,7 @@
           </ripple-btn>
           <button class="s_ft-cl-sub" @mousedown="uidCopy">UID: 1234123</button>
         </div>
-        <div class="_links">
+        <div class="_links" @mousedown="closeNav">
           <div class="_wrap">
             <router-link to="/">
               <font-awesome-icon :icon="['far', 'bookmark']" />
@@ -48,7 +48,7 @@
           </div>
         </div>
         <div class="_footer">
-          <ripple-btn>
+          <ripple-btn aria-label="setting">
             <font-awesome-icon icon="cog" />
           </ripple-btn>
         </div>
@@ -222,7 +222,7 @@ export default defineComponent({
   & > ._links {
     margin-top: 10px;
     border-top: 1px solid var(--br-cl);
-    overflow: scroll;
+    overflow: auto;
     & > ._wrap {
       padding: 20px var(--ct-indent);
       border-top: 1px solid var(--br-cl);
@@ -246,11 +246,10 @@ export default defineComponent({
   }
   & > ._footer {
     border-top: 1px solid var(--br-cl);
-    padding: var(--ct-indent-vert) calc(var(--ct-indent) - 5px);
     font-size: rem(20);
     button {
-      padding: 0 5px;
-      border-radius: 5px;
+      padding: 5px 10px;
+      border-radius: 10px;
     }
   }
 }
