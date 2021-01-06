@@ -9,12 +9,12 @@
     <div class="atom_modal" v-show="navDisplay">
       <nav id="or_nav">
         <div class="_profile">
-          <button v-ripple-effect aria-label="go my page" role="link">
+          <router-link to="/" v-ripple-effect="{router: true}" aria-label="go my page">
             <div class="_profile__img s_img-fit">
               <img src="https://pbs.twimg.com/profile_images/1297591729218916352/XSeEV90C_normal.jpg" alt="profile image" />
             </div>
             <p class="s_ft-si-up-2">프로필 이름</p>
-          </button>
+          </router-link>
           <button class="s_ft-cl-sub" @mousedown="uidCopy">UID: 1234123</button>
         </div>
         <div class="_links" @mousedown="closeNav">
@@ -205,7 +205,7 @@ export default defineComponent({
   grid-template-rows: auto 1fr auto;
   & > ._profile {
     padding: var(--ct-indent-vert) var(--ct-indent);
-    button {
+    & > button, & > a {
       display: block;
     }
     ._profile__img {

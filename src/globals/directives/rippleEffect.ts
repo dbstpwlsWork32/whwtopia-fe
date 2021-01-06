@@ -38,8 +38,16 @@ export default function (app: App) {
     target.appendChild(rippleDom)
   }
   app.directive('ripple-effect', {
-    mounted(el: HTMLElement) {
-      el.classList.add('m__ripple-btn')
+    mounted(el: HTMLElement, bind) {
+      if (bind.value && bind.value.router) {
+        // if router-link, it overlap class
+        setTimeout(() => {
+          el.classList.add('m__ripple-btn')
+        }, 0)
+      } else {
+        el.classList.add('m__ripple-btn')
+      }
+
       el.addEventListener('mousedown', rippleEffect)
       el.addEventListener('keydown', rippleEffect)
     },
