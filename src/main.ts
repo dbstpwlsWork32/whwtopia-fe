@@ -5,7 +5,6 @@ import 'normalize.css'
 import '@assets/styles/main.scss'
 // import './registerServiceWorker'
 import router from './router'
-import store from './store'
 
 // global custom modules
 import formatter from '@/globals/plugins/formatter'
@@ -20,7 +19,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faAlignJustify, faStickyNote, faBookmark, faAddressBook, faCog, faPaperPlane, faNewspaper, faImages)
 
 const app = createApp(App)
-app.use(store).use(router).use(formatter)
+app.use(router).use(formatter)
 
 // set directive
 useRippleEffect(app)

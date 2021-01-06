@@ -63,12 +63,12 @@
   <div id="or_alert_bottom">
     <transition
       name="fade"
-      @after-enter="bottomAlertRemove"
+      @after-enter="updateBottomAlert('')"
     >
       <div
         class="_text"
-        v-if="$store.state.bottomAlertText"
-      >{{ $store.state.bottomAlertText }}</div>
+        v-if="bottomAlert"
+      >{{ bottomAlert }}</div>
     </transition>
   </div>
 </template>
@@ -77,25 +77,7 @@
 import type { Ref } from 'vue'
 import isMobile from '@/utils/isMobile'
 import { defineComponent, reactive, ref, watch } from 'vue'
-import { useStore } from '@/store'
-
-function useBottomAlert() {
-  const store = useStore()
-
-  function bottomAlertRemove() {
-    store.commit('bottomAlertText', '')
-  }
-  async function uidCopy() {
-    await window.navigator.clipboard.writeText('asdasd')
-    const message = '복사 완료!'
-    store.commit('bottomAlertText', message)
-  }
-
-  return {
-    bottomAlertRemove,
-    uidCopy
-  }
-}
+import { bottomAlert, updateBottomAlert } from '@/hooks/bottomAlert'
 
 function useNavigation() {
   const display = ref(false)
@@ -141,17 +123,22 @@ function useNavGesture(isOpenRef: Ref<boolean>) {
 export default defineComponent({
   name: 'App',
   setup() {
-    const { bottomAlertRemove, uidCopy } = useBottomAlert()
+    async function uidCopy() {
+      await window.navigator.clipboard.writeText('asdasd')
+      updateBottomAlert('복사 완료!')
+    }
+
     const { display: navDisplay, openNav, closeNav } = useNavigation()
 
     if (isMobile()) useNavGesture(navDisplay)
 
     return {
-      bottomAlertRemove,
       uidCopy,
       navDisplay,
       openNav,
-      closeNav
+      closeNav,
+      bottomAlert,
+      updateBottomAlert
     }
   }
 })
