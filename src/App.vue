@@ -127,7 +127,7 @@ function useNavGesture(isOpenRef: Ref<boolean>, navDomRef: Ref<HTMLElement | und
       isOpenRef.value = false
     }
   })
-  window.addEventListener('touchend', e => {
+  window.addEventListener('touchend', () => {
     const navDom = navDomRef.value as HTMLElement
 
     // when side nav swape cancelled
