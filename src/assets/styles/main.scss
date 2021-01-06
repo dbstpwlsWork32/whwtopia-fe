@@ -69,6 +69,7 @@ a {
 }
 
 @import './modules/atoms.scss';
+@import './modules/molecules.scss';
 @import './modules/styles.scss';
 
 // user color mode
@@ -80,4 +81,11 @@ html.dark {
 }
 html.light {
   @extend %palette-light;
+}
+
+a, button {
+  transition: box-shadow var(--ani-2);
+  &:focus-visible {
+    box-shadow: 0 0 0 3px rgba($color:#1da1f2, $alpha: .3);
+  }
 }

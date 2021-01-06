@@ -1,20 +1,20 @@
 <template>
   <header id="or_header" class="atom_ct">
-    <ripple-btn class="_nav-btn" @mousedown="openNav" @keypress.enter="openNav" aria-label="open navigation" aria-haspopup aria-controls="or_nav" :aria-expanded="navDisplay">
+    <button v-ripple-effect class="_nav-btn" @mousedown="openNav" @keypress.enter="openNav" aria-label="open navigation" aria-haspopup aria-controls="or_nav" :aria-expanded="navDisplay">
       <font-awesome-icon icon="align-justify" />
-    </ripple-btn>
+    </button>
   </header>
 
   <transition name="nav">
     <div class="atom_modal" v-show="navDisplay">
       <nav id="or_nav">
         <div class="_profile">
-          <ripple-btn aria-label="go my page">
+          <button v-ripple-effect aria-label="go my page" role="link">
             <div class="_profile__img s_img-fit">
               <img src="https://pbs.twimg.com/profile_images/1297591729218916352/XSeEV90C_normal.jpg" alt="profile image" />
             </div>
             <p class="s_ft-si-up-2">프로필 이름</p>
-          </ripple-btn>
+          </button>
           <button class="s_ft-cl-sub" @mousedown="uidCopy">UID: 1234123</button>
         </div>
         <div class="_links" @mousedown="closeNav">
@@ -48,9 +48,9 @@
           </div>
         </div>
         <div class="_footer">
-          <ripple-btn aria-label="setting">
+          <button v-ripple-effect aria-label="setting">
             <font-awesome-icon icon="cog" />
-          </ripple-btn>
+          </button>
         </div>
       </nav>
       <div class="atom_modal__cover" @mousedown="closeNav" aria-label="navigation close" role="button"></div>
