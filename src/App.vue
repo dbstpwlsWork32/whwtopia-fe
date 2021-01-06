@@ -74,6 +74,7 @@
 </template>
 
 <script lang="ts">
+import type { Ref } from 'vue'
 import isMobile from '@/utils/isMobile'
 import { defineComponent, reactive, ref, watch } from 'vue'
 import { useStore } from '@/store'
@@ -117,31 +118,34 @@ function useNavigation() {
   }
 }
 
+function useNavGesture(isOpenRef: Ref<boolean>) {
+  const startPos = reactive({
+    x: 0,
+    y: 0
+  })
+  window.addEventListener('touchmove', e => {
+    if (Math.abs(e.touches[0].clientY - startPos.y) > 35) return false
+
+    if (e.touches[0].clientX - startPos.x > 50) {
+      isOpenRef.value = true
+    } else if (e.touches[0].clientX - startPos.x < -50) {
+      isOpenRef.value = false
+    }
+  })
+  window.addEventListener('touchstart', e => {
+    startPos.x = e.touches[0].clientX
+    startPos.y = e.touches[0].clientY
+  })
+}
+
 export default defineComponent({
   name: 'App',
   setup() {
     const { bottomAlertRemove, uidCopy } = useBottomAlert()
     const { display: navDisplay, openNav, closeNav } = useNavigation()
 
-    if (isMobile()) {
-      const startPos = reactive({
-        x: 0,
-        y: 0
-      })
-      window.addEventListener('touchmove', e => {
-        if (Math.abs(e.touches[0].clientY - startPos.y) > 35) return false
+    if (isMobile()) useNavGesture(navDisplay)
 
-        if (e.touches[0].clientX - startPos.x > 50) {
-          navDisplay.value = true
-        } else if (e.touches[0].clientX - startPos.x < -50) {
-          navDisplay.value = false
-        }
-      })
-      window.addEventListener('touchstart', e => {
-        startPos.x = e.touches[0].clientX
-        startPos.y = e.touches[0].clientY
-      })
-    }
     return {
       bottomAlertRemove,
       uidCopy,
