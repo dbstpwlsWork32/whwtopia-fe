@@ -9,7 +9,7 @@
     <div class="atom_modal" v-show="navDisplay">
       <nav id="or_nav">
         <div class="_profile">
-          <router-link to="/" v-ripple-effect="{router: true}" aria-label="go my page">
+          <router-link to="/" v-ripple-effect="{router: true}" v-click-sync="closeNav" aria-label="go my page">
             <div class="_profile__img s_img-fit">
               <img src="https://pbs.twimg.com/profile_images/1297591729218916352/XSeEV90C_normal.jpg" alt="profile image" />
             </div>
@@ -205,6 +205,9 @@ export default defineComponent({
   grid-template-rows: auto 1fr auto;
   & > ._profile {
     padding: var(--ct-indent-vert) var(--ct-indent);
+    & > a {
+      color: var(--ft-cl-base);
+    }
     & > button, & > a {
       display: block;
     }
