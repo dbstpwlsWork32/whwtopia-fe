@@ -5,7 +5,6 @@
   margin-right: auto;
 }
 
-
 .atom_modal {
   position: fixed;
   top: 0;
@@ -21,4 +20,10 @@
     background: rgba(0, 0, 0, .6);
     z-index: -1;
   }
+}
+
+.atom_text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

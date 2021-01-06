@@ -1,8 +1,9 @@
 <template>
   <header id="or_header" class="atom_ct">
     <button v-ripple-effect class="_nav-btn" v-click-sync="openNav" aria-label="open navigation" aria-haspopup aria-controls="or_nav" :aria-expanded="navDisplay">
-      <font-awesome-icon icon="align-justify" />
+      <font-awesome-icon icon="bars" />
     </button>
+    <h1 class="s_ft-si-up-2 atom_text-ellipsis">{{headerTitle}}</h1>
   </header>
 
   <transition name="nav">
@@ -78,6 +79,7 @@ import type { Ref } from 'vue'
 import isMobile from '@/utils/isMobile'
 import { defineComponent, reactive, ref, watch } from 'vue'
 import { bottomAlert, updateBottomAlert } from '@/hooks/bottomAlert'
+import headerTitle from '@/hooks/title'
 
 function useNavigation() {
   const display = ref(false)
@@ -138,7 +140,8 @@ export default defineComponent({
       openNav,
       closeNav,
       bottomAlert,
-      updateBottomAlert
+      updateBottomAlert,
+      headerTitle
     }
   }
 })
@@ -146,16 +149,29 @@ export default defineComponent({
 
 <style lang="scss">
 #or_header {
+  padding-top: 0;
+  padding-bottom: 0;
+  border-bottom: 2px solid var(--br-cl);
   z-index: 2;
   background: var(--bg-base);
   position: sticky;
   top: 0;
+  display: flex;
+  align-items: center;
   & > ._nav-btn {
+    flex-shrink: 0;
     font-size: rem(40);
-    padding: 0 5px;
     @include media(until-t) {
       font-size: rem(34);
     }
+    @include media(until-m) {
+      font-size: rem(30);
+    }
+  }
+  & > h1 {
+    padding-left: 5px;
+    flex-grow: 1;
+    text-align: center;
   }
 }
 
