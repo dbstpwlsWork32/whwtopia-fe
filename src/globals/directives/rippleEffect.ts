@@ -28,11 +28,11 @@ export default function (app: App) {
 
     const rippleEvent = () => {
       if (nowLength === willRemove.length) {
-        willRemove.forEach(el => { el.remove(); el.removeEventListener('animationend', rippleEvent) })
+        willRemove.forEach(el => el.remove())
         willRemove = []
       }
     }
-    rippleDom.addEventListener('animationend', rippleEvent)
+    rippleDom.addEventListener('animationend', rippleEvent, { once: true })
 
     willRemove.push(rippleDom)
     target.appendChild(rippleDom)
