@@ -1,6 +1,6 @@
 <template>
   <header id="or_header" class="atom_ct">
-    <button v-ripple-effect class="_nav-btn" @mousedown="openNav" @keypress.enter="openNav" aria-label="open navigation" aria-haspopup aria-controls="or_nav" :aria-expanded="navDisplay">
+    <button v-ripple-effect class="_nav-btn" v-click-sync="openNav" aria-label="open navigation" aria-haspopup aria-controls="or_nav" :aria-expanded="navDisplay">
       <font-awesome-icon icon="align-justify" />
     </button>
   </header>

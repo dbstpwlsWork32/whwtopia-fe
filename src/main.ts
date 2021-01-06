@@ -8,9 +8,9 @@ import router from './router'
 import store from './store'
 
 // global custom modules
-import RippleBtn from '@/globals/components/RippleBtn.vue'
 import formatter from '@/globals/plugins/formatter'
-import RippleEffect from '@/globals/directives/rippleEffect'
+import useRippleEffect from '@/globals/directives/rippleEffect'
+import useClickSync from '@/globals/directives/clickSync'
 
 // font awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -21,8 +21,10 @@ library.add(faAlignJustify, faStickyNote, faBookmark, faAddressBook, faCog, faPa
 
 const app = createApp(App)
 app.use(store).use(router).use(formatter)
-// set directive 
-RippleEffect(app)
+
+// set directive
+useRippleEffect(app)
+useClickSync(app)
 
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app')
