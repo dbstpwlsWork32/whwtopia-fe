@@ -8,9 +8,13 @@
     </div>
   </header>
 
-  <transition name="nav">
+  <transition
+    name="nav"
+    @after-enter="navDom.style.transition = 'none'"
+    @before-leave="navDom.removeAttribute('style')"
+  >
     <div class="atom_modal" v-show="navDisplay">
-      <nav id="or_nav">
+      <nav id="or_nav" ref="navDom">
         <div class="_profile">
           <router-link to="/" v-ripple-effect="{router: true}" v-click-sync="closeNav" aria-label="go my page">
             <div class="_profile__img s_img-fit">
@@ -104,18 +108,43 @@ function useNavigation() {
   }
 }
 
-function useNavGesture(isOpenRef: Ref<boolean>) {
+function useNavGesture(isOpenRef: Ref<boolean>, navDomRef: Ref<HTMLElement | undefined>) {
   const startPos = reactive({
     x: 0,
     y: 0
   })
   window.addEventListener('touchmove', e => {
+    if (isOpenRef.value) {
+      const navDom = navDomRef.value as HTMLElement
+      const move = e.touches[0].clientX - startPos.x
+      if (move < 0) navDom.style.transform = `translateX(${move}px)`
+    }
     if (Math.abs(e.touches[0].clientY - startPos.y) > 35) return false
 
     if (e.touches[0].clientX - startPos.x > 50) {
       isOpenRef.value = true
     } else if (e.touches[0].clientX - startPos.x < -50) {
       isOpenRef.value = false
+    }
+  })
+  window.addEventListener('touchend', e => {
+    const navDom = navDomRef.value as HTMLElement
+
+    // when side nav swape cancelled
+    if (isOpenRef.value && navDom.style.transform) {
+      const matchPx = navDom.style.transform.match(/\d+/)
+      let moved = parseInt(matchPx? '-' + matchPx[0] : '0')
+
+      if (moved) {
+        const _do = () => {
+          moved += 2
+          navDom.style.transform = `translateX(${moved > 0 ? 0 : moved}px)`
+
+          if (moved < 0) requestAnimationFrame(_do)
+        }
+
+        _do()
+      }
     }
   })
   window.addEventListener('touchstart', e => {
@@ -127,6 +156,8 @@ function useNavGesture(isOpenRef: Ref<boolean>) {
 export default defineComponent({
   name: 'App',
   setup() {
+    const navDom = ref<HTMLElement>()
+
     async function uidCopy() {
       await window.navigator.clipboard.writeText('asdasd')
       updateBottomAlert('복사 완료!')
@@ -134,7 +165,7 @@ export default defineComponent({
 
     const { display: navDisplay, openNav, closeNav } = useNavigation()
 
-    if (isMobile()) useNavGesture(navDisplay)
+    if (isMobile()) useNavGesture(navDisplay, navDom)
 
     return {
       uidCopy,
@@ -143,7 +174,8 @@ export default defineComponent({
       closeNav,
       bottomAlert,
       updateBottomAlert,
-      headerTitle
+      headerTitle,
+      navDom
     }
   }
 })
