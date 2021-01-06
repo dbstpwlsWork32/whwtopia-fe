@@ -32,3 +32,12 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+## z-index
+
+#or_header: 2
+#or_alert_bottom: 11
+
+.atom_modal: 10
+  &__cover: -1

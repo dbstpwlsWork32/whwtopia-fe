@@ -1,144 +1,91 @@
-@import './reset.scss';
+@import './modules/reset.scss';
+
+@mixin palette-dark {
+  :root {
+    --ft-cl-base: #fff;
+    --ft-cl-sub: #8899a6;
+    --br-cl: #38444d;
+    --bg-base: #16212c;
+    --bg-sub: #192734;
+    --bg-sub-2: #253341;
+  }
+}
+%palette-light {
+  --ft-cl-base: #000;
+  --ft-cl-sub: #5b7083;
+  --br-cl: #ebeef0;
+  --bg-base: #fff;
+  --bg-sub: #f7f9fa;
+  --bg-sub-2: #ebeef0;
+}
 
 :root {
-  --black: #000;
-  --blue: #4846e6;
-  --blue-1: #4E41DB;
-  --grey-1: #F8F9FD;
-  --grey-2: #E5E5E5;
-  --grey-3:#808080;
-  --red: #C4314B;
-  --purple:#9026c5;
+  --ft-si-root: #{$root * 1px};
+  --ft-si-base: #{rem(15)};
+  --ft-si-sub: #{rem(14)};
+  --ft-si-up-1: 1.2em;
+  --ft-si-up-2: 1.4em;
 
-  --bg-base: var(--grey-1);
-  --bg-blue: var(--blue-1);
-  --ft-cl-base: var(--black);
-  --ft-cl-blue: var(--blue);
-  --ft-cl-blue-1: var(--blue-1);
-  --ft-cl-sub: var(--grey-3);
-  --ft-cl-white-stance: #fff;
-  --ft-cl-red: var(--red);
-  --ft-cl-purple: var(--purple);
+  --ft-cl-primary: #1da1f2;
+  --ft-cl-link: #1b95e0;
+  @extend %palette-light;
 
-  --st-shadow: 0px 2px 30px rgba(0, 0, 0, 0.06);
-  --border-cl: #ccc;
-  --border-cl-white-stance: #fff;
-  --st-border: 1px solid #cccccc;
+  // content
+  --ct-max-width: 1400px;
+  --ct-indent: 20px;
+  --ct-indent-vert: 10px;
 
-  --content-gap: 20px;
-  --content-gap-vert: 20px;
-  --content-gap-vert-15: 15px;
-  --content-indent: 20px;
-  --content-indent-10: 10px;
-  --content-indent-15: 15px;
-  --content-width: 1280px;
+  --ani-6: .6s;
+  --ani-4: .4s;
+  --ani-3: .3s;
+  --ani-2: .2s;
 
-  --article-gap-vert: 40px;
-  --article-gap-vert-60: 60px;
-
-  --ft-si-base: #{rem(14)};
-  --ft-si-title-18: #{rem(18)};
-  --ft-si-title-16: #{rem(16)};
-  --ft-si-sub: #{rem(12)};
-  --ft-si-sub-13: #{rem(13)};
-
-  --bg-header: var(--blue-1);
-
-  @include media(until-t) {
-    --content-indent: 12px;
-    --content-indent-10: 5px;
-    --content-indent-15: 10px;
-    --content-gap-vert: 15px;
+  @include media(until-m) {
+    --ct-indent-vert: 10px;
+    --ct-indent: 10px;
+    --ft-si-base: #{rem(14)};
+    --ft-si-sub: #{rem(13)};
   }
 }
 
 html {
-  font-size: $root * 1px;
+  font-size: var(--ft-si-root);
 }
-
 body {
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   font-size: var(--ft-si-base);
+  line-height: 1.3;
   font-weight: $ft-normal;
-  line-height: 1.4;
   color: var(--ft-cl-base);
-  background: var(--grey-2);
-}
 
-.s_radius-4 {
-  border-radius: 4px;
-}
-.s_radius-10 {
-  border-radius: 10px;
-}
-
-h1, h2, h3, .s_ft-bold {
-  font-weight: $ft-bold;
-}
-h2 {
-  font-size: var(--ft-si-title-18);
-}
-h3 {
-  font-size: var(--ft-si-title-16);
-}
-a, .s_cl-blue {
-  color: var(--ft-cl-blue);
-}
-a:visited, .s-cl-purple {
-  color: var(--ft-cl-purple);
-}
-.s_cl-red {
-  color: var(--ft-cl-red);
-}
-.s_cl-sub {
-  color: var(--ft-cl-sub);
-}
-.s_cl-base, a.s_cl-base:visited {
-  color: var(--ft-cl-base);
-}
-.s_cl-reset {
-  &, a, a:visited {
-    color: inherit
+  background: var(--bg-base);
+  &.sc-lock {
+    height: 100vh;
+    overflow: hidden;
   }
 }
-
-.s_ft-si-title-2 {
-  font-size: var(--ft-si-title-16)
+a {
+  color: var(--ft-cl-link);
 }
 
-.s_mb-content {
-  margin-bottom: var(--content-gap-vert);
+@import './modules/atoms.scss';
+@import './modules/molecules.scss';
+@import './modules/styles.scss';
+
+// user color mode
+@media (prefers-color-scheme: dark) {
+  @include palette-dark;
 }
-.s_mt-content {
-  margin-top: var(--content-gap-vert);
+html.dark {
+  @include palette-dark;
 }
-.s_mt-article {
-  margin-top: var(--article-gap-vert);
+html.light {
+  @extend %palette-light;
 }
 
-.s_hidden-t, .s_hidden-m {
-  display: initial;
-}
-.s_hidden-pc {
-  display: none;
-}
-@include media(until-t) {
-  .s_hidden-pc, .s_hidden-m {
-    display: initial;
-  }
-  .s_hidden-t, .s_hidden-not-pc {
-    display: none
+a, button {
+  transition: box-shadow var(--ani-2);
+  &:focus-visible {
+    box-shadow: 0 0 0 3px rgba($color:#1da1f2, $alpha: .3);
   }
 }
-@include media(until-m) {
-  .s_hidden-pc, .s_hidden-t {
-    display: initial;
-  }
-  .s_hidden-m {
-    display: none;
-  }
-}
-
-// global class modules
-@import './atom.scss';
-@import './molecule.scss';

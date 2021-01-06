@@ -1,0 +1,21 @@
+.s_img-fit {
+  overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.s_ft-cl-sub {
+  color: var(--ft-cl-sub);
+}
+.s_ft-si-sub {
+  font-size: var(--ft-si-sub);
+}
+.s_ft-si-up-1 {
+  font-size: var(--ft-si-up-1);
+}
+.s_ft-si-up-2 {
+  font-size: var(--ft-si-up-2);
+}

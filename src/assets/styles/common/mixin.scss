@@ -1,14 +1,11 @@
-@mixin text-ellipsis {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 @mixin media($media) {
   @if $media == until-m {
     @media all and (max-width: $untilMobile) { @content; }
   }
   @else if $media == until-t {
     @media all and (max-width: $untilTablet) { @content; }
+  }
+  @else if $media == over-t {
+    @media all and (min-width: $untilTablet + 1px) { @content; }
   }
 }

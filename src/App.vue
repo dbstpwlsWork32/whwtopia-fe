@@ -1,172 +1,298 @@
 <template>
-  <div id="or__header__wrap">
-    <header id="or__header">
-      <h1>
-        <router-link to="/">
-          <img class="s_hidden-not-pc" :src="require('@images/logo.png')" :srcset="`${require('@images/logo.png')} 1x, ${require('@images/logo@2x.png')} 2x`" alt="wellcome to whw" />
-          <img class="s_hidden-pc" :src="require('@images/m_logo.png')" :srcset="`${require('@images/m_logo.png')} 1x, ${require('@images/m_logo@2x.png')} 2x`" alt="wellcome to whw" />
-        </router-link>
-      </h1>
+  <header id="or_header" class="atom_ct">
+    <button v-ripple-effect class="_nav-btn" v-click-sync="openNav" aria-label="open navigation" aria-haspopup aria-controls="or_nav" :aria-expanded="navDisplay">
+      <font-awesome-icon icon="bars" />
+    </button>
+    <h1 class="s_ft-si-up-2 atom_text-ellipsis">{{headerTitle}}</h1>
+  </header>
 
-      <nav class="s_cl-reset _center">
-        <router-link to="/" aria-label="gallery tour">
-          <span class="s_hidden-m">둘러보기</span>
-          <font-awesome-icon icon="compass" class="s_hidden-t s_hidden-pc" />
-        </router-link>
-        <button @click="searchOpen">
-          <span class="s_hidden-m">검색</span>
-          <font-awesome-icon icon="search" class="s_hidden-t s_hidden-pc" />
-        </button>
+  <transition name="nav">
+    <div class="atom_modal" v-show="navDisplay">
+      <nav id="or_nav">
+        <div class="_profile">
+          <router-link to="/" v-ripple-effect="{router: true}" v-click-sync="closeNav" aria-label="go my page">
+            <div class="_profile__img s_img-fit">
+              <img src="https://pbs.twimg.com/profile_images/1297591729218916352/XSeEV90C_normal.jpg" alt="profile image" />
+            </div>
+            <p class="s_ft-si-up-2">프로필 이름</p>
+          </router-link>
+          <button class="s_ft-cl-sub" @mousedown="uidCopy">UID: 1234123</button>
+        </div>
+        <div class="_links" @mousedown="closeNav">
+          <div class="_wrap">
+            <router-link to="/">
+              <font-awesome-icon :icon="['far', 'bookmark']" />
+              <span>즐겨찾기 갤러리</span>
+            </router-link>
+            <router-link to="/">
+              <font-awesome-icon :icon="['far', 'sticky-note']" />
+              <span>내 목록</span>
+            </router-link>
+            <router-link to="/">
+              <font-awesome-icon :icon="['far', 'address-book']" />
+              <span>구독</span>
+            </router-link>
+          </div>
+          <div class="_wrap">
+            <router-link to="/">
+              <font-awesome-icon :icon="['far', 'paper-plane']" />
+              <span>인기글</span>
+            </router-link>
+            <router-link to="/">
+              <font-awesome-icon :icon="['far', 'newspaper']" />
+              <span>인기 갤러리</span>
+            </router-link>
+            <router-link to="/">
+              <font-awesome-icon :icon="['far', 'images']" />
+              <span>짤빵 저장소</span>
+            </router-link>
+          </div>
+        </div>
+        <div class="_footer">
+          <button v-ripple-effect aria-label="setting">
+            <font-awesome-icon icon="cog" />
+          </button>
+        </div>
       </nav>
-      <div class="search-box s_radius-4" v-if="isSearchOpen" @click="e => e.stopPropagation()">
-        <button @click="searchClose">
-          <font-awesome-icon icon="arrow-left" />
-        </button>
-        <input
-          class="search"
-          type="text"
-          placeholder="Search"
-          v-model="searchValue"
-          @keydown.esc="searchClose"
-          ref="searchDom"
-        />
-      </div>
+      <div class="atom_modal__cover" @mousedown="closeNav" aria-label="navigation close" role="button"></div>
+    </div>
+  </transition>
 
-      <div class="_right">
-        <ripple-btn aria-label="notify" class="_notify">
-          <font-awesome-icon icon="bell"></font-awesome-icon>
-        </ripple-btn>
-        <ripple-btn class="atom_profile" aria-label="view profile">
-        </ripple-btn>
-      </div>
-    </header>
-  </div>
   <main>
     <router-view/>
   </main>
+  <div id="or_alert_bottom">
+    <transition
+      name="fade"
+      @after-enter="updateBottomAlert('')"
+    >
+      <div
+        class="_text"
+        v-if="bottomAlert"
+      >{{ bottomAlert }}</div>
+    </transition>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, nextTick } from 'vue'
+import type { Ref } from 'vue'
+import isMobile from '@/utils/isMobile'
+import { defineComponent, reactive, ref, watch } from 'vue'
+import { bottomAlert, updateBottomAlert } from '@/hooks/bottomAlert'
+import headerTitle from '@/hooks/title'
 
-const isSearchOpen = ref(false)
-const searchValue = ref('')
-const searchDom = ref<HTMLInputElement>()
+function useNavigation() {
+  const display = ref(false)
+
+  watch(() => display.value, () => {
+    const _do = display.value ? 'add' : 'remove'
+    document.body.classList[_do]('sc-lock')
+  })
+  function openNav() {
+    display.value = true
+  }
+  function closeNav() {
+    display.value = false
+  }
+
+  return {
+    display,
+    openNav,
+    closeNav
+  }
+}
+
+function useNavGesture(isOpenRef: Ref<boolean>) {
+  const startPos = reactive({
+    x: 0,
+    y: 0
+  })
+  window.addEventListener('touchmove', e => {
+    if (Math.abs(e.touches[0].clientY - startPos.y) > 35) return false
+
+    if (e.touches[0].clientX - startPos.x > 50) {
+      isOpenRef.value = true
+    } else if (e.touches[0].clientX - startPos.x < -50) {
+      isOpenRef.value = false
+    }
+  })
+  window.addEventListener('touchstart', e => {
+    startPos.x = e.touches[0].clientX
+    startPos.y = e.touches[0].clientY
+  })
+}
 
 export default defineComponent({
+  name: 'App',
   setup() {
-    const searchClose = () => {
-      isSearchOpen.value = false
-      document.removeEventListener('click', searchClose)
-      if (searchValue.value) searchValue.value = ''
+    async function uidCopy() {
+      await window.navigator.clipboard.writeText('asdasd')
+      updateBottomAlert('복사 완료!')
     }
-    const searchOpen = (e: MouseEvent) => {
-      e.stopPropagation()
-      isSearchOpen.value = true
-      document.addEventListener('click', searchClose)
-      nextTick(() => {
-        (searchDom.value as HTMLInputElement).focus()
-      })
-    }
+
+    const { display: navDisplay, openNav, closeNav } = useNavigation()
+
+    if (isMobile()) useNavGesture(navDisplay)
+
     return {
-      isSearchOpen,
-      searchOpen,
-      searchClose,
-      searchValue,
-      searchDom
+      uidCopy,
+      navDisplay,
+      openNav,
+      closeNav,
+      bottomAlert,
+      updateBottomAlert,
+      headerTitle
     }
   }
 })
 </script>
 
 <style lang="scss">
-
-$height: 60px;
-#or__header__wrap {
-  background: var(--bg-header);
-}
-#or__header {
-  margin-bottom: rem(40);
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1920px;
-  padding: 0 var(--content-indent);
+#or_header {
+  padding-top: 0;
+  padding-bottom: 0;
+  border-bottom: 2px solid var(--br-cl);
+  z-index: 2;
+  background: var(--bg-base);
+  position: sticky;
+  top: 0;
   display: flex;
-  height: $height;
   align-items: center;
-  justify-content: space-between;
-  position: relative;
-
-  @include media(until-m) {
-    margin-bottom: rem(20);
-  }
-  .search-box {
-    display: flex;
-    overflow: hidden;
-    position: absolute;
-    z-index: 10;
-    top: 5px;
-    left: 50%;
-    transform: translateX(-50%);
-    border: var(--st-border);
-    width: 100%;
-    max-width: 700px;
-    height: $height;
-    font-weight: $ft-bold;
-    background-color: var(--bg-base);
-    align-items: center;
-    input {
-      padding-right: 10px;
-    }
-    button {
-      width: 50px;
-      align-self: stretch;
-      text-align: center;
-    }
-  }
-
-  & > ._right {
+  & > ._nav-btn {
     flex-shrink: 0;
-    display: flex;
-    align-items: center;
+    font-size: rem(40);
+    @include media(until-t) {
+      font-size: rem(34);
+    }
+    @include media(until-m) {
+      font-size: rem(30);
+    }
+  }
+  & > h1 {
+    padding-left: 5px;
+    flex-grow: 1;
+    text-align: center;
+  }
+}
 
-    ._notify {
-      padding: 10px;
-      color: var(--ft-cl-white-stance);
+.atom_modal {
+  $time: var(--ani-3);
+  .atom_modal__cover {
+    contain: strict;
+    transition: opacity $time;
+    opacity: 1;
+  }
+  #or_nav {
+    contain: strict;
+    transition: transform $time;
+    transform: translateX(0);
+  }
+  &.nav-enter-active, &.nav-leave-active {
+    transition-duration: $time;
+  }
+  &.nav-enter-from, &.nav-leave-to {
+    .atom_modal__cover {
+      opacity: 0;
+    }
+    #or_nav {
+      transform: translateX(-100%);
+    }
+  }
+}
+#or_nav {
+  background: var(--bg-base);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 80%;
+  max-width: 500px;
+  height: 100vh;
+  z-index: 10;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  & > ._profile {
+    padding: var(--ct-indent-vert) var(--ct-indent);
+    & > a {
+      color: var(--ft-cl-base);
+    }
+    & > button, & > a {
+      display: block;
+    }
+    ._profile__img {
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      margin-right: 1em;
-      font-size: 20px;
+      margin-bottom: rem(5);
       @include media(until-m) {
-        margin-right: 5px;
-      }
-
-      svg {
-        transform: translateY(-4px);
+        width: 50px;
+        height: 50px;
       }
     }
   }
-
-  & > ._center {
-    margin-left: 12px;
-    margin-right: 10px;
-    font-size: var(--ft-si-title-18);
-    color: var(--ft-cl-white-stance);
-    & > a {
-      margin-right: 30px;
-    }
-
-    .router-link-exact-active {
-      cursor: default;
-      opacity: .7;
-    }
-
-    @include media(until-m) {
-      font-size: 20px;
-      & > a {
-        margin-right: 20px;
+  & > ._links {
+    margin-top: 10px;
+    border-top: 1px solid var(--br-cl);
+    overflow: auto;
+    & > ._wrap {
+      padding: 20px var(--ct-indent);
+      border-top: 1px solid var(--br-cl);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      &:first-child {
+        border-top: none;
       }
+      a {
+        font-size: var(--ft-si-up-2);
+        svg {
+          color: var(--ft-cl-sub);
+        }
+        span {
+          color: var(--ft-cl-base);
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+  & > ._footer {
+    border-top: 1px solid var(--br-cl);
+    font-size: rem(20);
+    button {
+      padding: 5px 10px;
+      border-radius: 10px;
+    }
+  }
+}
+
+#or_alert_bottom {
+  z-index: 11;
+  contain: layout paint;
+  position: fixed;
+  bottom: 10%;
+  left: var(--ct-indent);
+  right: var(--ct-indent);
+  color: var(--ft-cl-sub);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  & > ._text {
+    background: var(--bg-sub-2);
+    padding: 5px 10px;
+    border-radius: 5px;
+    &.fade-enter-active {
+      transition: transform var(--ani-2);
+    }
+    &.fade-enter-from {
+      transform: scale(0);
+    }
+    &.fade-leave-active {
+      transition: opacity .5s;
+      transition-delay: .5s;
+    }
+    &.fade-leave-to {
+      opacity: 0;
     }
   }
 }

@@ -8,9 +8,9 @@
 	line-height: inherit;
 	color: inherit;
 }
-
-a {
-	text-decoration: none;
+%placeholder {
+	@extend %font-reset;
+	opacity: .7;
 }
 
 html, body, div, span, applet, object, iframe,
@@ -33,35 +33,40 @@ time, mark, audio, video, input, button, select {
 	vertical-align: baseline;
 	@extend %font-reset;
 }
-
 svg {
 	@extend %font-reset;
 }
 
+a {
+	text-decoration: none;
+}
 button {
 	cursor: pointer;
-	outline: none;
+}
+button, a, input {
+	-webkit-tap-highlight-color: transparent;
 }
 
-input, select {
+input {
 	width: 100%;
 	&::placeholder {
-		@extend %font-reset;
-		opacity: .7;
+		@extend %placeholder;
 	}
 }
 
-input, select, button {
+[contenteditable="true"] {
+	cursor: text;
+	&:empty:before {
+		content: attr(aria-label);
+		@extend %placeholder;
+	}
+}
+
+input, button, a {
 	background: none;
 	outline: none;
 }
 
 ul, ol {
 	list-style: none;
-}
-
-a, button {
-	&:focus-visible {
-		outline: auto;
-	}
 }
