@@ -7,8 +7,8 @@ import '@assets/styles/main.scss'
 import router from './router'
 import store from './store'
 
-import RippleBtn from '@/globals/RippleBtn.vue'
-import formatter from '@/globals/formatter'
+import RippleBtn from '@/globals/components/RippleBtn.vue'
+import formatter from '@/globals/plugins/formatter'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faAlignJustify, faCog } from '@fortawesome/free-solid-svg-icons'
