@@ -13,21 +13,25 @@
 %palette-light {
   --ft-cl-base: #000;
   --ft-cl-sub: #5b7083;
+  --ft-cl-primary: #1da1f2;
+  --ft-cl-link: #1b95e0;
+
   --br-cl: #ebeef0;
   --bg-base: #fff;
   --bg-sub: #f7f9fa;
   --bg-sub-2: #ebeef0;
+
+  --bg-hover: rgba(255, 255, 255, .01);
 }
 
 :root {
   --ft-si-root: #{$root * 1px};
-  --ft-si-base: #{rem(15)};
-  --ft-si-sub: #{rem(14)};
-  --ft-si-up-1: 1.2em;
-  --ft-si-up-2: 1.4em;
+  --ft-si-base: #{rem(16)};
+  --ft-si-down-1: .9em;
+  --ft-si-up-1: 1.1em;
+  --ft-si-up-2: 1.15em;
+  --ft-si-up-3: 1.3em;
 
-  --ft-cl-primary: #1da1f2;
-  --ft-cl-link: #1b95e0;
   @extend %palette-light;
 
   // content
@@ -43,8 +47,7 @@
   @include media(until-m) {
     --ct-indent-vert: 10px;
     --ct-indent: 10px;
-    --ft-si-base: #{rem(14)};
-    --ft-si-sub: #{rem(13)};
+    --ft-si-base: 15px;
   }
 }
 
@@ -54,7 +57,7 @@ html {
 body {
   font-family: "Noto Sans KR", sans-serif;
   font-size: var(--ft-si-base);
-  line-height: 1.3;
+  line-height: 1.4;
   font-weight: $ft-normal;
   color: var(--ft-cl-base);
 
@@ -86,6 +89,6 @@ html.light {
 a, button {
   transition: box-shadow var(--ani-2);
   &:focus-visible {
-    box-shadow: 0 0 0 3px rgba($color:#1da1f2, $alpha: .3);
+    box-shadow: 0 0 0 3px rgba(29, 161, 242, .3);
   }
 }

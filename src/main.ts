@@ -13,10 +13,10 @@ import useClickSync from '@/globals/directives/clickSync'
 
 // font awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faBars, faCog } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faCog, faThumbsUp, faComment, faEye } from '@fortawesome/free-solid-svg-icons'
 import { faStickyNote, faBookmark, faAddressBook, faPaperPlane, faNewspaper, faImages } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faBars, faStickyNote, faBookmark, faAddressBook, faCog, faPaperPlane, faNewspaper, faImages)
+library.add(faBars, faStickyNote, faBookmark, faAddressBook, faCog, faPaperPlane, faNewspaper, faImages, faThumbsUp, faComment, faEye)
 
 const app = createApp(App)
 app.use(router).use(formatter)

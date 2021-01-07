@@ -1,8 +1,12 @@
 .atom_ct {
-  max-width: var(--ct-max-width);
-  padding: var(--ct-indent-vert) var(--ct-indent);
-  margin-left: auto;
-  margin-right: auto;
+  &, &-indent {
+    padding: var(--ct-indent-vert) var(--ct-indent);
+  }
+  &, &-width {
+    max-width: var(--ct-max-width);
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 .atom_modal {
@@ -26,4 +30,9 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.atom_profile {
+  @extend %s_img-fit;
+  border-radius: 50%;
 }

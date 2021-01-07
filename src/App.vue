@@ -4,7 +4,7 @@
       <button v-ripple-effect class="_nav-btn" v-click-sync="openNav" aria-label="open navigation" aria-haspopup aria-controls="or_nav" :aria-expanded="navDisplay">
         <font-awesome-icon icon="bars" />
       </button>
-      <h1 class="s_ft-si-up-2 atom_text-ellipsis">{{headerTitle}}</h1>
+      <h1 class="s_ft-si-up-3 atom_text-ellipsis">{{headerTitle}}</h1>
     </div>
   </header>
 
@@ -17,7 +17,7 @@
       <nav id="or_nav" ref="navDom">
         <div class="_profile">
           <router-link to="/" v-ripple-effect="{router: true}" v-click-sync="closeNav" aria-label="go my page">
-            <div class="_profile__img s_img-fit">
+            <div class="_profile__img atom_profile">
               <img src="https://pbs.twimg.com/profile_images/1297591729218916352/XSeEV90C_normal.jpg" alt="profile image" />
             </div>
             <p class="s_ft-si-up-2">프로필 이름</p>
@@ -82,8 +82,8 @@
 
 <script lang="ts">
 import type { Ref } from 'vue'
-import isMobile from '@/utils/isMobile'
 import { defineComponent, reactive, ref, watch } from 'vue'
+import isMobile from '@/utils/isMobile'
 import { bottomAlert, updateBottomAlert } from '@/hooks/bottomAlert'
 import headerTitle from '@/hooks/title'
 
@@ -184,6 +184,7 @@ export default defineComponent({
 <style lang="scss">
 #or_header {
   border-bottom: 2px solid var(--br-cl);
+  margin-bottom: 15px;
   & > ._wrap {
     padding-top: 0;
     padding-bottom: 0;
@@ -257,7 +258,6 @@ export default defineComponent({
     ._profile__img {
       width: 60px;
       height: 60px;
-      border-radius: 50%;
       margin-bottom: rem(5);
       @include media(until-m) {
         width: 50px;
