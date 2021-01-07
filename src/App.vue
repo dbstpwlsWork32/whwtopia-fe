@@ -16,7 +16,7 @@
     <div class="atom_modal" v-show="navDisplay">
       <nav id="or_nav" ref="navDom">
         <div class="_profile">
-          <router-link :to="`/user/${0}`" v-ripple-effect="{router: true}" v-click-sync="closeNav" aria-label="go my page">
+          <router-link :to="`/user/${0}`" v-ripple-effect="{selfAddClass: true}" class="m__ripple-btn" v-click-sync="closeNav" aria-label="go my page">
             <div class="_profile__img atom_profile">
               <img src="https://pbs.twimg.com/profile_images/1297591729218916352/XSeEV90C_normal.jpg" alt="profile image" />
             </div>
