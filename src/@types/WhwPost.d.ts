@@ -14,19 +14,13 @@ interface WhwPostBase {
   likes: number;
   userInfo: UserPostInfo;
   views: number;
+  gallery?: GalleryInfo;
 }
 
 interface WhwPost extends WhwPostBase {
   comments: UserComment[];
 }
 
-interface WhwPostListItem extends WhwPostBase {
+interface WhwPostPreviewItem extends WhwPostBase {
   comments: number;
-}
-
-interface WhwPostUnAnounce extends WhwPost {
-  gallery: string;
-}
-interface WhwPostUnAnounceListItem extends WhwPostListItem {
-  gallery: string;
 }

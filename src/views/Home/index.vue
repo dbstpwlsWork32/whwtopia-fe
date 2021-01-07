@@ -1,24 +1,19 @@
 <template>
 <div id="view-home" class="atom_ct-width">
-  <router-link
+  <whw-preview-item
     v-for="post in posts"
     :key="`post-${post.id}`"
-    to="/"
-    aria-label="go post detail"
+    :post="post"
     class="_whw-post"
-  >
-    <whw-post
-      :post="post"
-    />
-  </router-link>
+  />
 </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import WhwPost from '@/components/WhwPost/ListItem.vue'
+import WhwPreviewItem from '@/components/WhwPost/PreviewListItem.vue'
 
-const samplePosts: WhwPostUnAnounceListItem[] = [
+const samplePosts: WhwPostPreviewItem[] = [
   {
     id: 0,
     userInfo: {
@@ -31,15 +26,17 @@ const samplePosts: WhwPostUnAnounceListItem[] = [
     content: '컨텐츠',
     comments: 2000,
     likes: 2000,
-    gallery: '갤러리1',
-    views: 100
+    views: 100,
+    gallery: {
+      id: 1,
+      name: '갤러리이름'
+    }
   },
   {
     id: 1,
     title: '제목2',
     date: new Date(),
     content: '컨텐츠2',
-    gallery: '갤러리2',
     userInfo: {
       id: 1,
       imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
@@ -59,7 +56,7 @@ export default defineComponent({
     }
   },
   components: {
-    WhwPost
+    WhwPreviewItem
   }
 })
 </script>
@@ -67,8 +64,6 @@ export default defineComponent({
 <style lang="scss">
 #view-home {
   & > ._whw-post {
-    color: var(--cl-base);
-    display: block;
     margin-bottom: 10px;
   }
 }
