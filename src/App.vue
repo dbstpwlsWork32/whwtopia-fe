@@ -140,7 +140,7 @@ function useNavGesture(isOpenRef: Ref<boolean>, navDomRef: Ref<HTMLElement | und
           moved += 2
           navDom.style.transform = `translateX(${moved > 0 ? 0 : moved}px)`
 
-          if (moved < 0) requestAnimationFrame(_do)
+          if (moved < 0 && isOpenRef.value) requestAnimationFrame(_do)
         }
 
         _do()
@@ -232,7 +232,7 @@ export default defineComponent({
       opacity: 0;
     }
     #or_nav {
-      transform: translateX(-100%);
+      transform: translateX(-100%) !important;
     }
   }
 }
