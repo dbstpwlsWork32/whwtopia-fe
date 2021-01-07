@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import WhwPost from '@/components/WhwPost.vue'
+import WhwPost from '@/components/WhwPost/ListItem.vue'
 
 const samplePosts: WhwPostUnAnounceListItem[] = [
   {
