@@ -28,7 +28,7 @@
 import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({
-  name: 'com_whwpost',
+  name: 'com_whwPost-listitem',
   props: {
     post: {
       type: Object as PropType<WhwPostUnAnounceListItem>,
