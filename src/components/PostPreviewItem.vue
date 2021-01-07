@@ -3,12 +3,12 @@
   <section class="m_whw-post atom_ct-indent">
     <div class="_head">
       <h2 class="atom_text-ellipsis s_ft-si-up-2">{{post.title}}</h2>
-      <router-link to="/" class="s_ft-cl-sub">{{post.userInfo.name}}</router-link>
+      <p class="s_ft-cl-sub">{{post.userInfo.name}}</p>
       <div class="_info" v-if="post.gallery">
         <router-link :to="`/gallery/${post.gallery.id}`" class="atom_text-ellipsis s_ft-si-down-1">{{post.gallery.name}}</router-link>
         <p class="s_ft-si-down-1 s_ft-cl-sub">{{$formatDate(post.date)}}</p>
       </div>
-      <router-link v-ripple-effect to="/" class="_writer s_ft-si-down-1">
+      <router-link v-ripple-effect :to="`/user/${post.userInfo.id}`" class="_writer s_ft-si-down-1">
         <div class="m_whw-post__writer-pr atom_profile">
           <img :src="post.userInfo.imgUrl" alt="writer profile">
         </div>
