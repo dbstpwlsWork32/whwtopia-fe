@@ -20,3 +20,11 @@
 .s_ft-si-up-3 {
   font-size: var(--ft-si-up-3);
 }
+
+.s_btn-base {
+  background: var(--btn-bg-base);
+  color: var(--btn-cl-base);
+  padding: .3em .5em;
+  min-width: 50px;
+  cursor: pointer;
+}

@@ -75,6 +75,7 @@
       <div
         class="_text"
         v-if="bottomAlert"
+        role="alertdialog"
       >{{ bottomAlert }}</div>
     </transition>
   </div>

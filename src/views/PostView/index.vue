@@ -1,4 +1,4 @@
-<template>
+  <template>
 <section id="post-view" class="atom_ct-width">
   <div class="atom_ct-indent s_ft-cl-sub _head">
     <h2 class="s_ft-si-up-2 s_ft-cl-base">타이틀</h2>
@@ -23,22 +23,26 @@
       <p>{{$formatNumber(20000)}}</p>
     </div>
   </div>
-  <article class="atom_ct-indent _footer">
-    <h3>댓글 (1000)</h3>
-  </article>
+
+  <comments-section />
 </section>
 </template>
 
-<script lang="ts"> 
+<script lang="ts">
 import { defineComponent, ref } from 'vue'
+import CommentsSection from './CommentsSection.vue'
 
 export default defineComponent({
   name: 'view_post-view',
   setup() {
     const isLiked = ref(false)
+
     return {
       isLiked
     }
+  },
+  components: {
+    CommentsSection
   }
 })
 </script>
