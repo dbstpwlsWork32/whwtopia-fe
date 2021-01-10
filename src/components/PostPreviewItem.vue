@@ -4,11 +4,11 @@
     <div class="_head">
       <h2 class="atom_text-ellipsis s_ft-si-up-2">{{post.title}}</h2>
       <p class="s_ft-cl-sub">{{post.userInfo.name}}</p>
-      <div class="_info" v-if="post.gallery">
-        <router-link :to="`/gallery/${post.gallery.id}`" class="atom_text-ellipsis s_ft-si-down-1">{{post.gallery.name}}</router-link>
+      <div class="_info">
+        <router-link :to="`/gallery/${post.gallery.id}`" class="atom_text-ellipsis s_ft-si-down-1" v-if="post.gallery">{{post.gallery.name}}</router-link>
         <p class="s_ft-si-down-1 s_ft-cl-sub">{{$formatDate(post.date)}}</p>
       </div>
-      <router-link v-ripple-effect :to="`/user/${post.userInfo.id}`" class="_writer s_ft-si-down-1">
+      <router-link v-ripple-effect :to="`/user/${post.userInfo.id}`" class="_writer">
         <div class="m_whw-post__writer-pr atom_profile">
           <img :src="post.userInfo.imgUrl" alt="writer profile">
         </div>
@@ -18,7 +18,7 @@
       asdasd
     </div>
     <div class="_user-handle">
-      <p aria-label="like count"><font-awesome-icon icon="thumbs-up"/> {{$formatNumberFlag(post.likes)}}</p>
+      <p aria-label="like count"><font-awesome-icon icon="heart"/> {{$formatNumberFlag(post.likes)}}</p>
       <p aria-label="comment count"><font-awesome-icon icon="comment"/> {{$formatNumberFlag(post.comments)}}</p>
       <p aria-label="view count"><font-awesome-icon icon="eye" /> {{$formatNumberFlag(post.views)}}</p>
     </div>
@@ -71,7 +71,10 @@ export default defineComponent({
     gap: 3px 10px;
     text-align: left;
     align-items: center;
-    margin-bottom: calc(var(--ct-indent-vert) * 2);
+    margin-bottom: 20px;
+    @include media(until-m) {
+      margin-bottom: 10px;
+    }
     & > ._writer {
       grid-row: 1 / 4;
     }
