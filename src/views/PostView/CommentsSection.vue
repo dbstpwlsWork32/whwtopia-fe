@@ -74,7 +74,7 @@ export default defineComponent({
     }
   },
   methods: {
-    fileChange(e: File) {
+    fileChange() {
       const writeComment = this.$refs.writeRef as HTMLElement
       const fileInput = this.$refs.fileRef as HTMLInputElement
 
