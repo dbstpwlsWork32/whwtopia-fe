@@ -13,7 +13,7 @@ export default function (app: App) {
       el.addEventListener('mousedown', bind.value)
       el.addEventListener('keydown', keyboardCb)
     },
-    unmounted(el: HTMLElement, bind) {
+    beforeUnmount(el: HTMLElement, bind) {
       el.removeEventListener('mousedown', bind.value)
       el.removeEventListener('keydown', keyboardCb)
     }

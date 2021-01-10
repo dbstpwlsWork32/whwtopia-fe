@@ -44,7 +44,7 @@ export default function (app: App) {
       el.addEventListener('mousedown', rippleEffect)
       el.addEventListener('keydown', rippleEffect)
     },
-    unmounted(el: HTMLElement) {
+    beforeUnmount(el: HTMLElement) {
       el.removeEventListener('mousedown', rippleEffect)
       el.removeEventListener('keydown', rippleEffect)
     }
