@@ -77,6 +77,7 @@
         v-if="bottomAlert"
         role="alertdialog"
         v-mounted-focus
+        tabindex="0"
       >{{ bottomAlert }}</div>
     </transition>
   </div>
@@ -326,6 +327,9 @@ export default defineComponent({
     background: var(--bg-sub-2);
     padding: 5px 10px;
     border-radius: 5px;
+    &:focus {
+      outline: none;
+    }
     &.fade-enter-active {
       transition: transform var(--ani-2);
     }
