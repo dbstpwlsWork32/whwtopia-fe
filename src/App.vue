@@ -55,7 +55,7 @@
           </div>
         </div>
         <div class="_footer">
-          <button v-ripple-effect aria-label="setting">
+          <button v-ripple-effect aria-label="setting" v-click-sync="() => settingModalDisplay = true">
             <font-awesome-icon icon="cog" />
           </button>
         </div>
@@ -63,6 +63,35 @@
       <div class="atom_modal__cover" @mousedown="closeNav" aria-label="navigation close" role="button"></div>
     </div>
   </transition>
+
+  <modal v-model:display="settingModalDisplay" cover>
+    <div style="padding: 40px; background: var(--cl-red);">
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+    </div>
+  </modal>
 
   <main>
     <router-view/>
@@ -89,6 +118,8 @@ import { defineComponent, reactive, ref, watch } from 'vue'
 import { isMobile, overTabletWidth } from '@/utils/isMobile'
 import { bottomAlert, updateBottomAlert } from '@/hooks/bottomAlert'
 import headerTitle from '@/hooks/title'
+
+import Modal from '@/components/Modal.vue'
 
 function useNavigation() {
   const display = ref(false)
@@ -184,6 +215,8 @@ export default defineComponent({
       })
     }
 
+    const settingModalDisplay = ref(false)
+
     return {
       uidCopy,
       navDisplay,
@@ -192,7 +225,8 @@ export default defineComponent({
       bottomAlert,
       updateBottomAlert,
       headerTitle,
-      navDom
+      navDom,
+      settingModalDisplay
     }
   },
   directives: {
@@ -201,6 +235,9 @@ export default defineComponent({
         el.focus()
       }
     }
+  },
+  components: {
+    Modal
   }
 })
 </script>
@@ -337,6 +374,7 @@ main {
     }
   }
   & > ._footer {
+    text-align: right;
     border-top: 1px solid var(--br-cl);
     font-size: rem(20);
     button {
