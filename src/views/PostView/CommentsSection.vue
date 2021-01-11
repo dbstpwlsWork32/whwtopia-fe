@@ -1,6 +1,6 @@
 <template>
-<section class="atom_ct-indent atom_user-section post-view__comment-sec">
-  <h3 class="s_ft-si-up-2">댓글 <span class="s_ft-cl-sub s_ft-si-down-1">(1000)</span></h3>
+<section class="atom_ct-indent post-view__comment-sec">
+  <h3 class="s_ft-si-up-2">댓글 <span class="s_ft-cl-sub s_ft-si-down-1">({{$formatNumber(1000)}})</span></h3>
 
   <write-comment class="_write" />
 

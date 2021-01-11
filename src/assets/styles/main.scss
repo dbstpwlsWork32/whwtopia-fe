@@ -93,6 +93,7 @@ button:disabled {
 @import './modules/atoms.scss';
 @import './modules/molecules.scss';
 @import './modules/styles.scss';
+@import './modules/sideEffect.scss';
 
 // user color mode
 @media (prefers-color-scheme: dark) {

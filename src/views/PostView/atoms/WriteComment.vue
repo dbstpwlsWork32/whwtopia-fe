@@ -8,14 +8,14 @@
       <div
         contenteditable
         role="text"
-        class="s_user-write-word"
+        class="s_user-write-word se_user-section"
         ref="writeRef"
         aria-label="댓글 적기"
       ></div>
 
       <div class="_btn">
         <input type="file" @change="fileChange" :id="fileId" ref="fileRef" accept="image/*" />
-        <label class="s_btn-base" @click="imgRegister" :for="fileId">이미지 등록</label>
+        <label class="s_btn-base" v-click-touch-start="imgRegister" :for="fileId">이미지 등록</label>
         <button class="s_btn-base _do" :disabled="!commentTextNode">작성</button>
       </div>
     </div>
@@ -24,13 +24,40 @@
 
 <script lang="ts">
 import type { Ref } from 'vue'
-import { defineComponent, onBeforeUnmount, onMounted, ref } from 'vue'
+import { defineComponent, onBeforeUnmount, onMounted, ref, h } from 'vue'
 import { updateBottomAlert } from '@/hooks/bottomAlert'
 import makeUniqueKey from '@/utils/makeUniqueKey'
+import isMobile from '@/utils/isMobile'
 
 function useWriteCommentMutation(domRef: Ref<HTMLElement>, contentRef: Ref<string>) {
-  function cb(m: MutationRecord) {
-    if ((m.target as HTMLElement).querySelector('img')) {
+  function imageClick(e: Event) {
+    console.log(e)
+  }
+  function childListTypeCallback(m: MutationRecord) {
+    const parentNode = m.target as HTMLElement
+    for (const removeNode of m.removedNodes.values()) {
+      if (removeNode.nodeName.toLocaleLowerCase() === 'img') removeNode.removeEventListener('click', imageClick)
+    }
+    for (const addNode of m.addedNodes.values()) {
+      if (addNode.nodeName.toLocaleLowerCase() === 'img') {
+        (addNode as HTMLElement).classList.add('s_cursor-pointer')
+        addNode.addEventListener('click', imageClick)
+
+        const newDiv = document.createElement('div')
+        newDiv.appendChild(document.createElement('br'))
+        parentNode.appendChild(newDiv)
+
+        const range = new Range()
+        range.setStart(newDiv, 0)
+        range.setEnd(newDiv, 0)
+
+        const sel = window.getSelection()
+        sel!.removeAllRanges()
+        sel!.addRange(range)
+      }
+    }
+
+    if (parentNode.querySelector('img')) {
       contentRef.value = '1'
     } else {
       contentRef.value = m.target.textContent || ''
@@ -39,7 +66,7 @@ function useWriteCommentMutation(domRef: Ref<HTMLElement>, contentRef: Ref<strin
 
   const observer = new MutationObserver(ms => {
     ms.forEach(m => {
-      if (m.type === 'childList') cb(m)
+      if (m.type === 'childList') childListTypeCallback(m)
     })
   })
 
@@ -78,7 +105,7 @@ export default defineComponent({
       const writeComment = this.$refs.writeRef as HTMLElement
       const fileInput = this.$refs.fileRef as HTMLInputElement
 
-      if (!fileInput.files) return false
+      if (!fileInput.files || !fileInput.files.length) return false
       if (!fileInput.files[0].type.match(/^image\//)) {
         this.updateBottomAlert('이미지 파일만 첨부해주세요!')
         return false
@@ -99,6 +126,18 @@ export default defineComponent({
         e.preventDefault()
       } else {
         fileInput.value = ''
+      }
+    }
+  },
+  directives: {
+    clickTouchStart: {
+      mounted(el: HTMLElement, binding) {
+        const evName = isMobile()? 'touchstart' : 'click'
+        el.addEventListener(evName, binding.value)
+      },
+      beforeUnmount(el: HTMLElement, binding) {
+        const evName = isMobile()? 'touchstart' : 'click'
+        el.removeEventListener(evName, binding.value)
       }
     }
   }
