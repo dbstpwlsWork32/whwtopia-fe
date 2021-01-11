@@ -62,7 +62,6 @@ export default defineComponent({
     const commentTextNode = ref('')
 
     const fileId = makeUniqueKey('writeFile')
-    console.log(fileId)
 
     onMounted(() => {
       useWriteCommentMutation(writeRef as Ref<HTMLElement>, commentTextNode)
