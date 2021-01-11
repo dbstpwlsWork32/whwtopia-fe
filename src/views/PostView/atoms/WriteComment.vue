@@ -15,7 +15,7 @@
 
       <div class="_btn">
         <input type="file" @change="fileChange" :id="fileId" ref="fileRef" accept="image/*" />
-        <label class="s_btn-base" v-click-touch-start="imgRegister" :for="fileId">이미지 등록</label>
+        <label class="s_btn-base s_cursor-pointer" v-click-touch-start="imgRegister" :for="fileId">이미지 등록</label>
         <button class="s_btn-base _do" :disabled="!commentTextNode">작성</button>
       </div>
     </div>
@@ -24,24 +24,26 @@
 
 <script lang="ts">
 import type { Ref } from 'vue'
-import { defineComponent, onBeforeUnmount, onMounted, ref, h } from 'vue'
+import { defineComponent, onBeforeUnmount, onMounted, ref } from 'vue'
 import { updateBottomAlert } from '@/hooks/bottomAlert'
 import makeUniqueKey from '@/utils/makeUniqueKey'
 import isMobile from '@/utils/isMobile'
 
 function useWriteCommentMutation(domRef: Ref<HTMLElement>, contentRef: Ref<string>) {
-  function imageClick(e: Event) {
-    console.log(e)
-  }
   function childListTypeCallback(m: MutationRecord) {
     const parentNode = m.target as HTMLElement
-    for (const removeNode of m.removedNodes.values()) {
-      if (removeNode.nodeName.toLocaleLowerCase() === 'img') removeNode.removeEventListener('click', imageClick)
-    }
-    for (const addNode of m.addedNodes.values()) {
-      if (addNode.nodeName.toLocaleLowerCase() === 'img') {
-        (addNode as HTMLElement).classList.add('s_cursor-pointer')
-        addNode.addEventListener('click', imageClick)
+    // for (const removeNode of m.removedNodes.values()) {
+    //   if (removeNode.nodeName.toLocaleLowerCase() === 'img') removeNode.removeEventListener('keypress', imageClick as (e: Event) => void)
+    // }
+    for (const addNodeTarget of m.addedNodes.values()) {
+      if (addNodeTarget.nodeName.toLocaleLowerCase() === 'img') {
+        // const imageNode = addNodeTarget as HTMLImageElement
+        // imageNode.addEventListener('keypress', imageClick)
+
+        // imageNode.classList.add('s_cursor-pointer')
+        // imageNode.setAttribute('role', 'application')
+        // imageNode.setAttribute('aria-label', 'you can set image max size as ratio, ArrowRight is increase image ratio, ArrowLeft is decrease image ratio')
+        // imageNode.setAttribute('aria-keyshortcuts', 'Control+ArrowRight Control+ArrowLeft')
 
         const newDiv = document.createElement('div')
         newDiv.appendChild(document.createElement('br'))
@@ -51,9 +53,9 @@ function useWriteCommentMutation(domRef: Ref<HTMLElement>, contentRef: Ref<strin
         range.setStart(newDiv, 0)
         range.setEnd(newDiv, 0)
 
-        const sel = window.getSelection()
-        sel!.removeAllRanges()
-        sel!.addRange(range)
+        const sel = window.getSelection() as Selection
+        sel.removeAllRanges()
+        sel.addRange(range)
       }
     }
 
@@ -87,7 +89,6 @@ export default defineComponent({
   setup() {
     const writeRef = ref<HTMLElement>()
     const commentTextNode = ref('')
-
     const fileId = makeUniqueKey('writeFile')
 
     onMounted(() => {
@@ -180,11 +181,19 @@ $grid-gap: 10px;
       & > ._do {
         margin-left: 10px;
       }
+      label {
+        transition: box-shadow var(--ani-2);
+      }
       input[type=file] {
+        position: absolute;
         z-index: -2;
         opacity: 0;
         width: 0;
         height: 0;
+        overflow: hidden;
+        &:focus + label {
+          box-shadow: var(--btn-focus-shadow);
+        }
       }
     }
   }
