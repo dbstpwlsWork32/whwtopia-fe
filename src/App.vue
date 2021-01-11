@@ -76,6 +76,7 @@
         class="_text"
         v-if="bottomAlert"
         role="alertdialog"
+        v-mounted-focus
       >{{ bottomAlert }}</div>
     </transition>
   </div>
@@ -177,6 +178,13 @@ export default defineComponent({
       updateBottomAlert,
       headerTitle,
       navDom
+    }
+  },
+  directives: {
+    mountedFocus: {
+      mounted(el: HTMLElement) {
+        el.focus()
+      }
     }
   }
 })

@@ -50,7 +50,7 @@ button, a, input {
 a, button {
   transition: box-shadow var(--ani-2);
   &:focus-visible {
-    box-shadow: 0 0 0 3px rgba(29, 161, 242, .3);
+    box-shadow: var(--btn-focus-shadow);
   }
 }
 
