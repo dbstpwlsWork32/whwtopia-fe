@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import App from './App.vue'
+import App from './App/index.vue'
 
 import 'normalize.css'
 import '@assets/styles/main.scss'
@@ -10,6 +10,7 @@ import router from './router'
 import formatter from '@/globals/plugins/formatter'
 import useRippleEffect from '@/globals/directives/rippleEffect'
 import useClickSync from '@/globals/directives/clickSync'
+import useMountedFocus from '@/globals/directives/mountedFocus'
 
 // font awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -24,6 +25,7 @@ app.use(router).use(formatter)
 // set directive
 useRippleEffect(app)
 useClickSync(app)
+useMountedFocus(app)
 
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app')

@@ -1,0 +1,295 @@
+<template>
+  <transition
+    name="nav"
+    @after-enter="navDom.style.transition = 'none'"
+    @before-leave="navDom.removeAttribute('style')"
+  >
+    <div class="atom_modal" id="or_nav-modal" v-show="navDisplay">
+      <nav id="or_nav" ref="navDom">
+        <div class="_profile">
+          <router-link :to="`/user/${0}`" v-ripple-effect="{selfAddClass: true}" class="m__ripple-btn" v-click-sync="closeNav" aria-label="go my page">
+            <div class="_profile__img atom_profile">
+              <img src="https://pbs.twimg.com/profile_images/1297591729218916352/XSeEV90C_normal.jpg" alt="profile image" />
+            </div>
+            <p class="s_ft-si-up-2">프로필 이름</p>
+          </router-link>
+          <button class="s_ft-cl-sub" @mousedown="uidCopy">UID: 1234123</button>
+        </div>
+        <div class="_links" @mousedown="closeNav">
+          <div class="_wrap">
+            <router-link to="/">
+              <font-awesome-icon :icon="['far', 'bookmark']" />
+              <span>즐겨찾기 갤러리</span>
+            </router-link>
+            <router-link to="/">
+              <font-awesome-icon :icon="['far', 'sticky-note']" />
+              <span>내 목록</span>
+            </router-link>
+            <router-link to="/">
+              <font-awesome-icon :icon="['far', 'address-book']" />
+              <span>구독</span>
+            </router-link>
+          </div>
+          <div class="_wrap">
+            <router-link to="/">
+              <font-awesome-icon :icon="['far', 'paper-plane']" />
+              <span>인기글</span>
+            </router-link>
+            <router-link to="/">
+              <font-awesome-icon :icon="['far', 'newspaper']" />
+              <span>인기 갤러리</span>
+            </router-link>
+            <router-link to="/">
+              <font-awesome-icon :icon="['far', 'images']" />
+              <span>짤빵 저장소</span>
+            </router-link>
+          </div>
+        </div>
+        <div class="_footer">
+          <button v-ripple-effect aria-label="setting" v-click-sync="() => settingModalDisplay = true">
+            <font-awesome-icon icon="cog" />
+          </button>
+        </div>
+      </nav>
+      <div class="atom_modal__cover" @mousedown="closeNav" aria-label="navigation close" role="button"></div>
+    </div>
+  </transition>
+
+  <modal v-model:display="settingModalDisplay" cover>
+    <div style="padding: 40px; background: var(--cl-red);">
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
+    </div>
+  </modal>
+</template>
+
+<script lang="ts">
+import type { Ref } from 'vue'
+import { defineComponent, ref, watch, reactive  } from 'vue'
+import { isMobile, overTabletWidth } from '@/utils/isMobile'
+import { updateBottomAlert } from '@/hooks/bottomAlert'
+import Modal from '@/components/Modal.vue'
+
+type Emit = (event: "update:navDisplay", ...args: any[]) => void
+
+function useNavigation(dispaly: boolean, emit: Emit) {
+  watch(() => dispaly, () => {
+    if(!overTabletWidth()) {
+      const _do = dispaly ? 'add' : 'remove'
+      document.body.classList[_do]('sc-lock')
+
+      emit('update:navDisplay')
+    }
+  })
+  function openNav() {
+    emit('update:navDisplay', true)
+  }
+  function closeNav() {
+    if (!overTabletWidth()) emit('update:navDisplay', false)
+  }
+
+  return {
+    openNav,
+    closeNav
+  }
+}
+
+function useNavGesture(isOpenRef: boolean, emit: Emit, navDomRef: Ref<HTMLElement | undefined>) {
+  const startPos = reactive({
+    x: 0,
+    y: 0
+  })
+  window.addEventListener('touchmove', e => {
+    if (isOpenRef) {
+      const navDom = navDomRef.value as HTMLElement
+      const move = e.touches[0].clientX - startPos.x
+      if (move < 0) navDom.style.transform = `translateX(${move}px)`
+    }
+    if (Math.abs(e.touches[0].clientY - startPos.y) > 35) return false
+
+    if (e.touches[0].clientX - startPos.x > 50) {
+      emit('update:navDisplay', true)
+    } else if (e.touches[0].clientX - startPos.x < -50) {
+      emit('update:navDisplay', false)
+    }
+  })
+  window.addEventListener('touchend', () => {
+    const navDom = navDomRef.value as HTMLElement
+
+    // when side nav swape cancelled
+    if (isOpenRef && navDom.style.transform) {
+      const matchPx = navDom.style.transform.match(/\d+/)
+      let moved = parseInt(matchPx? '-' + matchPx[0] : '0')
+
+      if (moved) {
+        const _do = () => {
+          moved += 2
+          navDom.style.transform = `translateX(${moved > 0 ? 0 : moved}px)`
+
+          if (moved < 0 && isOpenRef) requestAnimationFrame(_do)
+        }
+
+        _do()
+      }
+    }
+  })
+  window.addEventListener('touchstart', e => {
+    startPos.x = e.touches[0].clientX
+    startPos.y = e.touches[0].clientY
+  })
+}
+export default defineComponent({
+  name: 'app_nav',
+  props: {
+    navDisplay: {
+      type: Boolean,
+      default: true
+    }
+  },
+  emits: ['update:navDisplay'],
+  setup(props, { emit }) {
+    const navDom = ref<HTMLElement>()
+    const settingModalDisplay = ref(false)
+
+    const { openNav, closeNav } = useNavigation(props.navDisplay, emit)
+    async function uidCopy() {
+      await window.navigator.clipboard.writeText('asdasd')
+      updateBottomAlert('복사 완료!')
+    }
+
+    if (isMobile()) useNavGesture(props.navDisplay, emit, navDom)
+
+    return {
+      uidCopy,
+      openNav,
+      closeNav,
+      navDom,
+      settingModalDisplay
+    }
+  },
+  components: {
+    Modal
+  }
+})
+</script>
+
+
+<style lang="scss">
+#or_nav-modal {
+  $time: var(--ani-3);
+  .atom_modal__cover {
+    contain: strict;
+    transition: opacity $time;
+    opacity: 1;
+    @include media(over-t) {
+      display: none !important;
+    }
+  }
+  #or_nav {
+    contain: strict;
+    transition: transform $time;
+    transform: translateX(0);
+    @include media(over-t) {
+      max-width: $nav-pc-width;
+    }
+  }
+  &.nav-enter-active, &.nav-leave-active {
+    transition-duration: $time;
+  }
+  &.nav-enter-from, &.nav-leave-to {
+    .atom_modal__cover {
+      opacity: 0;
+    }
+    #or_nav {
+      transform: translateX(-100%) !important;
+    }
+  }
+}
+#or_nav {
+  border-right: 1px solid var(--br-cl);
+  background: var(--bg-base);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 80%;
+  max-width: 500px;
+  height: 100vh;
+  z-index: 10;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  & > ._profile {
+    padding: var(--ct-indent-vert) var(--ct-indent);
+    & > a {
+      color: var(--ft-cl-base);
+    }
+    & > button, & > a {
+      display: block;
+    }
+    ._profile__img {
+      width: 60px;
+      height: 60px;
+      margin-bottom: rem(5);
+      @include media(until-m) {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+  & > ._links {
+    margin-top: 10px;
+    border-top: 1px solid var(--br-cl);
+    overflow: auto;
+    & > ._wrap {
+      padding: 20px var(--ct-indent);
+      border-top: 1px solid var(--br-cl);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      &:first-child {
+        border-top: none;
+      }
+      a {
+        font-size: var(--ft-si-up-2);
+        svg {
+          color: var(--ft-cl-sub);
+        }
+        span {
+          color: var(--ft-cl-base);
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+  & > ._footer {
+    text-align: right;
+    border-top: 1px solid var(--br-cl);
+    font-size: rem(20);
+    button {
+      padding: 5px 10px;
+      border-radius: 10px;
+    }
+  }
+}
+</style>
