@@ -308,13 +308,13 @@ export default defineComponent({
   bottom: 10%;
   left: var(--ct-indent);
   right: var(--ct-indent);
-  color: var(--ft-cl-sub);
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
   & > ._text {
+    border: 2px solid var(--br-cl);
     background: var(--bg-sub-2);
     padding: 5px 10px;
     border-radius: 5px;
