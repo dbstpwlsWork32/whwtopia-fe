@@ -1,7 +1,7 @@
 <template>
   <transition name="com_modal">
     <div class="atom_modal com_modal" v-if="display">
-      <div class="_content">
+      <div class="_content" tabindex="0" v-mounted-focus>
         <slot></slot>
       </div>
       <div class="atom_modal__cover" v-if="cover" @click="() => {if(!persistence) $emit('update:display', false)}"></div>
@@ -31,7 +31,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-$time: var(--ani-2);
+$time: var(--ani-3);
 .com_modal {
   width: 100%;
   height: 100vh;
