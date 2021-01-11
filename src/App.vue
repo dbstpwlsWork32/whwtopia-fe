@@ -13,7 +13,7 @@
     @after-enter="navDom.style.transition = 'none'"
     @before-leave="navDom.removeAttribute('style')"
   >
-    <div class="atom_modal" v-show="navDisplay">
+    <div class="atom_modal" id="or_nav-modal" v-show="navDisplay">
       <nav id="or_nav" ref="navDom">
         <div class="_profile">
           <router-link :to="`/user/${0}`" v-ripple-effect="{selfAddClass: true}" class="m__ripple-btn" v-click-sync="closeNav" aria-label="go my page">
@@ -222,7 +222,7 @@ export default defineComponent({
   }
 }
 
-.atom_modal {
+#or_nav-modal {
   $time: var(--ani-3);
   .atom_modal__cover {
     contain: strict;
