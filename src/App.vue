@@ -86,7 +86,7 @@
 <script lang="ts">
 import type { Ref } from 'vue'
 import { defineComponent, reactive, ref, watch } from 'vue'
-import isMobile from '@/utils/isMobile'
+import { isMobile, overTabletWidth } from '@/utils/isMobile'
 import { bottomAlert, updateBottomAlert } from '@/hooks/bottomAlert'
 import headerTitle from '@/hooks/title'
 
@@ -94,14 +94,16 @@ function useNavigation() {
   const display = ref(false)
 
   watch(() => display.value, () => {
-    const _do = display.value ? 'add' : 'remove'
-    document.body.classList[_do]('sc-lock')
+    if(!overTabletWidth()) {
+      const _do = display.value ? 'add' : 'remove'
+      document.body.classList[_do]('sc-lock')
+    }
   })
   function openNav() {
     display.value = true
   }
   function closeNav() {
-    display.value = false
+    if (!overTabletWidth()) display.value = false
   }
 
   return {
@@ -169,6 +171,18 @@ export default defineComponent({
     const { display: navDisplay, openNav, closeNav } = useNavigation()
 
     if (isMobile()) useNavGesture(navDisplay, navDom)
+    else {
+      navDisplay.value = overTabletWidth()
+      let throttling: number | null = null
+      window.addEventListener('resize', () => {
+        if (throttling !== null) clearTimeout(throttling)
+        throttling = setTimeout(() => {
+          throttling = null
+
+          navDisplay.value = overTabletWidth()
+        }, 200)
+      })
+    }
 
     return {
       uidCopy,
@@ -192,6 +206,17 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+$nav-pc-width: 250px;
+body {
+  @include media(over-t) {
+    padding-left: $nav-pc-width !important;
+  }
+}
+main {
+  @include media(over-t) {
+    padding-left: 10px !important;
+  }
+}
 #or_header {
   border-bottom: 2px solid var(--br-cl);
   margin-bottom: 15px;
@@ -204,9 +229,13 @@ export default defineComponent({
     padding-bottom: 0;
     display: flex;
     align-items: center;
+    min-height: 3em;
     & > ._nav-btn {
       flex-shrink: 0;
       font-size: rem(40);
+      @include media(over-t) {
+        display: none;
+      }
       @include media(until-t) {
         font-size: rem(34);
       }
@@ -228,11 +257,17 @@ export default defineComponent({
     contain: strict;
     transition: opacity $time;
     opacity: 1;
+    @include media(over-t) {
+      display: none !important;
+    }
   }
   #or_nav {
     contain: strict;
     transition: transform $time;
     transform: translateX(0);
+    @include media(over-t) {
+      max-width: $nav-pc-width;
+    }
   }
   &.nav-enter-active, &.nav-leave-active {
     transition-duration: $time;
@@ -247,6 +282,7 @@ export default defineComponent({
   }
 }
 #or_nav {
+  border-right: 1px solid var(--br-cl);
   background: var(--bg-base);
   position: fixed;
   top: 0;
