@@ -30,30 +30,35 @@
 </template>
 
 <script lang="ts">
+import type { Ref } from 'vue'
 import { defineComponent, ref } from 'vue'
 import { bottomAlert } from '@/hooks/bottomAlert'
 import headerTitle from '@/hooks/title'
-import { isMobile, overTabletWidth } from '@/utils/isMobile'
+import { overTabletWidth } from '@/utils/isMobile'
 import { updateBottomAlert } from '@/hooks/bottomAlert'
 
 import Nav from './Nav.vue'
+
+function useNavResizeEv(navDisplay: Ref<boolean>) {
+  navDisplay.value = overTabletWidth()
+  let throttling: number | null = null
+  window.addEventListener('resize', () => {
+    if (throttling !== null) clearTimeout(throttling)
+    throttling = setTimeout(() => {
+      throttling = null
+
+      navDisplay.value = overTabletWidth()
+    }, 200)
+  })
+}
 
 export default defineComponent({
   name: 'App',
   setup() {
     const navDisplay = ref(false)
-    if (!isMobile()) {
-      navDisplay.value = overTabletWidth()
-      let throttling: number | null = null
-      window.addEventListener('resize', () => {
-        if (throttling !== null) clearTimeout(throttling)
-        throttling = setTimeout(() => {
-          throttling = null
 
-          navDisplay.value = overTabletWidth()
-        }, 200)
-      })
-    }
+    useNavResizeEv(navDisplay)
+
     return {
       bottomAlert,
       headerTitle,
