@@ -186,13 +186,13 @@ export default defineComponent({
 #or_header {
   border-bottom: 2px solid var(--br-cl);
   margin-bottom: 15px;
+  position: sticky;
+  top: 0;
+  background: var(--bg-base);
+  z-index: 2;
   & > ._wrap {
     padding-top: 0;
     padding-bottom: 0;
-    z-index: 2;
-    background: var(--bg-base);
-    position: sticky;
-    top: 0;
     display: flex;
     align-items: center;
     & > ._nav-btn {

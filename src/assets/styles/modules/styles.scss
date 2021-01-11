@@ -4,6 +4,9 @@
 .s_ft-cl-base {
   color: var(--ft-cl-base);
 }
+.s_ft-cl-red {
+  color: var(--cl-red);
+}
 
 .s_ft-si-base {
   font-size: var(--ft-si-base);
@@ -27,4 +30,10 @@
   padding: .3em .5em;
   min-width: 50px;
   cursor: pointer;
+}
+
+.s_user-write-word {
+  max-width: 100%;
+  min-width: 0;
+  word-break: break-all;
 }

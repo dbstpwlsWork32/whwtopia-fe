@@ -2,113 +2,119 @@
 <section class="atom_ct-indent atom_user-section post-view__comment-sec">
   <h3 class="s_ft-si-up-2">댓글 <span class="s_ft-cl-sub s_ft-si-down-1">(1000)</span></h3>
 
-  <div class="_write" role="article" aria-label="write comment section">
-    <div class="atom_profile">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU" alt="my profile">
-    </div>
+  <write-comment class="_write" />
 
-    <div class="_wrap">
-      <div
-        contenteditable
-        role="text"
-        class="atom_user-section"
-        ref="writeRef"
-        aria-label="댓글 적기"
-      ></div>
-
-      <div class="_btn">
-        <input type="file" @change="fileChange" id="image-register" ref="fileRef" accept="image/*" />
-        <label class="s_btn-base" @click="imgRegister" for="image-register">이미지 등록</label>
-        <button class="s_btn-base _do" :disabled="!commentTextNode">작성</button>
+  <ul class="post-view__comment-sec__list">
+    <li v-for="comment in comments" :key="`comment-${comment.id}`">
+      <div class="atom_profile">
+        <img :src="comment.userInfo.imgUrl" alt="profile">
       </div>
-    </div>
-  </div>
+      <div class="post-view__comment-sec__list__side">
+        <div class="_top s_ft-si-down-1 s_ft-cl-sub">
+          <p>{{comment.userInfo.name}}</p>
+          <p>{{$formatDate(comment.date)}}</p>
+        </div>
+        <p class="_comment s_user-write-word">{{comment.content}}</p>
+        <div class="_bottom s_ft-si-down-1">
+          <p><font-awesome-icon icon="heart" aria-label="like count" class="s_ft-cl-red" /> {{$formatNumber(comment.likes)}}</p>
+          <button class="s_btn-base" @click="visibleReply[comment.id] = !visibleReply[comment.id]">{{ !visibleReply[comment.id] ? '답글' : '취소' }}</button>
+        </div>
+      </div>
+      <article class="_reply-wrap">
+        <write-comment class="_write" v-if="visibleReply[comment.id]" />
+        <ul class="post-view__comment-sec__list">
+          <li v-for="reply in comment.reply" :key="`reply-${reply.id}`">
+            <div class="atom_profile">
+              <img :src="reply.userInfo.imgUrl" alt="profile">
+            </div>
+            <div class="post-view__comment-sec__list__side">
+              <div class="_top s_ft-si-down-1 s_ft-cl-sub">
+                <p>{{reply.userInfo.name}}</p>
+                <p>{{$formatDate(reply.date)}}</p>
+              </div>
+              <p class="_comment s_user-write-word">{{reply.content}}</p>
+            </div>
+          </li>
+        </ul>
+      </article>
+    </li>
+  </ul>
 </section>
 </template>
 
 <script lang="ts">
-import { onBeforeUnmount, onMounted, Ref } from 'vue'
 import { defineComponent, ref } from 'vue'
-import { updateBottomAlert } from '@/hooks/bottomAlert'
+import writeComment from './atoms/WriteComment.vue'
 
-function useWriteCommentMutation(domRef: Ref<HTMLElement>, contentRef: Ref<string>) {
-  function cb(m: MutationRecord) {
-    if ((m.target as HTMLElement).querySelector('img')) {
-      contentRef.value = '1'
-    } else {
-      contentRef.value = m.target.textContent || ''
-    }
+const commentsSample: UserComment[] = [
+  {
+    id: 0,
+    userInfo: {
+      id: 0,
+      name: '이름',
+      imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
+    },
+    date: new Date(),
+    content: 'adsdsaasdsda',
+    likes: 1020,
+    reply: []
+  },
+  {
+    id: 1,
+    userInfo: {
+      id: 231,
+      name: '이름2',
+      imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
+    },
+    date: new Date(),
+    content: 'adsdsaasdsdasdasdasd12123aasdasdasddassadasddasdasdasasddasdassadasdasdasddasdsaasddsa',
+    likes: 10210,
+    reply: [
+      {
+        id: 0,
+        userInfo: {
+          id: 123,
+          name: '답글',
+          imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
+        },
+        date: new Date(),
+        content: '답글 답글 ㅁㄴㅇ ㅁㄴㅇ ㅁㄴㅇㅁㄴ ㅇㅁㄴ asd klsadkl; asd kl;sad ;kldas kl;das kl;asd kl; das kl;sad jklsad kjlsad ljkdas jkl sad ljk dasdhasj das hujkwed uh wqedf gjhkl wqer hkjl qwer hkjl qwer hjkl qwer hkjl qwer hkjl qwer hjkl qwer hkjl qwer lhjk werhjklqwer qwerjhkl  qwerjhkl'
+      },
+      {
+        id: 1,
+        userInfo: {
+          id: 123,
+          name: '답글2',
+          imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
+        },
+        date: new Date(),
+        content: '답글 답글 ㅁㄴㅇ ㅁㄴㅇ ㅁㄴㅇㅁㄴ ㅇㅁㄴ asd klsadkl; asd kl;sad ;kldas kl;das kl;asd kl; das kl;sad jklsad kjlsad ljkdas jkl sad ljk dasdhasj das hujkwed uh wqedf gjhkl wqer hkjl qwer hkjl qwer hjkl qwer hkjl qwer hkjl qwer hjkl qwer hkjl qwer lhjk werhjklqwer qwerjhkl  qwerjhkl'
+      }
+    ]
   }
-
-  const observer = new MutationObserver(ms => {
-    ms.forEach(m => {
-      if (m.type === 'childList') cb(m)
-    })
-  })
-
-  observer.observe(domRef.value, {
-    characterData: false,
-    attributes: false,
-    childList: true
-  })
-
-  onBeforeUnmount(() => {
-    observer.disconnect()
-  })
-}
-
+]
 
 export default defineComponent({
   name: 'view_post-view-comments',
   setup() {
-    const writeRef = ref<HTMLElement>()
-    const commentTextNode = ref('')
-
-    onMounted(() => {
-      useWriteCommentMutation(writeRef as Ref<HTMLElement>, commentTextNode)
-    })
+    const visibleReply = ref([])
     return {
-      commentTextNode,
-      writeRef,
-      updateBottomAlert
+      comments: commentsSample,
+      visibleReply
     }
   },
-  methods: {
-    fileChange() {
-      const writeComment = this.$refs.writeRef as HTMLElement
-      const fileInput = this.$refs.fileRef as HTMLInputElement
-
-      if (!fileInput.files) return false
-      if (!fileInput.files[0].type.match(/^image\//)) {
-        this.updateBottomAlert('이미지 파일만 첨부해주세요!')
-        return false
-      }
-
-      const thumbnailUrl = URL.createObjectURL(fileInput.files[0])
-      const img = document.createElement('img')
-      img.src = thumbnailUrl
-
-      writeComment.appendChild(img)
-    },
-    imgRegister(e: Event) {
-      const writeComment = this.$refs.writeRef as HTMLElement
-      const fileInput = this.$refs.fileRef as HTMLInputElement
-
-      if (writeComment.querySelector('img')) {
-        this.updateBottomAlert('댓글작성시 이미지는 최대 1개까지 올릴수 있습니다!')
-        e.preventDefault()
-      } else {
-        fileInput.value = ''
-      }
-    }
+  components: {
+    writeComment
   }
 })
 </script>
 
 <style lang="scss">
 
+$grid-gap: 10px;
 .post-view__comment-sec {
   .atom_profile {
+    flex-shrink: 0;
     width: 50px;
     height: 50px;
     @include media(until-m) {
@@ -119,44 +125,60 @@ export default defineComponent({
 
   & > ._write {
     margin-top: var(--gap-20-10);
-    display: flex;
-    gap: 10px;
-    & > .atom_profile {
-      flex-shrink: 0;
+  }
+
+  &__list {
+    margin-top: 4em;
+    @include media(until-m) {
+      margin-top: 2em;
     }
-    & > ._wrap {
-      flex-grow: 1;
-      align-self: center;
-      & > [contenteditable] {
-        padding: 5px;
-        border-bottom: 1px solid var(--br-cl);
-        margin-bottom: 10px;
-        position: relative;
-        &::after {
-          transition: width var(--ani-2);
-          content: '';
-          display: block;
-          position: absolute;
-          bottom: -1px;
-          height: 1px;
-          width: 0;
-          left: 0;
-          background: #000;
+    & > li {
+      display: grid;
+      gap: $grid-gap;
+      margin-top: 1.5em;
+      grid-template-columns: auto 1fr;
+      & > ._reply-wrap {
+        margin-left: 2em;
+        grid-column: span 2;
+        @include media(until-m) {
+          margin-left: 1em;
         }
-        &:focus::after {
-          width: 100%;
+        .atom_profile {
+          width: 35px;
+          height: 35px;
+          @include media(until-m) {
+            width: 30px;
+            height: 30px;
+          }
+        }
+
+        & > ._write {
+          margin-bottom: 2em;
+        }
+
+        .post-view__comment-sec__list {
+          margin-top: 0;
+          & > li {
+            margin-top: .5em;
+          }
         }
       }
-      & > ._btn {
-        & > ._do {
-          margin-left: 10px;
-        }
-        input[type=file] {
-          z-index: -2;
-          opacity: 0;
-          width: 0;
-          height: 0;
-        }
+    }
+
+    &__side {
+      flex-grow: 1;
+      & > ._top {
+        display: flex;
+        gap: $grid-gap;
+      }
+      & > ._comment {
+        margin-top: .2em;
+        margin-bottom: .4em;
+      }
+      & > ._bottom {
+        display: flex;
+        align-items: center;
+        gap: $grid-gap;
       }
     }
   }

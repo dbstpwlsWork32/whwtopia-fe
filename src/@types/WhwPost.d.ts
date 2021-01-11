@@ -1,9 +1,13 @@
-type UserComment = {
+interface UserCommentBase {
   id: number;
   date: date;
   content: string;
-  likes: number;
   userInfo: UserPostInfo;
+}
+
+interface UserComment extends UserCommentBase {
+  likes: number;
+  reply: UserCommentBase[];
 }
 
 interface WhwPostBase {
