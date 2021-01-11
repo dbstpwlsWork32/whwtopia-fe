@@ -92,15 +92,13 @@ import { isMobile, overTabletWidth } from '@/utils/isMobile'
 import { updateBottomAlert } from '@/hooks/bottomAlert'
 import Modal from '@/components/Modal.vue'
 
-type Emit = (event: "update:navDisplay", ...args: any[]) => void
+type NavEmit = (event: "update:navDisplay", p: boolean) => void
 
-function useNavigation(dispaly: boolean, emit: Emit) {
+function useNavigation(dispaly: boolean, emit: NavEmit) {
   watch(() => dispaly, () => {
     if(!overTabletWidth()) {
       const _do = dispaly ? 'add' : 'remove'
       document.body.classList[_do]('sc-lock')
-
-      emit('update:navDisplay')
     }
   })
   function openNav() {
@@ -116,7 +114,7 @@ function useNavigation(dispaly: boolean, emit: Emit) {
   }
 }
 
-function useNavGesture(isOpenRef: boolean, emit: Emit, navDomRef: Ref<HTMLElement | undefined>) {
+function useNavGesture(isOpenRef: boolean, emit: NavEmit, navDomRef: Ref<HTMLElement | undefined>) {
   const startPos = reactive({
     x: 0,
     y: 0
