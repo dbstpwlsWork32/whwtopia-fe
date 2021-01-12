@@ -6,9 +6,9 @@
 
   <ul class="post-view__comment-sec__list">
     <li v-for="comment in comments" :key="`comment-${comment.id}`">
-      <div class="atom_profile">
+      <router-link class="atom_profile" :to="`/user/${comment.userInfo.id}`">
         <img :src="comment.userInfo.imgUrl" alt="profile">
-      </div>
+      </router-link>
       <div class="post-view__comment-sec__list__side">
         <div class="_top s_ft-si-down-1 s_ft-cl-sub">
           <p>{{comment.userInfo.name}}</p>
@@ -24,9 +24,9 @@
         <write-comment class="_write" v-if="visibleReply[comment.id]" />
         <ul class="post-view__comment-sec__list">
           <li v-for="reply in comment.reply" :key="`reply-${reply.id}`">
-            <div class="atom_profile">
+            <router-link class="atom_profile" :to="`/user/${comment.userInfo.id}`">
               <img :src="reply.userInfo.imgUrl" alt="profile">
-            </div>
+            </router-link>
             <div class="post-view__comment-sec__list__side">
               <div class="_top s_ft-si-down-1 s_ft-cl-sub">
                 <p>{{reply.userInfo.name}}</p>

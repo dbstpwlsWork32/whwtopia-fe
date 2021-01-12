@@ -71,7 +71,7 @@ import Modal from '@/components/Modal.vue'
  * Setting component have to get html font-size
  * but even if use getComputedStyle api, it can't get real rendered font-size.
  * And Setting component is rendered every displayed by wrapped Modal component's v-if direction.
- * so To once get real html font-size once, it have to called asyncnology
+ * so To get real html font-size once, it have to called asyncnology
  */
 const Setting = defineAsyncComponent(() => import('./Setting.vue'))
 
