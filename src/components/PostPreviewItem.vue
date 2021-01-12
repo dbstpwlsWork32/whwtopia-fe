@@ -14,8 +14,9 @@
         </div>
       </router-link>
     </div>
-    <div class="_content">
-      asdasd
+    <div class="se_post-comment">
+      <img src="https://storage.matsurihi.me/mltd_ko/card_bg/016tsu0034_0.png" alt="">
+      asdkl;dsalk;sad;lkdskl;dsa;kldsa;kldaskl;dsa;lkdsa;kldsakl;das;lkdask;ldsa;kldas;kldas;kldas;klasdkl;dsalk;sad;lkdskl;dsa;kldsa;kldaskl;dsa;lkdsa;kldsakl;das;lkdask;ldsa;kldas;kldas;kldas;klasdkl;dsalk;sad;lkdskl;dsa;kldsa;kldaskl;dsa;lkdsa;kldsakl;das;lkdask;ldsa;kldas;kldas;kldas;klasdkl;dsalk;sad;lkdskl;dsa;kldsa;kldaskl;dsa;lkdsa;kldsakl;das;lkdask;ldsa;kldas;kldas;kldas;klasdkl;dsalk;sad;lkdskl;dsa;kldsa;kldaskl;dsa;lkdsa;kldsakl;das;lkdask;ldsa;kldas;kldas;kldas;kl
     </div>
     <div class="_user-handle">
       <p aria-label="like count"><font-awesome-icon icon="heart"/> {{$formatNumberFlag(post.likes)}}</p>

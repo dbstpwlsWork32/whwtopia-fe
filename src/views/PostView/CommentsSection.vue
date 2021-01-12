@@ -14,7 +14,7 @@
           <p>{{comment.userInfo.name}}</p>
           <p>{{$formatDate(comment.date)}}</p>
         </div>
-        <p class="_comment s_user-write-word">{{comment.content}}</p>
+        <p class="_comment se_post-comment">{{comment.content}}</p>
         <div class="_bottom s_ft-si-down-1">
           <p><font-awesome-icon icon="heart" aria-label="like count" class="s_ft-cl-red" /> {{$formatNumber(comment.likes)}}</p>
           <button class="s_btn-base" @click="visibleReply[comment.id] = !visibleReply[comment.id]">{{ !visibleReply[comment.id] ? '답글' : '취소' }}</button>
@@ -32,7 +32,7 @@
                 <p>{{reply.userInfo.name}}</p>
                 <p>{{$formatDate(reply.date)}}</p>
               </div>
-              <p class="_comment s_user-write-word">{{reply.content}}</p>
+              <p class="_comment se_post-comment">{{reply.content}}</p>
             </div>
           </li>
         </ul>
