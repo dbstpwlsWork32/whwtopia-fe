@@ -1,21 +1,43 @@
-.s_img-fit {
-  overflow: hidden;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
 .s_ft-cl-sub {
   color: var(--ft-cl-sub);
 }
-.s_ft-si-sub {
-  font-size: var(--ft-si-sub);
+.s_ft-cl-base {
+  color: var(--ft-cl-base);
+}
+.s_ft-cl-red {
+  color: var(--cl-red);
+}
+
+.s_ft-si-base {
+  font-size: var(--ft-si-base);
+}
+.s_ft-si-down-1 {
+  font-size: var(--ft-si-down-1);
 }
 .s_ft-si-up-1 {
   font-size: var(--ft-si-up-1);
 }
 .s_ft-si-up-2 {
   font-size: var(--ft-si-up-2);
+}
+.s_ft-si-up-3 {
+  font-size: var(--ft-si-up-3);
+}
+
+.s_btn-base {
+  background: var(--btn-bg-base);
+  color: var(--btn-cl-base);
+  padding: .3em .5em;
+  min-width: 50px;
+  cursor: pointer;
+}
+
+.s_user-write-word {
+  max-width: 100%;
+  min-width: 0;
+  word-break: break-all;
+}
+
+.s_cursor-pointer {
+  cursor: pointer;
 }

@@ -1,17 +1,14 @@
 <template>
-  <header id="or_header" class="atom_ct">
-    <button v-ripple-effect class="_nav-btn" v-click-sync="openNav" aria-label="open navigation" aria-haspopup aria-controls="or_nav" :aria-expanded="navDisplay">
-      <font-awesome-icon icon="bars" />
-    </button>
-    <h1 class="s_ft-si-up-2 atom_text-ellipsis">{{headerTitle}}</h1>
-  </header>
-
-  <transition name="nav">
-    <div class="atom_modal" v-show="navDisplay">
-      <nav id="or_nav">
+  <transition
+    name="nav"
+    @after-enter="navDom.style.transition = 'none'"
+    @before-leave="navDom.removeAttribute('style')"
+  >
+    <div class="atom_modal" id="or_nav-modal" v-show="navDisplay">
+      <nav id="or_nav" ref="navDom">
         <div class="_profile">
-          <router-link to="/" v-ripple-effect="{router: true}" v-click-sync="closeNav" aria-label="go my page">
-            <div class="_profile__img s_img-fit">
+          <router-link :to="`/user/${0}`" v-ripple-effect="{selfAddClass: true}" class="m__ripple-btn" v-click-sync="closeNav" aria-label="go my page">
+            <div class="_profile__img atom_profile">
               <img src="https://pbs.twimg.com/profile_images/1297591729218916352/XSeEV90C_normal.jpg" alt="profile image" />
             </div>
             <p class="s_ft-si-up-2">프로필 이름</p>
@@ -49,7 +46,7 @@
           </div>
         </div>
         <div class="_footer">
-          <button v-ripple-effect aria-label="setting">
+          <button v-ripple-effect aria-label="setting" v-click-sync="() => settingModalDisplay = true">
             <font-awesome-icon icon="cog" />
           </button>
         </div>
@@ -58,62 +55,85 @@
     </div>
   </transition>
 
-  <main>
-    <router-view/>
-  </main>
-  <div id="or_alert_bottom">
-    <transition
-      name="fade"
-      @after-enter="updateBottomAlert('')"
-    >
-      <div
-        class="_text"
-        v-if="bottomAlert"
-      >{{ bottomAlert }}</div>
-    </transition>
-  </div>
+  <modal v-model:display="settingModalDisplay" cover>
+    <setting />
+  </modal>
 </template>
 
 <script lang="ts">
 import type { Ref } from 'vue'
-import isMobile from '@/utils/isMobile'
-import { defineComponent, reactive, ref, watch } from 'vue'
-import { bottomAlert, updateBottomAlert } from '@/hooks/bottomAlert'
-import headerTitle from '@/hooks/title'
+import { defineComponent, defineAsyncComponent, ref, watch, reactive  } from 'vue'
+import { isMobile, overTabletWidth } from '@/utils/isMobile'
+import { updateBottomAlert } from '@/hooks/bottomAlert'
 
-function useNavigation() {
-  const display = ref(false)
+import Modal from '@/components/Modal.vue'
+/**
+ * Setting component have to get html font-size
+ * but even if use getComputedStyle api, it can't get real rendered font-size.
+ * And Setting component is rendered every displayed by wrapped Modal component's v-if direction.
+ * so To once get real html font-size once, it have to called asyncnology
+ */
+const Setting = defineAsyncComponent(() => import('./Setting.vue'))
 
-  watch(() => display.value, () => {
-    const _do = display.value ? 'add' : 'remove'
-    document.body.classList[_do]('sc-lock')
+type NavEmit = (event: "update:navDisplay", p: boolean) => void
+
+function useNavigation(dispaly: boolean, emit: NavEmit) {
+  watch(() => dispaly, () => {
+    if(!overTabletWidth()) {
+      const _do = dispaly ? 'add' : 'remove'
+      document.body.classList[_do]('sc-lock')
+    }
   })
   function openNav() {
-    display.value = true
+    emit('update:navDisplay', true)
   }
   function closeNav() {
-    display.value = false
+    if (!overTabletWidth()) emit('update:navDisplay', false)
   }
 
   return {
-    display,
     openNav,
     closeNav
   }
 }
 
-function useNavGesture(isOpenRef: Ref<boolean>) {
+function useNavGesture(isOpenRef: boolean, emit: NavEmit, navDomRef: Ref<HTMLElement | undefined>) {
   const startPos = reactive({
     x: 0,
     y: 0
   })
   window.addEventListener('touchmove', e => {
+    if (isOpenRef) {
+      const navDom = navDomRef.value as HTMLElement
+      const move = e.touches[0].clientX - startPos.x
+      if (move < 0) navDom.style.transform = `translateX(${move}px)`
+    }
     if (Math.abs(e.touches[0].clientY - startPos.y) > 35) return false
 
     if (e.touches[0].clientX - startPos.x > 50) {
-      isOpenRef.value = true
+      emit('update:navDisplay', true)
     } else if (e.touches[0].clientX - startPos.x < -50) {
-      isOpenRef.value = false
+      emit('update:navDisplay', false)
+    }
+  })
+  window.addEventListener('touchend', () => {
+    const navDom = navDomRef.value as HTMLElement
+
+    // when side nav swape cancelled
+    if (isOpenRef && navDom.style.transform) {
+      const matchPx = navDom.style.transform.match(/\d+/)
+      let moved = parseInt(matchPx? '-' + matchPx[0] : '0')
+
+      if (moved) {
+        const _do = () => {
+          moved += 2
+          navDom.style.transform = `translateX(${moved > 0 ? 0 : moved}px)`
+
+          if (moved < 0 && isOpenRef) requestAnimationFrame(_do)
+        }
+
+        _do()
+      }
     }
   })
   window.addEventListener('touchstart', e => {
@@ -121,71 +141,61 @@ function useNavGesture(isOpenRef: Ref<boolean>) {
     startPos.y = e.touches[0].clientY
   })
 }
-
 export default defineComponent({
-  name: 'App',
-  setup() {
+  name: 'app_nav',
+  props: {
+    navDisplay: {
+      type: Boolean,
+      default: true
+    }
+  },
+  emits: ['update:navDisplay'],
+  setup(props, { emit }) {
+    const navDom = ref<HTMLElement>()
+    const settingModalDisplay = ref(false)
+
+    const { openNav, closeNav } = useNavigation(props.navDisplay, emit)
     async function uidCopy() {
       await window.navigator.clipboard.writeText('asdasd')
       updateBottomAlert('복사 완료!')
     }
 
-    const { display: navDisplay, openNav, closeNav } = useNavigation()
-
-    if (isMobile()) useNavGesture(navDisplay)
+    if (isMobile()) useNavGesture(props.navDisplay, emit, navDom)
 
     return {
       uidCopy,
-      navDisplay,
       openNav,
       closeNav,
-      bottomAlert,
-      updateBottomAlert,
-      headerTitle
+      navDom,
+      settingModalDisplay
     }
+  },
+  components: {
+    Modal,
+    Setting
   }
 })
 </script>
 
-<style lang="scss">
-#or_header {
-  padding-top: 0;
-  padding-bottom: 0;
-  border-bottom: 2px solid var(--br-cl);
-  z-index: 2;
-  background: var(--bg-base);
-  position: sticky;
-  top: 0;
-  display: flex;
-  align-items: center;
-  & > ._nav-btn {
-    flex-shrink: 0;
-    font-size: rem(40);
-    @include media(until-t) {
-      font-size: rem(34);
-    }
-    @include media(until-m) {
-      font-size: rem(30);
-    }
-  }
-  & > h1 {
-    padding-left: 5px;
-    flex-grow: 1;
-    text-align: center;
-  }
-}
 
-.atom_modal {
+<style lang="scss">
+#or_nav-modal {
   $time: var(--ani-3);
   .atom_modal__cover {
     contain: strict;
     transition: opacity $time;
     opacity: 1;
+    @include media(over-t) {
+      display: none !important;
+    }
   }
   #or_nav {
     contain: strict;
     transition: transform $time;
     transform: translateX(0);
+    @include media(over-t) {
+      max-width: $nav-pc-width;
+    }
   }
   &.nav-enter-active, &.nav-leave-active {
     transition-duration: $time;
@@ -195,11 +205,12 @@ export default defineComponent({
       opacity: 0;
     }
     #or_nav {
-      transform: translateX(-100%);
+      transform: translateX(-100%) !important;
     }
   }
 }
 #or_nav {
+  border-right: 1px solid var(--br-cl);
   background: var(--bg-base);
   position: fixed;
   top: 0;
@@ -221,7 +232,6 @@ export default defineComponent({
     ._profile__img {
       width: 60px;
       height: 60px;
-      border-radius: 50%;
       margin-bottom: rem(5);
       @include media(until-m) {
         width: 50px;
@@ -255,44 +265,12 @@ export default defineComponent({
     }
   }
   & > ._footer {
+    text-align: right;
     border-top: 1px solid var(--br-cl);
     font-size: rem(20);
     button {
       padding: 5px 10px;
       border-radius: 10px;
-    }
-  }
-}
-
-#or_alert_bottom {
-  z-index: 11;
-  contain: layout paint;
-  position: fixed;
-  bottom: 10%;
-  left: var(--ct-indent);
-  right: var(--ct-indent);
-  color: var(--ft-cl-sub);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  & > ._text {
-    background: var(--bg-sub-2);
-    padding: 5px 10px;
-    border-radius: 5px;
-    &.fade-enter-active {
-      transition: transform var(--ani-2);
-    }
-    &.fade-enter-from {
-      transform: scale(0);
-    }
-    &.fade-leave-active {
-      transition: opacity .5s;
-      transition-delay: .5s;
-    }
-    &.fade-leave-to {
-      opacity: 0;
     }
   }
 }

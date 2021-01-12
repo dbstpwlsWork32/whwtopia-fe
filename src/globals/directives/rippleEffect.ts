@@ -28,30 +28,23 @@ export default function (app: App) {
 
     const rippleEvent = () => {
       if (nowLength === willRemove.length) {
-        willRemove.forEach(el => { el.remove(); el.removeEventListener('animationend', rippleEvent) })
+        willRemove.forEach(el => el.remove())
         willRemove = []
       }
     }
-    rippleDom.addEventListener('animationend', rippleEvent)
+    rippleDom.addEventListener('animationend', rippleEvent, { once: true })
 
     willRemove.push(rippleDom)
     target.appendChild(rippleDom)
   }
   app.directive('ripple-effect', {
     mounted(el: HTMLElement, bind) {
-      if (bind.value && bind.value.router) {
-        // if router-link, it overlap class
-        setTimeout(() => {
-          el.classList.add('m__ripple-btn')
-        }, 0)
-      } else {
-        el.classList.add('m__ripple-btn')
-      }
+      if (!bind.value || !bind.value.selfAddClass) el.classList.add('m__ripple-btn')
 
       el.addEventListener('mousedown', rippleEffect)
       el.addEventListener('keydown', rippleEffect)
     },
-    unmounted(el: HTMLElement) {
+    beforeUnmount(el: HTMLElement) {
       el.removeEventListener('mousedown', rippleEffect)
       el.removeEventListener('keydown', rippleEffect)
     }

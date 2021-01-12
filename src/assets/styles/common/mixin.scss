@@ -9,3 +9,12 @@
     @media all and (min-width: $untilTablet + 1px) { @content; }
   }
 }
+
+%s_img-fit {
+  overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

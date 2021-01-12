@@ -1,33 +1,43 @@
 @import './modules/reset.scss';
 
 @mixin palette-dark {
-  :root {
-    --ft-cl-base: #fff;
-    --ft-cl-sub: #8899a6;
-    --br-cl: #38444d;
-    --bg-base: #16212c;
-    --bg-sub: #192734;
-    --bg-sub-2: #253341;
-  }
+  --ft-cl-base: #e9e9e9;
+  --ft-cl-sub: #8899a6;
+  --br-cl: #38444d;
+  --bg-base: #16212c;
+  --bg-sub: #192734;
+  --bg-sub-2: #253341;
+
+  --btn-bg-base: #1da0f2c0;
+  --btn-cl-base: #e9e9e9;
 }
 %palette-light {
+  --cl-red: #e0245e;
   --ft-cl-base: #000;
   --ft-cl-sub: #5b7083;
+  --ft-cl-primary: #1da1f2;
+  --ft-cl-link: #1b95e0;
+
   --br-cl: #ebeef0;
   --bg-base: #fff;
   --bg-sub: #f7f9fa;
   --bg-sub-2: #ebeef0;
+
+  --bg-hover: rgba(255, 255, 255, .01);
+
+  --btn-bg-base: var(--ft-cl-primary);
+  --btn-cl-base: #fff;
+  --btn-focus-shadow: 0 0 0 3px rgba(29, 161, 242, .3);
 }
 
 :root {
   --ft-si-root: #{$root * 1px};
-  --ft-si-base: #{rem(15)};
-  --ft-si-sub: #{rem(14)};
-  --ft-si-up-1: 1.2em;
-  --ft-si-up-2: 1.4em;
+  --ft-si-base: #{rem(16)};
+  --ft-si-down-1: .9em;
+  --ft-si-up-1: 1.1em;
+  --ft-si-up-2: 1.15em;
+  --ft-si-up-3: 1.3em;
 
-  --ft-cl-primary: #1da1f2;
-  --ft-cl-link: #1b95e0;
   @extend %palette-light;
 
   // content
@@ -35,6 +45,11 @@
   --ct-indent: 20px;
   --ct-indent-vert: 10px;
 
+  // gap
+  --gap-20-15: 20px;
+  --gap-20-10: 20px;
+
+  // animation
   --ani-6: .6s;
   --ani-4: .4s;
   --ani-3: .3s;
@@ -42,9 +57,11 @@
 
   @include media(until-m) {
     --ct-indent-vert: 10px;
-    --ct-indent: 10px;
-    --ft-si-base: #{rem(14)};
-    --ft-si-sub: #{rem(13)};
+    --ct-indent: 15px;
+    --ft-si-base: #{rem(15)};
+
+    --gap-20-15: 15px;
+    --gap-20-10: 10px;
   }
 }
 
@@ -54,7 +71,7 @@ html {
 body {
   font-family: "Noto Sans KR", sans-serif;
   font-size: var(--ft-si-base);
-  line-height: 1.3;
+  line-height: 1.4;
   font-weight: $ft-normal;
   color: var(--ft-cl-base);
 
@@ -68,24 +85,24 @@ a {
   color: var(--ft-cl-link);
 }
 
+button:disabled {
+  opacity: .5;
+}
+
 @import './modules/atoms.scss';
 @import './modules/molecules.scss';
 @import './modules/styles.scss';
+@import './modules/sideEffect.scss';
 
 // user color mode
 @media (prefers-color-scheme: dark) {
-  @include palette-dark;
+  :root {
+    @include palette-dark;
+  }
 }
 html.dark {
   @include palette-dark;
 }
 html.light {
   @extend %palette-light;
-}
-
-a, button {
-  transition: box-shadow var(--ani-2);
-  &:focus-visible {
-    box-shadow: 0 0 0 3px rgba($color:#1da1f2, $alpha: .3);
-  }
 }
