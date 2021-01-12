@@ -37,7 +37,7 @@ import headerTitle from '@/hooks/title'
 import { overTabletWidth } from '@/utils/isMobile'
 import { updateBottomAlert } from '@/hooks/bottomAlert'
 
-import Nav from './Nav.vue'
+import Nav from './Nav/index.vue'
 
 function useNavResizeEv(navDisplay: Ref<boolean>) {
   navDisplay.value = overTabletWidth()

@@ -56,41 +56,24 @@
   </transition>
 
   <modal v-model:display="settingModalDisplay" cover>
-    <div style="padding: 40px; background: var(--cl-red);">
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-      asdasddasjk;asdkl;asd;klasdlkjasdkjlasd asddsa sad sad asd asd asd asd asd asd asd sad asd asd asd das asd asd sad asd asd  asd
-    </div>
+    <setting />
   </modal>
 </template>
 
 <script lang="ts">
 import type { Ref } from 'vue'
-import { defineComponent, ref, watch, reactive  } from 'vue'
+import { defineComponent, defineAsyncComponent, ref, watch, reactive  } from 'vue'
 import { isMobile, overTabletWidth } from '@/utils/isMobile'
 import { updateBottomAlert } from '@/hooks/bottomAlert'
+
 import Modal from '@/components/Modal.vue'
+/**
+ * Setting component have to get html font-size
+ * but even if use getComputedStyle api, it can't get real rendered font-size.
+ * And Setting component is rendered every displayed by wrapped Modal component's v-if direction.
+ * so To once get real html font-size once, it have to called asyncnology
+ */
+const Setting = defineAsyncComponent(() => import('./Setting.vue'))
 
 type NavEmit = (event: "update:navDisplay", p: boolean) => void
 
@@ -188,7 +171,8 @@ export default defineComponent({
     }
   },
   components: {
-    Modal
+    Modal,
+    Setting
   }
 })
 </script>

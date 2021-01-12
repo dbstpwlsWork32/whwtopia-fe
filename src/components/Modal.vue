@@ -1,7 +1,7 @@
 <template>
   <transition name="com_modal">
     <div class="atom_modal com_modal" v-if="display">
-      <div class="_content" tabindex="0" v-mounted-focus>
+      <div class="_content" v-mounted-focus tabindex="0">
         <slot></slot>
       </div>
       <div class="atom_modal__cover" v-if="cover" @click="() => {if(!persistence) $emit('update:display', false)}"></div>
@@ -35,8 +35,10 @@ $time: var(--ani-3);
 .com_modal {
   width: 100%;
   height: 100vh;
+  transition: none $time;
   transition-duration: $time;
   & > ._content {
+    outline: none;
     position: absolute;
     left: 50%;
     top: 50%;
