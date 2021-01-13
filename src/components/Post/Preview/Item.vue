@@ -96,7 +96,14 @@ export default defineComponent({
   & > ._user-handle {
     margin-top: var(--ct-indent-vert);
     display: flex;
-    gap: 20px;
+    // gap is not apply at samsung browser ssibal
+    // gap: var(--gap-20-10);
+    p {
+      margin-right: var(--gap-20-10);
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
 
   @include media(until-t) {

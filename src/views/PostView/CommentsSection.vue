@@ -169,7 +169,13 @@ $grid-gap: 10px;
       flex-grow: 1;
       & > ._top {
         display: flex;
-        gap: $grid-gap;
+        // gap: $grid-gap;
+        p {
+          margin-right: $grid-gap;
+          &:last-child {
+            margin-right: 0;
+          }
+        }
       }
       & > ._comment {
         margin-top: .2em;
@@ -178,7 +184,10 @@ $grid-gap: 10px;
       & > ._bottom {
         display: flex;
         align-items: center;
-        gap: $grid-gap;
+        // gap: $grid-gap;
+        p {
+          margin-right: $grid-gap;
+        }
       }
     }
   }

@@ -10,6 +10,8 @@
 
   --btn-bg-base: #1da0f2c0;
   --btn-cl-base: #e9e9e9;
+
+  --shaodw-base: 0px 3px 20px -5px rgba(255, 255, 255, .3);
 }
 %palette-light {
   --cl-red: #e0245e;
@@ -28,6 +30,8 @@
   --btn-bg-base: var(--ft-cl-primary);
   --btn-cl-base: #fff;
   --btn-focus-shadow: 0 0 0 3px rgba(29, 161, 242, .3);
+
+  --shaodw-base: 0px 3px 20px -5px rgba(0, 0, 0, .5);
 }
 
 :root {

@@ -246,8 +246,7 @@ export default defineComponent({
     & > ._wrap {
       padding: 20px var(--ct-indent);
       border-top: 1px solid var(--br-cl);
-      display: flex;
-      flex-direction: column;
+      display: grid;
       gap: 20px;
       &:first-child {
         border-top: none;

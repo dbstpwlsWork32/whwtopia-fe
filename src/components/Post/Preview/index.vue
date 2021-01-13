@@ -8,9 +8,9 @@
   />
 
   <div class="_write-btn-wrap">
-    <button v-ripple-effect aria-label="write post">
+    <router-link to="/" class="_btn" v-ripple-effect aria-label="write post">
       <font-awesome-icon icon="feather-alt" />
-    </button>
+    </router-link>
   </div>
 </div>
 </template>
@@ -41,14 +41,17 @@ export default defineComponent({
   
   & > ._write-btn-wrap {
     text-align: right;
-    button {
+    & > ._btn {
+      text-align: center;
+      display: inline-block;
+      box-shadow: var(--shaodw-base);
       color: #fff;
       transform: translateX(calc(-100% - 5px));
       position: fixed;
       bottom: 15px;
       font-size: rem(35);
       width: 1.8em;
-      height: 1.8em;
+      line-height: 1.8em;
       background: var(--ft-cl-primary);
       border-radius: 50%;
     }
