@@ -10,18 +10,25 @@ export default function (app: App) {
     const target = e.currentTarget as Element
 
     const nowLength = willRemove.length + 1
-    const { clientWidth, clientHeight } = target
-    const { x: offsetLeft, y: offsetTop } = target.getBoundingClientRect()
-    const radius = Math.max(clientWidth, clientHeight) / 2
+    const {
+      x: targetViewX, y: targetViewY,
+      width: targetWidth, height: targetHeight
+    } = target.getBoundingClientRect()
+    const radius = Math.max(targetWidth, targetHeight) / 2
 
     const rippleDom = document.createElement('div')
     rippleDom.classList.add('js_ripple')
     rippleDom.style.width = rippleDom.style.height = `${radius * 2}px`
 
-    const relativeOffest = {
-      x: ('pageX' in e) ?  e.pageX - offsetLeft : clientWidth / 2,
-      y: ('pageY' in e) ?  e.pageY - offsetTop : clientHeight / 2
-    }
+    const relativeOffest = (e instanceof MouseEvent)
+      ? {
+        x: e.pageX - targetViewX,
+        y: e.pageY - Math.round(window.scrollY) - targetViewY
+      }
+      : {
+        x: targetWidth / 2,
+        y: targetHeight / 2
+      }
 
     rippleDom.style.top = `${(relativeOffest.y - radius)}px`
     rippleDom.style.left = `${(relativeOffest.x - radius)}px`

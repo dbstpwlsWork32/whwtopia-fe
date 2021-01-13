@@ -9,8 +9,34 @@ function date (date: Date) {
   
     return `${'0'.repeat(needNum)}${num}`
   }
-
   return `${date.getFullYear()}.${getLength(date.getMonth() + 1)}.${getLength(date.getDate())} ${getLength(date.getHours())}:${getLength(date.getMinutes())}`
+}
+function dateFlag (date: Date) {
+  type DateCheck = 'getFullYear' | 'getMonth' | 'getDate' | 'getHours' | 'getMinutes'
+
+  const check: Array<{ m: DateCheck; flag: string }> = [
+    { m: 'getFullYear', flag: '년' },
+    { m: 'getMonth', flag: '개월' },
+    { m: 'getDate', flag: '일' },
+    { m: 'getHours', flag: '시간' },
+    { m: 'getMinutes', flag: '분' }
+  ]
+
+  const now = new Date()
+
+  for (const { m, flag } of check) {
+    const nowNum = now[m]()
+    const dateNum = date[m]()
+    if (nowNum === dateNum) continue
+    
+    const parallax = (m === 'getMonth')
+      ? nowNum - dateNum + 1
+      : nowNum - dateNum
+
+    return parallax + flag + '전'
+  }
+
+  return '방금전'
 }
 
 function numberWithCommas(x: number | string): string {
@@ -46,6 +72,7 @@ function numberFlag (num: number): string {
 
 function install (app: App) {
   app.config.globalProperties.$formatDate = date
+  app.config.globalProperties.$formatDateFlag = dateFlag
   app.config.globalProperties.$formatNumber = numberWithCommas
   app.config.globalProperties.$formatNumberFlag = numberFlag
 }
