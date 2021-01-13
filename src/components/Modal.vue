@@ -38,27 +38,24 @@ $time: var(--ani-3);
   transition: none $time;
   transition-duration: $time;
   & > ._content {
+    contain: paint;
     outline: none;
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%) scale(1);
-    transition: transform $time;
+    transform: translate(-50%, -50%);
     max-width: calc(100% - var(--ct-indent) * 2);
     max-height: 90vh;
     overflow-y: auto;
   }
-  .atom_modal__cover {
+  .atom_modal__cover, & > ._content {
     transition: opacity $time;
     opacity: 1;
   }
 
   &.com_modal-enter-from, &.com_modal-leave-to {
-    .atom_modal__cover {
+    .atom_modal__cover, & > ._content {
       opacity: 0;
-    }
-    & > ._content {
-      transform: translate(-50%, -50%) scale(0);
     }
   }
 }
