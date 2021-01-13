@@ -1,15 +1,15 @@
 <template>
-<router-link :to="`/post/${post.id}`" aria-label="go post detail" class="m_whw-post-wrap">
-  <section class="m_whw-post atom_ct-indent">
+<router-link :to="`/post/${post.id}`" aria-label="go post detail" class="com_post_preview_item-wrap">
+  <section class="com_post_preview_item atom_ct-indent">
     <div class="_head">
       <h2 class="atom_text-ellipsis s_ft-si-up-2">{{post.title}}</h2>
       <p class="s_ft-cl-sub">{{post.userInfo.name}}</p>
       <div class="_info">
         <router-link :to="`/gallery/${post.gallery.id}`" class="atom_text-ellipsis s_ft-si-down-1" v-if="post.gallery">{{post.gallery.name}}</router-link>
-        <p class="s_ft-si-down-1 s_ft-cl-sub">{{$formatDate(post.date)}}</p>
+        <p class="s_ft-si-down-1 s_ft-cl-sub">{{$formatDateFlag(post.date)}}</p>
       </div>
-      <router-link v-ripple-effect :to="`/user/${post.userInfo.id}`" class="_writer">
-        <div class="m_whw-post__writer-pr atom_profile">
+      <router-link :to="`/user/${post.userInfo.id}`" class="_writer">
+        <div class="com_post_preview_item__writer-pr atom_profile">
           <img :src="post.userInfo.imgUrl" alt="writer profile">
         </div>
       </router-link>
@@ -18,7 +18,7 @@
       <img src="https://storage.matsurihi.me/mltd_ko/card_bg/016tsu0034_0.png" alt="">
       asdkl;dsalk;sad;lkdskl;dsa;kldsa;kldaskl;dsa;lkdsa;kldsakl;das;lkdask;ldsa;kldas;kldas;kldas;klasdkl;dsalk;sad;lkdskl;dsa;kldsa;kldaskl;dsa;lkdsa;kldsakl;das;lkdask;ldsa;kldas;kldas;kldas;klasdkl;dsalk;sad;lkdskl;dsa;kldsa;kldaskl;dsa;lkdsa;kldsakl;das;lkdask;ldsa;kldas;kldas;kldas;klasdkl;dsalk;sad;lkdskl;dsa;kldsa;kldaskl;dsa;lkdsa;kldsakl;das;lkdask;ldsa;kldas;kldas;kldas;klasdkl;dsalk;sad;lkdskl;dsa;kldsa;kldaskl;dsa;lkdsa;kldsakl;das;lkdask;ldsa;kldas;kldas;kldas;kl
     </div>
-    <div class="_user-handle">
+    <div class="_user-handle atom_text-ellipsis">
       <p aria-label="like count"><font-awesome-icon icon="heart"/> {{$formatNumberFlag(post.likes)}}</p>
       <p aria-label="comment count"><font-awesome-icon icon="comment"/> {{$formatNumberFlag(post.comments)}}</p>
       <p aria-label="view count"><font-awesome-icon icon="eye" /> {{$formatNumberFlag(post.views)}}</p>
@@ -31,7 +31,7 @@
 import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({
-  name: 'com_pr-li-it',
+  name: 'com_post_preview_item',
   props: {
     post: {
       type: Object as PropType<WhwPostPreviewItem>,
@@ -42,7 +42,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.m_whw-post {
+.com_post_preview_item {
   cursor: pointer;
   transition: background-color var(--ani-2);
   background-color: transparent;
