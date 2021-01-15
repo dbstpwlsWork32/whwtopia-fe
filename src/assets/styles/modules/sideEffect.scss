@@ -1,7 +1,24 @@
-.se_user-section {
+.se_post-comment {
+  word-break: break-all;
   img {
     max-width: 100% !important;
     max-height: 500px;
-    padding: var(--gap-20-10);
+  }
+}
+
+.se_post-content {
+  word-break: break-all;
+  img {
+    max-width: 100% !important;
+  }
+}
+
+.se_post-content-write {
+  *:empty:before {
+    content: attr(aria-label);
+    font: inherit;
+    line-height: inherit;
+    color: inherit;
+    opacity: .7;
   }
 }

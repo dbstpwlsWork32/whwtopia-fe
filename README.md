@@ -41,3 +41,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 .atom_modal: 10
   &__cover: -1
+
+.post-write__floating-menu: 3
+
+## Uniqueness
+
+1. gap is not apply at samsung browser ssibal

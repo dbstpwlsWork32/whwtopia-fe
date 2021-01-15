@@ -1,17 +1,12 @@
 <template>
 <div id="view-home" class="atom_ct-width">
-  <post-preview-item
-    v-for="post in posts"
-    :key="`post-${post.id}`"
-    :post="post"
-    class="_whw-post"
-  />
+  <PostPreview :posts="posts" />
 </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import PostPreviewItem from '@/components/PostPreviewItem.vue'
+import PostPreview from '@/components/Post/Preview/index.vue'
 
 const samplePosts: WhwPostPreviewItem[] = [
   {
@@ -56,7 +51,7 @@ export default defineComponent({
     }
   },
   components: {
-    PostPreviewItem
+    PostPreview
   }
 })
 </script>

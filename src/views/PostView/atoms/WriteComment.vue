@@ -8,14 +8,14 @@
       <div
         contenteditable
         role="text"
-        class="s_user-write-word se_user-section"
+        class="se_post-comment"
         ref="writeRef"
         aria-label="댓글 적기"
       ></div>
 
       <div class="_btn">
         <input type="file" @change="fileChange" :id="fileId" ref="fileRef" accept="image/*" />
-        <label class="s_btn-base s_cursor-pointer" v-click-touch-start="imgRegister" :for="fileId">이미지 등록</label>
+        <label class="s_btn-base" v-click-touch-start="imgRegister" :for="fileId">이미지 등록</label>
         <button class="s_btn-base _do" :disabled="!commentTextNode">작성</button>
       </div>
     </div>

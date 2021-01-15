@@ -82,6 +82,7 @@ body {
 main {
   @include media(over-t) {
     padding-left: 10px !important;
+    padding-right: 10px !important;
   }
 }
 #or_header {
