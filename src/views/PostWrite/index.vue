@@ -2,9 +2,9 @@
 <div id="post-write" class="atom_ct-width">
   <input type="file" tabindex="-1" multiple accept="image/*" ref="imageUpload" class="_file" />
 
-  <input type="text" maxlength="40" placeholder="제목을 입력해 주세요" v-mounted-focus class="_title s_ft-si-up-3" @keydown="blurNextFocus" />
+  <input type="text" maxlength="40" placeholder="제목을 입력해 주세요" v-mounted-focus class="_title s_ft-si-up-3" @keydown.enter="blurNextFocus" />
 
-  <div contenteditable aria-label="내용을 입력해 주세요" class="_content" @keyup="inputCheck"></div>
+  <div contenteditable aria-label="내용을 입력해 주세요" class="_content" ref="contentDomRef"></div>
 
   <article
     role="application"
@@ -12,37 +12,37 @@
     class="post-write__floating-menu"
     v-show="uiControl.display"
     :style="{ top: uiControl.top, left: uiControl.left }"
+    ref="insertMenuDomRef"
   >
     <template v-if="matchedItems.length">
       <div class="_section" v-for="(section, sectionIndex) in matchedItems" :key="`command-i-${sectionIndex}`">
-        <h3 class="s_ft-si-down-1 s_ft-cl-sub">{{section.title}}</h3>
-        <button v-for="(item, itemIndex) in section.items" :key="`command-i-${sectionIndex}-${itemIndex}`">{{item}}</button>
+        <h3 class="s_ft-cl-sub">{{section.title}}</h3>
+        <button class="s_ft-si-up-2" v-for="(item, itemIndex) in section.items" :key="`command-i-${sectionIndex}-${itemIndex}`">{{item}}</button>
       </div>
     </template>
-    <h3 class="s_ft-si-down-1 s_ft-cl-sub" v-else>not result</h3>
+    <h3 class="s_ft-cl-sub" v-else>없어용!</h3>
   </article>
-
-  <!-- font select 했을때 위에 창뜨기 document.selectChange when contenteditable focus -->
 </div>
 </template>
 
-<script lang="ts">``
-import { defineComponent, reactive, ref, watch } from 'vue'
+<script lang="ts">
+import type { Ref } from 'vue'
+import { defineComponent, reactive, ref, watch, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import resolveHangul from '@/utils/resolveHangul'
 
 function blurNextFocus(e: KeyboardEvent) {
-  if (e.key.toLowerCase() === 'enter') {
-    e.preventDefault()
-    const nextEl = (e.target as HTMLElement).nextSibling as HTMLElement
-    if (nextEl) nextEl.focus()
-  }
+  e.preventDefault()
+  const nextEl = (e.target as HTMLElement).nextSibling as HTMLElement
+  if (nextEl) nextEl.focus()
 }
 
 type commandItem = { title: string; items: string[] }
 function useCommandInput (
   commandText: string,
   // items is not ref just static
-  items: commandItem[]
+  items: commandItem[],
+  contentDomRef: Ref<HTMLElement>,
+  insertMenuDomRef: Ref<HTMLElement>
 ) {
   const uiControl = reactive({
     display: false,
@@ -85,7 +85,6 @@ function useCommandInput (
 
     matchedItems.value = foundItems
   }
-
   function inputCheck() {
     const { anchorOffset, anchorNode, isCollapsed } = window.getSelection() as Selection
     const anchorBeforeOffset = anchorOffset - 1
@@ -101,51 +100,99 @@ function useCommandInput (
     }
 
     if (isCollapsed) {
-      if (anchorText === commandText && !uiControl.display) {
-        searchStartOffset = anchorOffset
-        uiControl.display = true
+      if (anchorText === commandText) {
+        if (!uiControl.display) {
+          searchStartOffset = anchorOffset
+          uiControl.display = true
+        } else if (searchStartOffset !== anchorOffset) {
+          uiControl.display = false
+        }
       }
   
       if (uiControl.display) findMatchItems(anchorNode.nodeValue.slice(searchStartOffset))
     }
   }
 
-  watch(() => uiControl.display, () => {
-    if (uiControl.display) {
-      const selection = window.getSelection() as Selection
-
-      const { left, top, height, width } = selection.getRangeAt(0).getBoundingClientRect()
-      uiControl.top = top + height + 'px'
-      uiControl.left = `${left + width}px`
+  function keyDown(e: KeyboardEvent) {
+    const key = e.key.toLowerCase()
+    if (key === 'enter') {
+      window.scrollBy(0, 21)
+    } else if (key === 'arrowup' || key === 'arrowdown') {
+      if (uiControl.display) {
+        e.preventDefault()
+      }
     }
+  }
+
+  function closeFloatingMenu() {
+    uiControl.display = false
+  }
+
+  onMounted(() => {
+    contentDomRef.value.addEventListener('keydown', keyDown)
+    contentDomRef.value.addEventListener('keyup', inputCheck)
+    contentDomRef.value.addEventListener('mousedown', closeFloatingMenu)
+
+    watch(() => uiControl.display, async () => {
+      if (uiControl.display) {
+        await nextTick()
+
+        const { innerHeight: maximumHeight, innerWidth: maximumWidth } = window
+        const { offsetHeight, offsetWidth } = insertMenuDomRef.value
+        const selection = window.getSelection() as Selection
+
+        const { left, top, height } = selection.getRangeAt(0).getBoundingClientRect()
+
+        let willTop = top + height
+        const occupyHeight = offsetHeight + willTop
+        if (occupyHeight > maximumHeight) {
+          willTop -= occupyHeight - maximumHeight
+          if (willTop < 0) willTop = 0
+        }
+
+        let willLeft = left + 3
+        const occupyWidth = offsetWidth + willLeft
+        if (occupyWidth > maximumWidth) {
+          willLeft = left - offsetWidth
+          if (willLeft < 0) willLeft = 0
+        }
+
+        uiControl.top = willTop + 'px'
+        uiControl.left = `${willLeft}px`
+      }
+    })
+  })
+  onBeforeUnmount(() => {
+    contentDomRef.value.removeEventListener('keydown', keyDown)
+    contentDomRef.value.removeEventListener('keyup', inputCheck)
+    contentDomRef.value.removeEventListener('mousedown', closeFloatingMenu)
   })
 
   return {
     uiControl,
-    matchedItems,
-    inputCheck
+    matchedItems
   }
 }
 
 export default defineComponent({
   name: 'view_post-write',
   setup() {
-    // 검색 알고리즘은 효율을 위해 아이템텍스트엔 한글 + 숫자만 있다고 가정하고 코드짬
-    const { uiControl, matchedItems, inputCheck } = useCommandInput('/', [
+    const contentDomRef = ref<HTMLElement>()
+    const insertMenuDomRef = ref<HTMLElement>()
+
+    // 아이템 검색 알고리즘은 효율을 위해 아이템텍스트엔 한글 + 숫자만 있다고 가정하고 코드짬
+    const { uiControl, matchedItems } = useCommandInput('/', [
       {
-        title: '내용',
-        items: ['이미지', '제목1', '제목2', '제목3', '작은텍스트1']
-      },
-      {
-        title: '임베디드',
-        items: ['유튜브영상']
+        title: '다음 라인에 삽입',
+        items: ['제목1', '제목2', '제목3', '유튜브 영상']
       }
-    ])
+    ], contentDomRef as Ref<HTMLElement>, insertMenuDomRef as Ref<HTMLElement>)
     return {
       blurNextFocus,
       uiControl,
       matchedItems,
-      inputCheck
+      contentDomRef,
+      insertMenuDomRef
     }
   }
 })
@@ -158,14 +205,16 @@ export default defineComponent({
     margin-top: 1em;
   }
   & > ._title, & > ._content {
-    padding: var(--ct-indent-vert) var(--ct-indent);
+    padding: calc(var(--ct-indent-vert) * 2) var(--ct-indent);
     background: var(--bg-sub-2);
   }
   & > ._content {
     min-height: 10ch;
     margin-top: 2em;
+    margin-bottom: 30em;
     @include media(until-m) {
       margin-top: 1em;
+      margin-bottom: 10em;
     }
   }
   & > ._file {
@@ -174,6 +223,10 @@ export default defineComponent({
 }
 
 .post-write__floating-menu {
+  max-width: calc(100% - 10ch);
+  max-height: 100vh;
+  overflow: auto;
+  z-index: 3;
   padding: .5em;
   will-change: top, left;
   position: fixed;
