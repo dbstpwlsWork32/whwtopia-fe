@@ -4,7 +4,7 @@
       <div class="_content" v-mounted-focus tabindex="0">
         <slot></slot>
       </div>
-      <div class="atom_modal__cover" v-if="cover" @click="() => {if(!persistence) $emit('update:display', false)}"></div>
+      <div class="atom_modal__cover" v-if="cover" @click="close"></div>
     </div>
   </transition>
 </template>
@@ -25,6 +25,21 @@ export default defineComponent({
     cover: {
       type: Boolean,
       default: false
+    }
+  },
+  methods: {
+    close() {
+      if(!this.persistence) this.$emit('update:display', false)
+    },
+    keyClose(e: KeyboardEvent) {
+      const keyLowCase = e.key.toLowerCase()
+      if (keyLowCase === 'esc' || keyLowCase === 'escape') this.close()
+    }
+  },
+  watch: {
+    display(display) {
+      if (display) window.addEventListener('keydown', this.keyClose)
+      else window.removeEventListener('keydown', this.keyClose)
     }
   }
 })

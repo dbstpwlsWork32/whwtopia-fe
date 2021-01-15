@@ -8,7 +8,7 @@
   />
 
   <div class="_write-btn-wrap">
-    <router-link to="/" class="_btn" v-ripple-effect aria-label="write post">
+    <router-link to="/newpost" class="_btn" aria-label="write post">
       <font-awesome-icon icon="feather-alt" />
     </router-link>
   </div>
