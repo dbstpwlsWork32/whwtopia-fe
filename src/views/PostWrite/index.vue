@@ -17,7 +17,11 @@
     <template v-if="matchedItems.length">
       <div class="_section" v-for="(section, sectionIndex) in matchedItems" :key="`command-i-${sectionIndex}`">
         <h3 class="s_ft-cl-sub">{{section.title}}</h3>
-        <button class="s_ft-si-up-2" v-for="(item, itemIndex) in section.items" :key="`command-i-${sectionIndex}-${itemIndex}`">{{item}}</button>
+        <button
+          class="s_ft-si-up-2"
+          v-for="(item, itemIndex) in section.items"
+          :key="`command-i-${sectionIndex}-${itemIndex}`"
+          :class="{'s_selected': uiControl.selectIndex === itemIndex}">{{item}}</button>
       </div>
     </template>
     <h3 class="s_ft-cl-sub" v-else>없어용!</h3>
@@ -47,7 +51,8 @@ function useCommandInput (
   const uiControl = reactive({
     display: false,
     top: '',
-    left: ''
+    left: '',
+    selectIndex: -1
   })
   const matchedItems = ref(items)
   let searchStartOffset = 0
@@ -120,21 +125,42 @@ function useCommandInput (
     } else if (key === 'arrowup' || key === 'arrowdown') {
       if (uiControl.display) {
         e.preventDefault()
+        const { maxIndex } = matchedItems.value.reduce(({ items, maxIndex }, c) => {
+          return {
+            maxIndex: !c.items.length ? maxIndex : maxIndex + c.items.length - 1,
+            items: []
+          }
+        }, { items: [], maxIndex: 0 })
+
+        let willSelectIndex = (key === 'arrowdown')? uiControl.selectIndex + 1 : uiControl.selectIndex - 1
+
+        if (willSelectIndex < 0) willSelectIndex = 0
+        else if (willSelectIndex > maxIndex) willSelectIndex = maxIndex
+        uiControl.selectIndex = willSelectIndex
       }
     }
   }
 
-  function closeFloatingMenu() {
+  function floatingPersistenceClose() {
     uiControl.display = false
+  }
+  function mouseup(e: Event) {
+    e.stopPropagation()
+    const { anchorNode, anchorOffset } = window.getSelection() as Selection
+
+    if (anchorNode && anchorNode.nodeValue && anchorNode.nodeValue[anchorOffset - 1]) uiControl.display = true
+    else uiControl.display = false
   }
 
   onMounted(() => {
     contentDomRef.value.addEventListener('keydown', keyDown)
     contentDomRef.value.addEventListener('keyup', inputCheck)
-    contentDomRef.value.addEventListener('mousedown', closeFloatingMenu)
+    contentDomRef.value.addEventListener('mouseup', mouseup)
 
     watch(() => uiControl.display, async () => {
       if (uiControl.display) {
+        window.addEventListener('mouseup', floatingPersistenceClose)
+
         await nextTick()
 
         const { innerHeight: maximumHeight, innerWidth: maximumWidth } = window
@@ -159,13 +185,16 @@ function useCommandInput (
 
         uiControl.top = willTop + 'px'
         uiControl.left = `${willLeft}px`
+      } else {
+        window.removeEventListener('mouseup', floatingPersistenceClose)
+        uiControl.selectIndex = -1
       }
     })
   })
   onBeforeUnmount(() => {
     contentDomRef.value.removeEventListener('keydown', keyDown)
     contentDomRef.value.removeEventListener('keyup', inputCheck)
-    contentDomRef.value.removeEventListener('mousedown', closeFloatingMenu)
+    contentDomRef.value.removeEventListener('mouseup', mouseup)
   })
 
   return {
@@ -246,11 +275,15 @@ export default defineComponent({
     & > h3 {
       margin-bottom: .2em;
     }
-    button, label {
+    button {
       padding: .2em 0;
       display: block;
       text-align: left;
       width: 100%;
+      &.s_selected {
+        background: red;
+        // border: 2px solid var(--ft-base);
+      }
     }
   }
 }
