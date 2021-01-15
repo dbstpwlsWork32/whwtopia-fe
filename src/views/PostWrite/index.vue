@@ -35,7 +35,7 @@
 <script lang="ts">
 import type { Ref } from 'vue'
 import { defineComponent, ref } from 'vue'
-import useCommandInput from './useContenteditable'
+import useCommandInput from './useCommandInput'
 
 const contentDomRef = ref<HTMLElement>() as Ref<HTMLElement>
 const insertMenuDomRef = ref<HTMLElement>() as Ref<HTMLElement>
@@ -53,7 +53,6 @@ const commandItem = [
       {
         text: '제목1',
         func() {
-          const range = document.createRange()
           const div = document.createElement('div')
           const h3 = document.createElement('h3')
           h3.classList.add('s_ft-si-up-3')
