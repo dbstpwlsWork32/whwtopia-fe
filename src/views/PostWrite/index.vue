@@ -2,13 +2,13 @@
 <div id="post-write" class="atom_ct-width">
   <input type="file" tabindex="-1" multiple accept="image/*" ref="imageUpload" class="_file" />
 
-  <input type="text" maxlength="40" placeholder="제목을 입력해 주세요" v-mounted-focus class="_title s_ft-si-up-3" @keydown.enter="blurNextFocus" />
+  <input type="text" maxlength="40" placeholder="글 제목" v-mounted-focus class="_title s_ft-si-up-3" @keydown.enter="blurNextFocus" />
 
-  <div contenteditable aria-label="내용을 입력해 주세요" class="_content" ref="contentDomRef"></div>
+  <div contenteditable aria-label="내용을 입력해 주세요" class="_content se_post-content-write" ref="contentDomRef"></div>
 
   <article
     role="application"
-    aria-label="하위 버튼을 선택하면 해당하는 아이템을 삽입합니다."
+    aria-label="하위 버튼을 선택하면 해당하는 아이템을 삽입합니다. 위 아래 키보드 키로 아이템을 선택할수 있습니다."
     class="post-write__floating-menu"
     v-show="uiControl.display"
     :style="{ top: uiControl.top, left: uiControl.left }"
@@ -21,7 +21,10 @@
           class="s_ft-si-up-2"
           v-for="(item, itemIndex) in section.items"
           :key="`command-i-${sectionIndex}-${itemIndex}`"
-          :class="{'s_selected': uiControl.selectIndex === itemIndex}">{{item}}</button>
+          :class="{'s_selected': uiControl.selectKey.join('-') === `${sectionIndex}-${itemIndex}`}"
+          tabindex="-1"
+          @mousedown="item.func"
+        >{{item.text}}</button>
       </div>
     </template>
     <h3 class="s_ft-cl-sub" v-else>없어용!</h3>
@@ -31,8 +34,11 @@
 
 <script lang="ts">
 import type { Ref } from 'vue'
-import { defineComponent, reactive, ref, watch, onMounted, onBeforeUnmount, nextTick } from 'vue'
-import resolveHangul from '@/utils/resolveHangul'
+import { defineComponent, ref } from 'vue'
+import useCommandInput from './useContenteditable'
+
+const contentDomRef = ref<HTMLElement>() as Ref<HTMLElement>
+const insertMenuDomRef = ref<HTMLElement>() as Ref<HTMLElement>
 
 function blurNextFocus(e: KeyboardEvent) {
   e.preventDefault()
@@ -40,182 +46,55 @@ function blurNextFocus(e: KeyboardEvent) {
   if (nextEl) nextEl.focus()
 }
 
-type commandItem = { title: string; items: string[] }
-function useCommandInput (
-  commandText: string,
-  // items is not ref just static
-  items: commandItem[],
-  contentDomRef: Ref<HTMLElement>,
-  insertMenuDomRef: Ref<HTMLElement>
-) {
-  const uiControl = reactive({
-    display: false,
-    top: '',
-    left: '',
-    selectIndex: -1
-  })
-  const matchedItems = ref(items)
-  let searchStartOffset = 0
+const commandItem = [
+  {
+    title: '컨텐츠',
+    items: [
+      {
+        text: '제목1',
+        func() {
+          const range = document.createRange()
+          const div = document.createElement('div')
+          const h3 = document.createElement('h3')
+          h3.classList.add('s_ft-si-up-3')
 
-  function findMatchItems(query: string) {
-    if (!query) {
-      matchedItems.value = items
-      return false
-    }
-    function searchAlgorhythm(itemText: string, querys: ResolveHangle[]) {
-      const matchResult = querys.filter(query => {
-        const { cho: qCho } = query
-
-        return itemText.split('').find(s => {
-          const { cho } = resolveHangul(s)
-
-          return cho === qCho
-        })
-      })
-
-      return matchResult.length === querys.length
-    }
-
-    const foundItems: commandItem[] = []
-
-    // 여기 한정으로 아이템엔 한글 + 숫자만 있으니까 거르기 ( 무겁게 만들 필요가 없다고 생각한다. )
-    if (query.match(/[ㄱ-ㅎ가-힣0-9]/)) {
-
-      const resolveQuery = query.split('').map(s => resolveHangul(s))
-      items.forEach(section => {
-        const foundSectionItems = section.items.filter(s => searchAlgorhythm(s, resolveQuery))
-        if (foundSectionItems.length) foundItems.push({ title: section.title, items: foundSectionItems })
-      })
-    }
-
-    matchedItems.value = foundItems
-  }
-  function inputCheck() {
-    const { anchorOffset, anchorNode, isCollapsed } = window.getSelection() as Selection
-    const anchorBeforeOffset = anchorOffset - 1
-
-    if (!(anchorNode instanceof Text) || !anchorNode.nodeValue || !anchorNode.nodeValue[anchorBeforeOffset]) {
-      uiControl.display = false
-      return false
-    }
-
-    const anchorText = anchorNode.nodeValue[anchorBeforeOffset]
-    if (uiControl.display) {
-      if (anchorText.charCodeAt(0) === 160 || searchStartOffset > anchorOffset || !isCollapsed) uiControl.display = false
-    }
-
-    if (isCollapsed) {
-      if (anchorText === commandText) {
-        if (!uiControl.display) {
-          searchStartOffset = anchorOffset
-          uiControl.display = true
-        } else if (searchStartOffset !== anchorOffset) {
-          uiControl.display = false
+          h3.setAttribute('aria-label', '제목1')
+          div.appendChild(h3)
+          contentDomRef.value.appendChild(div)
+        }
+      },
+      {
+        text: '제목2',
+        func() {
+          console.log('2')
+        }
+      },
+      {
+        text: '제목3',
+        func() {
+          console.log('3')
         }
       }
-  
-      if (uiControl.display) findMatchItems(anchorNode.nodeValue.slice(searchStartOffset))
-    }
-  }
-
-  function keyDown(e: KeyboardEvent) {
-    const key = e.key.toLowerCase()
-    if (key === 'enter') {
-      window.scrollBy(0, 21)
-    } else if (key === 'arrowup' || key === 'arrowdown') {
-      if (uiControl.display) {
-        e.preventDefault()
-        const { maxIndex } = matchedItems.value.reduce(({ items, maxIndex }, c) => {
-          return {
-            maxIndex: !c.items.length ? maxIndex : maxIndex + c.items.length - 1,
-            items: []
-          }
-        }, { items: [], maxIndex: 0 })
-
-        let willSelectIndex = (key === 'arrowdown')? uiControl.selectIndex + 1 : uiControl.selectIndex - 1
-
-        if (willSelectIndex < 0) willSelectIndex = 0
-        else if (willSelectIndex > maxIndex) willSelectIndex = maxIndex
-        uiControl.selectIndex = willSelectIndex
-      }
-    }
-  }
-
-  function floatingPersistenceClose() {
-    uiControl.display = false
-  }
-  function mouseup(e: Event) {
-    e.stopPropagation()
-    const { anchorNode, anchorOffset } = window.getSelection() as Selection
-
-    if (anchorNode && anchorNode.nodeValue && anchorNode.nodeValue[anchorOffset - 1]) uiControl.display = true
-    else uiControl.display = false
-  }
-
-  onMounted(() => {
-    contentDomRef.value.addEventListener('keydown', keyDown)
-    contentDomRef.value.addEventListener('keyup', inputCheck)
-    contentDomRef.value.addEventListener('mouseup', mouseup)
-
-    watch(() => uiControl.display, async () => {
-      if (uiControl.display) {
-        window.addEventListener('mouseup', floatingPersistenceClose)
-
-        await nextTick()
-
-        const { innerHeight: maximumHeight, innerWidth: maximumWidth } = window
-        const { offsetHeight, offsetWidth } = insertMenuDomRef.value
-        const selection = window.getSelection() as Selection
-
-        const { left, top, height } = selection.getRangeAt(0).getBoundingClientRect()
-
-        let willTop = top + height
-        const occupyHeight = offsetHeight + willTop
-        if (occupyHeight > maximumHeight) {
-          willTop -= occupyHeight - maximumHeight
-          if (willTop < 0) willTop = 0
+    ]
+  },
+  {
+    title: '임베디드',
+    items: [
+      {
+        text: '유튜브영상',
+        func() {
+          console.log('4')
         }
-
-        let willLeft = left + 3
-        const occupyWidth = offsetWidth + willLeft
-        if (occupyWidth > maximumWidth) {
-          willLeft = left - offsetWidth
-          if (willLeft < 0) willLeft = 0
-        }
-
-        uiControl.top = willTop + 'px'
-        uiControl.left = `${willLeft}px`
-      } else {
-        window.removeEventListener('mouseup', floatingPersistenceClose)
-        uiControl.selectIndex = -1
       }
-    })
-  })
-  onBeforeUnmount(() => {
-    contentDomRef.value.removeEventListener('keydown', keyDown)
-    contentDomRef.value.removeEventListener('keyup', inputCheck)
-    contentDomRef.value.removeEventListener('mouseup', mouseup)
-  })
-
-  return {
-    uiControl,
-    matchedItems
+    ]
   }
-}
+]
 
 export default defineComponent({
   name: 'view_post-write',
   setup() {
-    const contentDomRef = ref<HTMLElement>()
-    const insertMenuDomRef = ref<HTMLElement>()
-
     // 아이템 검색 알고리즘은 효율을 위해 아이템텍스트엔 한글 + 숫자만 있다고 가정하고 코드짬
-    const { uiControl, matchedItems } = useCommandInput('/', [
-      {
-        title: '다음 라인에 삽입',
-        items: ['제목1', '제목2', '제목3', '유튜브 영상']
-      }
-    ], contentDomRef as Ref<HTMLElement>, insertMenuDomRef as Ref<HTMLElement>)
+    const { uiControl, matchedItems } = useCommandInput('/', commandItem, contentDomRef, insertMenuDomRef)
     return {
       blurNextFocus,
       uiControl,
@@ -252,6 +131,7 @@ export default defineComponent({
 }
 
 .post-write__floating-menu {
+  min-width: 120px;
   max-width: calc(100% - 10ch);
   max-height: 100vh;
   overflow: auto;
@@ -276,13 +156,13 @@ export default defineComponent({
       margin-bottom: .2em;
     }
     button {
-      padding: .2em 0;
+      padding: .2em .5em;
+      padding-bottom: .2em;
       display: block;
       text-align: left;
       width: 100%;
       &.s_selected {
-        background: red;
-        // border: 2px solid var(--ft-base);
+        background: var(--bg-sub-2);
       }
     }
   }
