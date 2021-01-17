@@ -1,10 +1,10 @@
 <template>
   <transition name="com_modal">
-    <div class="atom_modal com_modal" v-if="display">
-      <div class="_content" v-mounted-focus tabindex="0">
+    <div class="atom_modal com_modal" v-if="display" @click="this.close">
+      <div class="_content" @click.stop="">
         <slot></slot>
       </div>
-      <div class="atom_modal__cover" v-if="cover" @click="close"></div>
+      <div class="atom_modal__cover" v-if="cover"></div>
     </div>
   </transition>
 </template>

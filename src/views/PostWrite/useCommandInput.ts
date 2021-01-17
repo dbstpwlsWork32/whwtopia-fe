@@ -2,11 +2,11 @@ import type { Ref } from 'vue'
 import { reactive, ref, watch, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import resolveHangul from '@/utils/resolveHangul'
 
-type commandItem = { title: string; items: { text: string; func: Function }[] }
-export default function useCommandInput (
+type commandItem = { title: string; items: { text: string; func: () => void | Function }[] }
+export default function useCommandInput(
   commandText: string,
   // items is not ref just static
-  items: commandItem[],
+  itemsOrigin: commandItem[],
   contentDomRef: Ref<HTMLElement>,
   insertMenuDomRef: Ref<HTMLElement>
 ) {
@@ -16,8 +16,26 @@ export default function useCommandInput (
     left: '',
     selectKey: [0, -1]
   })
-  const matchedItems = ref(items)
   let searchStartOffset = 0
+  let openTextNode: Text
+
+  const items = itemsOrigin.map(sec => {
+    return {
+      ...sec,
+      items: sec.items.map(i => ({
+        ...i,
+        func() {
+          const openTextNodeTextContent = openTextNode.textContent as string
+          if (openTextNodeTextContent === commandText) openTextNode.remove();
+          else openTextNode.textContent = openTextNodeTextContent.slice(0, searchStartOffset - 1)
+
+          uiControl.display = false;
+          i.func()
+        }
+      }))
+    }
+  })
+  const matchedItems = ref(items)
 
   function findMatchItems(query: string) {
     if (!query) {
@@ -70,6 +88,7 @@ export default function useCommandInput (
       if (anchorText === commandText) {
         if (!uiControl.display) {
           searchStartOffset = anchorOffset
+          openTextNode = anchorNode
           uiControl.display = true
         } else if (searchStartOffset !== anchorOffset) {
           uiControl.display = false
@@ -88,14 +107,7 @@ export default function useCommandInput (
 
         const [ctSectionIndex, ctItemIndex] = uiControl.selectKey
         const ctItem = matchedItems.value[ctSectionIndex].items[ctItemIndex]
-        if (ctItem) {
-          const { anchorNode } = window.getSelection() as Selection
-          if (anchorNode && anchorNode.nodeValue) {
-            anchorNode.nodeValue = anchorNode.nodeValue.slice(0, searchStartOffset - 1)
-          }
-          uiControl.display = false
-          ctItem.func()
-        }
+        ctItem.func()
       } else {
         window.scrollBy(0, 21)
       }
@@ -107,16 +119,21 @@ export default function useCommandInput (
         let willSectionIndex = ctSectionIndex
         let willItemIndex = (key === 'arrowdown')? ctItemIndex + 1 : ctItemIndex - 1
 
+        if (!matchedItems.value[willSectionIndex]) {
+          willSectionIndex = 0
+          willItemIndex = -1
+        }
+
         if (willItemIndex < 0) {
-          if (ctSectionIndex > 0) {
+          if (willSectionIndex > 0) {
             willSectionIndex = ctSectionIndex - 1
             willItemIndex = matchedItems.value[willSectionIndex].items.length - 1
           } else {
             willItemIndex = 0
           }
-        } else if (willItemIndex > matchedItems.value[ctSectionIndex].items.length - 1) {
-          if (ctSectionIndex < matchedItems.value.length - 1) {
-            willSectionIndex = ctSectionIndex + 1
+        } else if (willItemIndex > matchedItems.value[willSectionIndex].items.length - 1) {
+          if (willSectionIndex < matchedItems.value.length - 1) {
+            willSectionIndex = willSectionIndex + 1
             willItemIndex = 0
           } else {
             willItemIndex = ctItemIndex
