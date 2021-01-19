@@ -14,7 +14,7 @@
         </div>
       </router-link>
     </div>
-    <div class="se_post-comment">
+    <div class="se_post-content-base">
       <img src="https://storage.matsurihi.me/mltd_ko/card_bg/016tsu0034_0.png" alt="">
       asdkl;dsalk;sad;lkdskl;dsa;kldsa;kldaskl;dsa;lkdsa;kldsakl;das;lkdask;ldsa;kldas;kldas;kldas;klasdkl;dsalk;sad;lkdskl;dsa;kldsa;kldaskl;dsa;lkdsa;kldsakl;das;lkdask;ldsa;kldas;kldas;kldas;klasdkl;dsalk;sad;lkdskl;dsa;kldsa;kldaskl;dsa;lkdsa;kldsakl;das;lkdask;ldsa;kldas;kldas;kldas;klasdkl;dsalk;sad;lkdskl;dsa;kldsa;kldaskl;dsa;lkdsa;kldsakl;das;lkdask;ldsa;kldas;kldas;kldas;klasdkl;dsalk;sad;lkdskl;dsa;kldsa;kldaskl;dsa;lkdsa;kldsakl;das;lkdask;ldsa;kldas;kldas;kldas;kl
     </div>

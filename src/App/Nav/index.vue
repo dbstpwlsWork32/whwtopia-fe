@@ -55,7 +55,7 @@
     </div>
   </transition>
 
-  <modal v-model:display="settingModalDisplay" cover>
+  <modal v-model:display="settingModalDisplay" cover v-mounted-focus tabindex="0">
     <setting />
   </modal>
 </template>

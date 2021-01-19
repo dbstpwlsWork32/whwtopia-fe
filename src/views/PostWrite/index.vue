@@ -1,10 +1,17 @@
 <template>
 <div id="post-write" class="atom_ct-width">
-  <input type="file" tabindex="-1" multiple accept="image/*" ref="imageUpload" class="_file" />
+  <input type="file" tabindex="-1" multiple accept="image/*" ref="inputFileDomRef" @change="imageRegister" class="_file" />
 
   <input type="text" maxlength="40" placeholder="글 제목" v-mounted-focus class="_title s_ft-si-up-3" @keydown.enter="blurNextFocus" />
 
-  <div contenteditable aria-label="내용을 입력해 주세요" class="_content se_post-content-write" ref="contentDomRef"></div>
+  <div contenteditable aria-label="/를 입력하면 삽입아이템들이 나옵니다." class="_content se_post-content-write" ref="contentDomRef"></div>
+
+  <modal v-model:display="youtubeLinkPopup.display">
+    <div class="post-write__youtube-popup">
+      <input type="text" class="atom_ct" v-mounted-focus placeholder="유튜브 링크" v-model="youtubeLinkPopup.href" />
+      <button @click="youtubeRegister">등록</button>
+    </div>
+  </modal>
 
   <article
     role="application"
@@ -34,16 +41,103 @@
 
 <script lang="ts">
 import type { Ref } from 'vue'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, reactive, watch } from 'vue'
+
 import useCommandInput from './useCommandInput'
+import { useContenteditableMedia, makeMediaWrapper } from './useContentiableMedia'
+
+import Modal from '@/components/Modal.vue'
+import { updateBottomAlert } from '@/hooks/bottomAlert'
 
 const contentDomRef = ref<HTMLElement>() as Ref<HTMLElement>
 const insertMenuDomRef = ref<HTMLElement>() as Ref<HTMLElement>
+const inputFileDomRef = ref<HTMLInputElement>() as Ref<HTMLInputElement>
+const youtubeLinkPopup = reactive({
+  display: false,
+  href: ''
+})
+const textModifyDisplay = ref(false)
 
-function blurNextFocus(e: KeyboardEvent) {
-  e.preventDefault()
-  const nextEl = (e.target as HTMLElement).nextSibling as HTMLElement
-  if (nextEl) nextEl.focus()
+function appendAndFocus(appendTag: HTMLElement | DocumentFragment) {
+  contentDomRef.value.appendChild(appendTag)
+
+  contentDomRef.value.focus()
+  const range = document.createRange()
+  range.setStart(appendTag, 0)
+  const sl = window.getSelection() as Selection
+  sl.removeAllRanges()
+  sl.addRange(range)
+}
+
+function youtubeRegister() {
+  if (
+    !youtubeLinkPopup.href ||
+    (!youtubeLinkPopup.href.match(/^https:\/\/(www\.)|(music\.)?youtube\.com/) && !youtubeLinkPopup.href.match(/^https:\/\/youtu\.be/))
+  ) {
+    updateBottomAlert('올바른 유튜브 링크를 입력해 주세요!')
+    return false
+  }
+
+  const url = new URL(youtubeLinkPopup.href)
+  const videoId = url.searchParams.get('v') || url.pathname
+  if (!videoId) {
+    updateBottomAlert('올바른 유튜브 링크를 입력해 주세요!')
+    return false
+  }
+
+  const iframeParent = makeMediaWrapper('div')
+  iframeParent.classList.add('se_post-content-base__youtube-max')
+  const iframeWrap = document.createElement('div')
+  iframeWrap.classList.add('atom_youtube-wrap')
+
+  const iframe = document.createElement('iframe')
+  iframe.src = `https://www.youtube.com/embed/${videoId}?feature=oembed&origin=http://example.com`
+
+  iframeWrap.appendChild(iframe)
+  iframeParent.appendChild(iframeWrap)
+  contentDomRef.value.appendChild(iframeParent)
+
+  const div = document.createElement('div')
+  div.appendChild(document.createElement('br'))
+  appendAndFocus(div)
+
+  youtubeLinkPopup.display = false
+}
+
+function imageRegister(e: Event & { target: HTMLInputElement }) {
+  if (e.target.files === null) return false
+
+  function makeImageDom(file: File) {
+    if (!file.type.match(/^image\//)) return false
+    const thumbnailUrl = URL.createObjectURL(file)
+
+    const imageDom = document.createElement('img')
+    imageDom.src = thumbnailUrl
+    return imageDom
+  }
+
+  const newImagesFragment = new DocumentFragment()
+
+  for (const file of e.target.files) {
+    const imageDom = makeImageDom(file)
+
+    if (!imageDom) {
+      updateBottomAlert('올바른 이미지파일을 업로드해주세요')
+      return false
+    }
+
+    const imageWrapper = makeMediaWrapper('div')
+    imageWrapper.appendChild(imageDom)
+    newImagesFragment.appendChild(imageWrapper)
+  }
+
+  const nextNode = document.createElement('div')
+  nextNode.appendChild(document.createElement('br'))
+
+  contentDomRef.value.appendChild(newImagesFragment)
+  appendAndFocus(nextNode)
+
+  e.target.value = ''
 }
 
 const commandItem = [
@@ -53,25 +147,28 @@ const commandItem = [
       {
         text: '제목1',
         func() {
-          const div = document.createElement('div')
           const h3 = document.createElement('h3')
           h3.classList.add('s_ft-si-up-3')
-
           h3.setAttribute('aria-label', '제목1')
-          div.appendChild(h3)
-          contentDomRef.value.appendChild(div)
+          appendAndFocus(h3)
         }
       },
       {
         text: '제목2',
         func() {
-          console.log('2')
+          const h3 = document.createElement('h4')
+          h3.classList.add('s_ft-si-up-2')
+          h3.setAttribute('aria-label', '제목2')
+          appendAndFocus(h3)
         }
       },
       {
         text: '제목3',
         func() {
-          console.log('3')
+          const h3 = document.createElement('h5')
+          h3.classList.add('s_ft-si-up-1')
+          h3.setAttribute('aria-label', '제목3')
+          appendAndFocus(h3)
         }
       }
     ]
@@ -80,9 +177,15 @@ const commandItem = [
     title: '임베디드',
     items: [
       {
+        text: '이미지',
+        func() {
+          inputFileDomRef.value.click()
+        }
+      },
+      {
         text: '유튜브영상',
         func() {
-          console.log('4')
+          youtubeLinkPopup.display = true
         }
       }
     ]
@@ -94,13 +197,35 @@ export default defineComponent({
   setup() {
     // 아이템 검색 알고리즘은 효율을 위해 아이템텍스트엔 한글 + 숫자만 있다고 가정하고 코드짬
     const { uiControl, matchedItems } = useCommandInput('/', commandItem, contentDomRef, insertMenuDomRef)
+    useContenteditableMedia(contentDomRef)
+
+    watch(() => youtubeLinkPopup.display, (display) => {
+      if (!display) {
+        youtubeLinkPopup.href = ''
+        contentDomRef.value.focus()
+      }
+    })
     return {
-      blurNextFocus,
       uiControl,
       matchedItems,
       contentDomRef,
-      insertMenuDomRef
+      insertMenuDomRef,
+      inputFileDomRef,
+      youtubeLinkPopup,
+      textModifyDisplay
     }
+  },
+  methods: {
+    blurNextFocus(e: KeyboardEvent) {
+      e.preventDefault()
+      const nextEl = (e.target as HTMLElement).nextSibling as HTMLElement
+      if (nextEl) nextEl.focus()
+    },
+    youtubeRegister,
+    imageRegister
+  },
+  components: {
+    Modal
   }
 })
 </script>
@@ -164,6 +289,23 @@ export default defineComponent({
         background: var(--bg-sub-2);
       }
     }
+  }
+}
+
+.post-write__youtube-popup {
+  background: var(--bg-sub-2);
+  width: 500px;
+  max-width: 100%;
+  border: 2px solid var(--br-cl);
+  input {
+    background: var(--btn-bg-base);
+    color: var(--btn-cl-base);
+  }
+  button {
+    padding: .5em;
+    width: 100%;
+    display: block;
+    text-align: center;
   }
 }
 </style>

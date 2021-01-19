@@ -35,3 +35,15 @@
   @extend %s_img-fit;
   border-radius: 50%;
 }
+
+.atom_youtube-wrap {
+  position: relative;
+  padding-bottom: 56.25%;
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
