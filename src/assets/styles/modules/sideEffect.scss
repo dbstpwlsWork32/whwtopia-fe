@@ -1,19 +1,16 @@
-.se_post-comment {
+.se_post-content-base {
   word-break: break-all;
   img {
     max-width: 100% !important;
+    width: 1000px;
   }
-}
-
-.se_post-content {
-  word-break: break-all;
-  img {
-    max-width: 100% !important;
+  &__youtube-max {
+    max-width: 100%;
+    width: 1000px;
   }
 }
 
 .se_post-content-write {
-  word-break: break-all;
   *:empty:before {
     content: attr(aria-label);
     font: inherit;
@@ -21,11 +18,6 @@
     color: inherit;
     opacity: .7;
   }
-  img {
-    max-width: 100% !important;
-  }
-  &__youtube-max {
-    max-width: 100%;
-    width: 1000px;
-  }
+
+  @extend .se_post-content-base
 }

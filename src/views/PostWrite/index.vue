@@ -1,6 +1,6 @@
 <template>
 <div id="post-write" class="atom_ct-width">
-  <input type="file" tabindex="-1" multiple accept="image/*" ref="inputFileDomRef" class="_file" />
+  <input type="file" tabindex="-1" multiple accept="image/*" ref="inputFileDomRef" @change="imageRegister" class="_file" />
 
   <input type="text" maxlength="40" placeholder="글 제목" v-mounted-focus class="_title s_ft-si-up-3" @keydown.enter="blurNextFocus" />
 
@@ -56,6 +56,7 @@ const youtubeLinkPopup = reactive({
   display: false,
   href: ''
 })
+const textModifyDisplay = ref(false)
 
 function appendAndFocus(appendTag: HTMLElement | DocumentFragment) {
   contentDomRef.value.appendChild(appendTag)
@@ -85,7 +86,7 @@ function youtubeRegister() {
   }
 
   const iframeParent = makeMediaWrapper('div')
-  iframeParent.classList.add('se_post-content-write__youtube-max')
+  iframeParent.classList.add('se_post-content-base__youtube-max')
   const iframeWrap = document.createElement('div')
   iframeWrap.classList.add('atom_youtube-wrap')
 
@@ -101,6 +102,42 @@ function youtubeRegister() {
   appendAndFocus(div)
 
   youtubeLinkPopup.display = false
+}
+
+function imageRegister(e: Event & { target: HTMLInputElement }) {
+  if (e.target.files === null) return false
+
+  function makeImageDom(file: File) {
+    if (!file.type.match(/^image\//)) return false
+    const thumbnailUrl = URL.createObjectURL(file)
+
+    const imageDom = document.createElement('img')
+    imageDom.src = thumbnailUrl
+    return imageDom
+  }
+
+  const newImagesFragment = new DocumentFragment()
+
+  for (const file of e.target.files) {
+    const imageDom = makeImageDom(file)
+
+    if (!imageDom) {
+      updateBottomAlert('올바른 이미지파일을 업로드해주세요')
+      return false
+    }
+
+    const imageWrapper = makeMediaWrapper('div')
+    imageWrapper.appendChild(imageDom)
+    newImagesFragment.appendChild(imageWrapper)
+  }
+
+  const nextNode = document.createElement('div')
+  nextNode.appendChild(document.createElement('br'))
+
+  contentDomRef.value.appendChild(newImagesFragment)
+  appendAndFocus(nextNode)
+
+  e.target.value = ''
 }
 
 const commandItem = [
@@ -174,7 +211,8 @@ export default defineComponent({
       contentDomRef,
       insertMenuDomRef,
       inputFileDomRef,
-      youtubeLinkPopup
+      youtubeLinkPopup,
+      textModifyDisplay
     }
   },
   methods: {
@@ -183,7 +221,8 @@ export default defineComponent({
       const nextEl = (e.target as HTMLElement).nextSibling as HTMLElement
       if (nextEl) nextEl.focus()
     },
-    youtubeRegister
+    youtubeRegister,
+    imageRegister
   },
   components: {
     Modal

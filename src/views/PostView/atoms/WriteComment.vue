@@ -8,7 +8,7 @@
       <div
         contenteditable
         role="text"
-        class="se_post-comment"
+        class="se_post-content-base"
         ref="writeRef"
         aria-label="댓글 적기"
       ></div>

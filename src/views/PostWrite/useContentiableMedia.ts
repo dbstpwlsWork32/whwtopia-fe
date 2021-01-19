@@ -22,7 +22,7 @@ function makeMediaWrapper(tagname: string) {
 }
 
 function useContenteditableMedia(contenteditableDomRef: Ref<HTMLElement>) {
-  function selectChange() {
+  function keyup() {
     const se = window.getSelection()
     if (!se || !se.anchorNode) return false
 
@@ -44,10 +44,10 @@ function useContenteditableMedia(contenteditableDomRef: Ref<HTMLElement>) {
 
 
   onMounted(() => {
-    contenteditableDomRef.value.addEventListener('keyup', selectChange)
+    contenteditableDomRef.value.addEventListener('keyup', keyup)
   })
   onBeforeUnmount(() => {
-    contenteditableDomRef.value.removeEventListener('keyup', selectChange)
+    contenteditableDomRef.value.removeEventListener('keyup', keyup)
   })
 }
 
