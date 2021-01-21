@@ -1,4 +1,4 @@
-@import './modules/reset.scss';
+@import './imports/reset.scss';
 
 @mixin palette-dark {
   --ft-cl-base: #e9e9e9;
@@ -14,22 +14,15 @@
   --shaodw-base: 0px 3px 20px -5px rgba(255, 255, 255, .3);
 }
 %palette-light {
-  --cl-red: #e0245e;
   --ft-cl-base: #000;
   --ft-cl-sub: #5b7083;
-  --ft-cl-primary: #1da1f2;
-  --ft-cl-link: #1b95e0;
-
   --br-cl: #ebeef0;
   --bg-base: #fff;
   --bg-sub: #f7f9fa;
   --bg-sub-2: #ebeef0;
 
-  --bg-hover: rgba(255, 255, 255, .01);
-
-  --btn-bg-base: var(--ft-cl-primary);
+  --btn-bg-base: var(--flag-cl-primary);
   --btn-cl-base: #fff;
-  --btn-focus-shadow: 0 0 0 3px rgba(29, 161, 242, .3);
 
   --shaodw-base: 0px 3px 20px -5px rgba(0, 0, 0, .5);
 }
@@ -41,6 +34,12 @@
   --ft-si-up-1: 1.1em;
   --ft-si-up-2: 1.15em;
   --ft-si-up-3: 1.3em;
+
+  --flag-cl-red: #e0245e;
+  --flag-cl-primary: #1da1f2;
+
+  --bg-hover: rgba(255, 255, 255, .01);
+  --btn-focus-shadow: 0 0 0 3px rgba(29, 161, 242, .3);
 
   @extend %palette-light;
 
@@ -86,17 +85,16 @@ body {
   }
 }
 a {
-  color: var(--ft-cl-link);
+  color: var(--flag-cl-primary);
 }
 
 button:disabled {
   opacity: .5;
 }
 
-@import './modules/atoms.scss';
-@import './modules/molecules.scss';
-@import './modules/styles.scss';
-@import './modules/sideEffect.scss';
+@import './imports/modules.scss';
+@import './imports/styles.scss';
+@import './imports/sideEffect.scss';
 
 // user color mode
 @media (prefers-color-scheme: dark) {

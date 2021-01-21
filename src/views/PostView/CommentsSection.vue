@@ -1,12 +1,12 @@
 <template>
-<section class="atom_ct-indent post-view__comment-sec">
+<section class="m_ct-indent post-view__comment-sec">
   <h3 class="s_ft-si-up-2">댓글 <span class="s_ft-cl-sub s_ft-si-down-1">({{$formatNumber(1000)}})</span></h3>
 
   <write-comment class="_write" />
 
   <ul class="post-view__comment-sec__list">
     <li v-for="comment in comments" :key="`comment-${comment.id}`">
-      <router-link class="atom_profile" :to="`/user/${comment.userInfo.id}`">
+      <router-link class="m_profile" :to="`/user/${comment.userInfo.id}`">
         <img :src="comment.userInfo.imgUrl" alt="profile">
       </router-link>
       <div class="post-view__comment-sec__list__side">
@@ -24,7 +24,7 @@
         <write-comment class="_write" v-if="visibleReply[comment.id]" />
         <ul class="post-view__comment-sec__list">
           <li v-for="reply in comment.reply" :key="`reply-${reply.id}`">
-            <router-link class="atom_profile" :to="`/user/${comment.userInfo.id}`">
+            <router-link class="m_profile" :to="`/user/${comment.userInfo.id}`">
               <img :src="reply.userInfo.imgUrl" alt="profile">
             </router-link>
             <div class="post-view__comment-sec__list__side">
@@ -113,7 +113,7 @@ export default defineComponent({
 
 $grid-gap: 10px;
 .post-view__comment-sec {
-  .atom_profile {
+  .m_profile {
     flex-shrink: 0;
     width: 50px;
     height: 50px;
@@ -143,7 +143,7 @@ $grid-gap: 10px;
         @include media(until-m) {
           margin-left: 1em;
         }
-        .atom_profile {
+        .m_profile {
           width: 35px;
           height: 35px;
           @include media(until-m) {

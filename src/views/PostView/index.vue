@@ -1,6 +1,6 @@
   <template>
-<section id="post-view" class="atom_ct-width">
-  <div class="atom_ct-indent s_ft-cl-sub _head">
+<section id="post-view" class="m_ct-width">
+  <div class="m_ct-indent s_ft-cl-sub _head">
     <h2 class="s_ft-si-up-2 s_ft-cl-base">타이틀</h2>
     <p class="s_ft-cl-base">작성자</p>
     <p class="_date">{{$formatDate(new Date())}}</p>
@@ -8,11 +8,11 @@
       <p aria-label="view count"><font-awesome-icon icon="eye" /> {{$formatNumberFlag(20000)}}</p>
       <p aria-label="comment count"><font-awesome-icon icon="comment"/> {{$formatNumberFlag(200)}}</p>
     </div>
-    <router-link to="/user/0" class="_profile atom_profile" aria-label="go writer profile page">
+    <router-link to="/user/0" class="_profile m_profile" aria-label="go writer profile page">
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU" alt="writer profile">
     </router-link>
   </div>
-  <div class="atom_ct-indent">
+  <div class="m_ct-indent">
     <p>asddas</p>
 
     <div class="post-view__user-control">
@@ -113,7 +113,7 @@ export default defineComponent({
       }
 
       &._like {
-        color: var(--cl-red);
+        color: var(--flag-cl-red);
       }
     }
   }

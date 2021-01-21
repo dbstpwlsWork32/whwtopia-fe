@@ -1,5 +1,5 @@
 <template>
-<div id="post-write" class="atom_ct-width">
+<div id="post-write" class="m_ct-width">
   <input type="file" tabindex="-1" multiple accept="image/*" ref="inputFileDomRef" @change="imageRegister" class="_file" />
 
   <input type="text" maxlength="40" placeholder="글 제목" v-mounted-focus class="_title s_ft-si-up-3" @keydown.enter="blurNextFocus" />
@@ -8,7 +8,7 @@
 
   <modal v-model:display="youtubeLinkPopup.display">
     <div class="post-write__youtube-popup">
-      <input type="text" class="atom_ct" v-mounted-focus placeholder="유튜브 링크" v-model="youtubeLinkPopup.href" />
+      <input type="text" class="m_ct" v-mounted-focus placeholder="유튜브 링크" v-model="youtubeLinkPopup.href" />
       <button @click="youtubeRegister">등록</button>
     </div>
   </modal>
@@ -88,7 +88,7 @@ function youtubeRegister() {
   const iframeParent = makeMediaWrapper('div')
   iframeParent.classList.add('se_post-content-base__youtube-max')
   const iframeWrap = document.createElement('div')
-  iframeWrap.classList.add('atom_youtube-wrap')
+  iframeWrap.classList.add('m_youtube-wrap')
 
   const iframe = document.createElement('iframe')
   iframe.src = `https://www.youtube.com/embed/${videoId}?feature=oembed&origin=http://example.com`

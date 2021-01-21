@@ -1,5 +1,5 @@
 <template>
-<div id="view-home" class="atom_ct-width">
+<div id="view-home" class="m_ct-width">
   <PostPreview :posts="posts" />
 </div>
 </template>

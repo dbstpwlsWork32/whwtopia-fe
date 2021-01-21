@@ -46,7 +46,7 @@ export default function (app: App) {
   }
   app.directive('ripple-effect', {
     mounted(el: HTMLElement, bind) {
-      if (!bind.value || !bind.value.selfAddClass) el.classList.add('m__ripple-btn')
+      if (!bind.value || !bind.value.selfAddClass) el.classList.add('m_ripple-btn')
 
       el.addEventListener('mousedown', rippleEffect)
       el.addEventListener('keydown', rippleEffect)

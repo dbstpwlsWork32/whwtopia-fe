@@ -4,16 +4,16 @@
     @after-enter="navDom.style.transition = 'none'"
     @before-leave="navDom.removeAttribute('style')"
   >
-    <div class="atom_modal" id="or_nav-modal" v-show="navDisplay">
+    <div class="m_modal" id="or_nav-modal" v-show="navDisplay">
       <nav id="or_nav" ref="navDom">
         <div class="_profile">
-          <router-link :to="`/user/${0}`" v-ripple-effect="{selfAddClass: true}" class="m__ripple-btn" v-click-sync="closeNav" aria-label="go my page">
-            <div class="_profile__img atom_profile">
+          <router-link :to="`/user/${0}`" v-ripple-effect="{selfAddClass: true}" class="m_ripple-btn" v-click-sync="closeNav" aria-label="go my page">
+            <div class="_profile__img m_profile">
               <img src="https://pbs.twimg.com/profile_images/1297591729218916352/XSeEV90C_normal.jpg" alt="profile image" />
             </div>
             <p class="s_ft-si-up-2">프로필 이름</p>
           </router-link>
-          <button class="s_ft-cl-sub" @mousedown="uidCopy">UID: 1234123</button>
+          <button class="s_ft-cl-sub" @mousedown="uidCopy" aria-label="uid copy">UID: 1234123</button>
         </div>
         <div class="_links" @mousedown="closeNav">
           <div class="_wrap">
@@ -37,7 +37,7 @@
             </router-link>
             <router-link to="/">
               <font-awesome-icon :icon="['far', 'newspaper']" />
-              <span>인기 갤러리</span>
+              <span>갤러리 탐색</span>
             </router-link>
             <router-link to="/">
               <font-awesome-icon :icon="['far', 'images']" />
@@ -51,7 +51,7 @@
           </button>
         </div>
       </nav>
-      <div class="atom_modal__cover" @mousedown="closeNav" aria-label="navigation close" role="button"></div>
+      <div class="m_modal__cover" @mousedown="closeNav" aria-label="navigation close" role="button"></div>
     </div>
   </transition>
 
@@ -181,7 +181,7 @@ export default defineComponent({
 <style lang="scss">
 #or_nav-modal {
   $time: var(--ani-3);
-  .atom_modal__cover {
+  .m_modal__cover {
     contain: strict;
     transition: opacity $time;
     opacity: 1;
@@ -201,7 +201,7 @@ export default defineComponent({
     transition-duration: $time;
   }
   &.nav-enter-from, &.nav-leave-to {
-    .atom_modal__cover {
+    .m_modal__cover {
       opacity: 0;
     }
     #or_nav {
@@ -253,11 +253,11 @@ export default defineComponent({
       }
       a {
         font-size: var(--ft-si-up-2);
-        svg {
-          color: var(--ft-cl-sub);
+        color: var(--ft-cl-base);
+        &.router-link-exact-active {
+          color: var(--flag-cl-primary);
         }
         span {
-          color: var(--ft-cl-base);
           margin-left: 10px;
         }
       }

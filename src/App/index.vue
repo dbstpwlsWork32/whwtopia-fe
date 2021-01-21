@@ -1,10 +1,10 @@
 <template>
   <header id="or_header">
-    <div class="atom_ct _wrap">
+    <div class="m_ct _wrap">
       <button v-ripple-effect class="_nav-btn" v-click-sync="() => navDisplay = true" aria-label="open navigation" aria-haspopup aria-controls="or_nav" :aria-expanded="navDisplay">
         <font-awesome-icon icon="bars" />
       </button>
-      <h1 class="s_ft-si-up-3 atom_text-ellipsis">{{headerTitle}}</h1>
+      <h1 class="s_ft-si-up-3 m_text-ellipsis">{{headerTitle}}</h1>
     </div>
   </header>
 

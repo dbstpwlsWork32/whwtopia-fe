@@ -1,10 +1,10 @@
 <template>
   <transition name="com_modal">
-    <div class="atom_modal com_modal" v-if="display" @click="this.close">
+    <div class="m_modal com_modal" v-if="display" @click="this.close">
       <div class="_content" @click.stop="">
         <slot></slot>
       </div>
-      <div class="atom_modal__cover" v-if="cover"></div>
+      <div class="m_modal__cover" v-if="cover"></div>
     </div>
   </transition>
 </template>
@@ -12,7 +12,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 export default defineComponent({
-  name: 'atom_modal',
+  name: 'm_modal',
   props: {
     display: {
       type: Boolean,
@@ -63,13 +63,13 @@ $time: var(--ani-3);
     max-height: 90vh;
     overflow-y: auto;
   }
-  .atom_modal__cover, & > ._content {
+  .m_modal__cover, & > ._content {
     transition: opacity $time;
     opacity: 1;
   }
 
   &.com_modal-enter-from, &.com_modal-leave-to {
-    .atom_modal__cover, & > ._content {
+    .m_modal__cover, & > ._content {
       opacity: 0;
     }
   }

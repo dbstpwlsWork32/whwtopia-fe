@@ -1,5 +1,5 @@
 <template>
-<div class="com_post-preview atom_ct-width">
+<div class="com_post-preview m_ct-width">
   <item
     v-for="post in posts"
     :key="`post-${post.id}`"
@@ -52,7 +52,7 @@ export default defineComponent({
       font-size: rem(35);
       width: 1.8em;
       line-height: 1.8em;
-      background: var(--ft-cl-primary);
+      background: var(--flag-cl-primary);
       border-radius: 50%;
     }
 
