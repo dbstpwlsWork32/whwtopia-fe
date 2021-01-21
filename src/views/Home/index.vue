@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import PostPreview from '@/components/Post/Preview/index.vue'
+import PostPreview from '@/components/PostPreview/index.vue'
 
 const samplePosts: WhwPostPreviewItem[] = [
   {
