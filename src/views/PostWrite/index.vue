@@ -72,7 +72,7 @@ function appendAndFocus(appendTag: HTMLElement | DocumentFragment) {
 function youtubeRegister() {
   if (
     !youtubeLinkPopup.href ||
-    (!youtubeLinkPopup.href.match(/^https:\/\/(www\.)|(music\.)?youtube\.com/) && !youtubeLinkPopup.href.match(/^https:\/\/youtu\.be/))
+    (!youtubeLinkPopup.href.match(/^https:\/\/((www\.)|(music\.))?youtube\.com/) && !youtubeLinkPopup.href.match(/^https:\/\/youtu\.be/))
   ) {
     updateBottomAlert('올바른 유튜브 링크를 입력해 주세요!')
     return false

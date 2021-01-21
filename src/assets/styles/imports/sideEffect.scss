@@ -2,10 +2,9 @@
   word-break: break-all;
   img {
     max-width: 100% !important;
-    width: 1000px;
   }
   &__youtube-max {
-    max-width: 100%;
+    max-width: 100% !important;
     width: 1000px;
   }
 }

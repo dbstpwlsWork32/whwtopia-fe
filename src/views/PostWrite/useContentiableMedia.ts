@@ -22,7 +22,7 @@ function makeMediaWrapper(tagname: string) {
 }
 
 function useContenteditableMedia(contenteditableDomRef: Ref<HTMLElement>) {
-  function keyup() {
+  function findMediaWrapper() {
     const se = window.getSelection()
     if (!se || !se.anchorNode) return false
 
@@ -44,10 +44,12 @@ function useContenteditableMedia(contenteditableDomRef: Ref<HTMLElement>) {
 
 
   onMounted(() => {
-    contenteditableDomRef.value.addEventListener('keyup', keyup)
+    contenteditableDomRef.value.addEventListener('keyup', findMediaWrapper)
+    contenteditableDomRef.value.addEventListener('mouseup', findMediaWrapper)
   })
   onBeforeUnmount(() => {
-    contenteditableDomRef.value.removeEventListener('keyup', keyup)
+    contenteditableDomRef.value.removeEventListener('keyup', findMediaWrapper)
+    contenteditableDomRef.value.addEventListener('mouseup', findMediaWrapper)
   })
 }
 
