@@ -2,11 +2,11 @@ import type { Ref } from 'vue'
 import { reactive, ref, watch, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import resolveHangul from '@/utils/resolveHangul'
 
-type commandItem = { title: string; items: { text: string; func: () => void | Function }[] }
+type CommandItem = { title: string; items: { text: string; func: () => void | Function }[] }
 export default function useCommandInput(
   commandText: string,
   // items is not ref just static
-  itemsOrigin: commandItem[],
+  itemsOrigin: CommandItem[],
   contentDomRef: Ref<HTMLElement>,
   insertMenuDomRef: Ref<HTMLElement>
 ) {
@@ -56,7 +56,7 @@ export default function useCommandInput(
       return matchResult.length === choJungJongs.length
     }
 
-    const foundItems: commandItem[] = []
+    const foundItems: CommandItem[] = []
 
     const resolveQuery = query.split('').map(s => resolveHangul(s))
     items.forEach(section => {

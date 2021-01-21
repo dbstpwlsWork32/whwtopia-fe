@@ -1,10 +1,12 @@
 <template>
 <div id="post-write" class="m_ct-width">
-  <input type="file" tabindex="-1" multiple accept="image/*" ref="inputFileDomRef" @change="imageRegister" class="_file" />
+  <input type="file" tabindex="-1" multiple accept="image/*" ref="imageInputDomRef" @change="imageRegister" class="_file" />
 
   <input type="text" maxlength="40" placeholder="글 제목" v-mounted-focus class="_title s_ft-si-up-3" @keydown.enter="blurNextFocus" />
 
   <div contenteditable aria-label="/를 입력하면 삽입아이템들이 나옵니다." class="_content se_post-content-write" ref="contentDomRef"></div>
+
+  <button v-ripple-effect class="_write-btn s_btn-base">작성</button>
 
   <modal v-model:display="youtubeLinkPopup.display">
     <div class="post-write__youtube-popup">
@@ -19,7 +21,7 @@
     class="post-write__floating-menu"
     v-show="uiControl.display"
     :style="{ top: uiControl.top, left: uiControl.left }"
-    ref="insertMenuDomRef"
+    ref="floatingMenuDomRef"
   >
     <template v-if="matchedItems.length">
       <div class="_section" v-for="(section, sectionIndex) in matchedItems" :key="`command-i-${sectionIndex}`">
@@ -50,13 +52,12 @@ import Modal from '@/components/Modal.vue'
 import { updateBottomAlert } from '@/hooks/bottomAlert'
 
 const contentDomRef = ref<HTMLElement>() as Ref<HTMLElement>
-const insertMenuDomRef = ref<HTMLElement>() as Ref<HTMLElement>
-const inputFileDomRef = ref<HTMLInputElement>() as Ref<HTMLInputElement>
+const floatingMenuDomRef = ref<HTMLElement>() as Ref<HTMLElement>
+const imageInputDomRef = ref<HTMLInputElement>() as Ref<HTMLInputElement>
 const youtubeLinkPopup = reactive({
   display: false,
   href: ''
 })
-const textModifyDisplay = ref(false)
 
 function appendAndFocus(appendTag: HTMLElement | DocumentFragment) {
   contentDomRef.value.appendChild(appendTag)
@@ -67,77 +68,6 @@ function appendAndFocus(appendTag: HTMLElement | DocumentFragment) {
   const sl = window.getSelection() as Selection
   sl.removeAllRanges()
   sl.addRange(range)
-}
-
-function youtubeRegister() {
-  if (
-    !youtubeLinkPopup.href ||
-    (!youtubeLinkPopup.href.match(/^https:\/\/((www\.)|(music\.))?youtube\.com/) && !youtubeLinkPopup.href.match(/^https:\/\/youtu\.be/))
-  ) {
-    updateBottomAlert('올바른 유튜브 링크를 입력해 주세요!')
-    return false
-  }
-
-  const url = new URL(youtubeLinkPopup.href)
-  const videoId = url.searchParams.get('v') || url.pathname
-  if (!videoId) {
-    updateBottomAlert('올바른 유튜브 링크를 입력해 주세요!')
-    return false
-  }
-
-  const iframeParent = makeMediaWrapper('div')
-  iframeParent.classList.add('se_post-content-base__youtube-max')
-  const iframeWrap = document.createElement('div')
-  iframeWrap.classList.add('m_youtube-wrap')
-
-  const iframe = document.createElement('iframe')
-  iframe.src = `https://www.youtube.com/embed/${videoId}?feature=oembed&origin=http://example.com`
-
-  iframeWrap.appendChild(iframe)
-  iframeParent.appendChild(iframeWrap)
-  contentDomRef.value.appendChild(iframeParent)
-
-  const div = document.createElement('div')
-  div.appendChild(document.createElement('br'))
-  appendAndFocus(div)
-
-  youtubeLinkPopup.display = false
-}
-
-function imageRegister(e: Event & { target: HTMLInputElement }) {
-  if (e.target.files === null) return false
-
-  function makeImageDom(file: File) {
-    if (!file.type.match(/^image\//)) return false
-    const thumbnailUrl = URL.createObjectURL(file)
-
-    const imageDom = document.createElement('img')
-    imageDom.src = thumbnailUrl
-    return imageDom
-  }
-
-  const newImagesFragment = new DocumentFragment()
-
-  for (const file of e.target.files) {
-    const imageDom = makeImageDom(file)
-
-    if (!imageDom) {
-      updateBottomAlert('올바른 이미지파일을 업로드해주세요')
-      return false
-    }
-
-    const imageWrapper = makeMediaWrapper('div')
-    imageWrapper.appendChild(imageDom)
-    newImagesFragment.appendChild(imageWrapper)
-  }
-
-  const nextNode = document.createElement('div')
-  nextNode.appendChild(document.createElement('br'))
-
-  contentDomRef.value.appendChild(newImagesFragment)
-  appendAndFocus(nextNode)
-
-  e.target.value = ''
 }
 
 const commandItem = [
@@ -170,12 +100,6 @@ const commandItem = [
           h3.setAttribute('aria-label', '제목3')
           appendAndFocus(h3)
         }
-      },
-      {
-        text: 'test제',
-        func() {
-          console.log('asd')
-        }
       }
     ]
   },
@@ -185,7 +109,7 @@ const commandItem = [
       {
         text: '이미지',
         func() {
-          inputFileDomRef.value.click()
+          imageInputDomRef.value.click()
         }
       },
       {
@@ -201,7 +125,7 @@ const commandItem = [
 export default defineComponent({
   name: 'view_post-write',
   setup() {
-    const { uiControl, matchedItems } = useCommandInput('/', commandItem, contentDomRef, insertMenuDomRef)
+    const { uiControl, matchedItems } = useCommandInput('/', commandItem, contentDomRef, floatingMenuDomRef)
     useContenteditableMedia(contentDomRef)
 
     watch(() => youtubeLinkPopup.display, (display) => {
@@ -214,10 +138,9 @@ export default defineComponent({
       uiControl,
       matchedItems,
       contentDomRef,
-      insertMenuDomRef,
-      inputFileDomRef,
-      youtubeLinkPopup,
-      textModifyDisplay
+      floatingMenuDomRef,
+      imageInputDomRef,
+      youtubeLinkPopup
     }
   },
   methods: {
@@ -226,8 +149,75 @@ export default defineComponent({
       const nextEl = (e.target as HTMLElement).nextSibling as HTMLElement
       if (nextEl) nextEl.focus()
     },
-    youtubeRegister,
-    imageRegister
+    youtubeRegister() {
+      if (
+        !youtubeLinkPopup.href ||
+        (!youtubeLinkPopup.href.match(/^https:\/\/((www\.)|(music\.))?youtube\.com/) && !youtubeLinkPopup.href.match(/^https:\/\/youtu\.be/))
+      ) {
+        updateBottomAlert('올바른 유튜브 링크를 입력해 주세요!')
+        return false
+      }
+
+      const url = new URL(youtubeLinkPopup.href)
+      const videoId = url.searchParams.get('v') || url.pathname
+      if (!videoId) {
+        updateBottomAlert('올바른 유튜브 링크를 입력해 주세요!')
+        return false
+      }
+
+      const iframeParent = makeMediaWrapper('div')
+      iframeParent.classList.add('se_post-content-base__youtube-max')
+      const iframeWrap = document.createElement('div')
+      iframeWrap.classList.add('m_youtube-wrap')
+
+      const iframe = document.createElement('iframe')
+      iframe.src = `https://www.youtube.com/embed/${videoId}?feature=oembed&origin=http://example.com`
+
+      iframeWrap.appendChild(iframe)
+      iframeParent.appendChild(iframeWrap)
+      contentDomRef.value.appendChild(iframeParent)
+
+      const div = document.createElement('div')
+      div.appendChild(document.createElement('br'))
+      appendAndFocus(div)
+
+      youtubeLinkPopup.display = false
+    },
+    imageRegister(e: Event & { target: HTMLInputElement }) {
+      if (e.target.files === null) return false
+
+      function makeImageDom(file: File) {
+        if (!file.type.match(/^image\//)) return false
+        const thumbnailUrl = URL.createObjectURL(file)
+
+        const imageDom = document.createElement('img')
+        imageDom.src = thumbnailUrl
+        return imageDom
+      }
+
+      const newImagesFragment = new DocumentFragment()
+
+      for (const file of e.target.files) {
+        const imageDom = makeImageDom(file)
+
+        if (!imageDom) {
+          updateBottomAlert('올바른 이미지파일을 업로드해주세요')
+          return false
+        }
+
+        const imageWrapper = makeMediaWrapper('div')
+        imageWrapper.appendChild(imageDom)
+        newImagesFragment.appendChild(imageWrapper)
+      }
+
+      const nextNode = document.createElement('div')
+      nextNode.appendChild(document.createElement('br'))
+
+      contentDomRef.value.appendChild(newImagesFragment)
+      appendAndFocus(nextNode)
+
+      e.target.value = ''
+    }
   },
   components: {
     Modal
@@ -247,13 +237,21 @@ export default defineComponent({
   }
   & > ._content {
     min-height: 10ch;
-    margin-top: 2em;
+    margin: 2em 0;
+  }
+  & > ._write-btn {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin-left: auto;
+    margin-right: auto;
     margin-bottom: 30em;
     @include media(until-m) {
       margin-top: 1em;
       margin-bottom: 10em;
     }
   }
+
   & > ._file {
     display: none;
   }

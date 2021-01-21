@@ -7,16 +7,37 @@
     max-width: 100% !important;
     width: 1000px;
   }
+
+  [data-content-media] {
+    display: inline-block;
+    position: relative;
+    resize: both;
+    &::before {
+      content: '';
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(var(--flag-cl-primary-rgb), .3)
+    }
+    &:focus {
+      outline: none;
+      &::before {
+        display: block;
+      }
+    }
+  }
 }
 
 .se_post-content-write {
-  *:empty:before {
+  @extend .se_post-content-base;
+  & > *:empty:before {
     content: attr(aria-label);
     font: inherit;
     line-height: inherit;
     color: inherit;
     opacity: .7;
   }
-
-  @extend .se_post-content-base
 }

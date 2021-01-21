@@ -8,7 +8,6 @@
   --bg-sub: #192734;
   --bg-sub-2: #253341;
 
-  --btn-bg-base: #1da0f2c0;
   --btn-cl-base: #e9e9e9;
 
   --shaodw-base: 0px 3px 20px -5px rgba(255, 255, 255, .3);
@@ -21,7 +20,6 @@
   --bg-sub: #f7f9fa;
   --bg-sub-2: #ebeef0;
 
-  --btn-bg-base: var(--flag-cl-primary);
   --btn-cl-base: #fff;
 
   --shaodw-base: 0px 3px 20px -5px rgba(0, 0, 0, .5);
@@ -37,6 +35,9 @@
 
   --flag-cl-red: #e0245e;
   --flag-cl-primary: #1da1f2;
+  --flag-cl-primary-rgb: 29, 161, 242;
+
+  --btn-bg-base: var(--flag-cl-primary);
 
   --bg-hover: rgba(255, 255, 255, .01);
   --btn-focus-shadow: 0 0 0 3px rgba(29, 161, 242, .3);
