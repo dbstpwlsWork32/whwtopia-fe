@@ -170,12 +170,6 @@ const commandItem = [
           h3.setAttribute('aria-label', '제목3')
           appendAndFocus(h3)
         }
-      },
-      {
-        text: 'test제',
-        func() {
-          console.log('asd')
-        }
       }
     ]
   },
@@ -201,6 +195,7 @@ const commandItem = [
 export default defineComponent({
   name: 'view_post-write',
   setup() {
+    // 아이템 검색 알고리즘은 효율을 위해 아이템텍스트엔 한글 + 숫자만 있다고 가정하고 코드짬
     const { uiControl, matchedItems } = useCommandInput('/', commandItem, contentDomRef, insertMenuDomRef)
     useContenteditableMedia(contentDomRef)
 
@@ -236,81 +231,4 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-#post-write {
-  margin-top: 3em;
-  @include media(until-m) {
-    margin-top: 1em;
-  }
-  & > ._title, & > ._content {
-    padding: calc(var(--ct-indent-vert) * 2) var(--ct-indent);
-    background: var(--bg-sub-2);
-  }
-  & > ._content {
-    min-height: 10ch;
-    margin-top: 2em;
-    margin-bottom: 30em;
-    @include media(until-m) {
-      margin-top: 1em;
-      margin-bottom: 10em;
-    }
-  }
-  & > ._file {
-    display: none;
-  }
-}
-
-.post-write__floating-menu {
-  min-width: 120px;
-  max-width: calc(100% - 10ch);
-  max-height: 100vh;
-  overflow: auto;
-  z-index: 3;
-  padding: .5em;
-  will-change: top, left;
-  position: fixed;
-  border: 1px solid var(--br-cl);
-  background: var(--bg-sub);
-  border-radius: 5px;
-  & > ._section {
-    padding-bottom: .7em;
-    margin-bottom: .7em;
-    border-bottom: 1px solid var(--br-cl);
-    &:last-child {
-      border: none;
-      padding-bottom: 0;
-      margin-bottom: 0;
-    }
-
-    & > h3 {
-      margin-bottom: .2em;
-    }
-    button {
-      padding: .2em .5em;
-      padding-bottom: .2em;
-      display: block;
-      text-align: left;
-      width: 100%;
-      &.s_selected {
-        background: var(--bg-sub-2);
-      }
-    }
-  }
-}
-
-.post-write__youtube-popup {
-  background: var(--bg-sub-2);
-  width: 500px;
-  max-width: 100%;
-  border: 2px solid var(--br-cl);
-  input {
-    background: var(--btn-bg-base);
-    color: var(--btn-cl-base);
-  }
-  button {
-    padding: .5em;
-    width: 100%;
-    display: block;
-    text-align: center;
-  }
-}
 </style>

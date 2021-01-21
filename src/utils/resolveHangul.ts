@@ -24,14 +24,15 @@ const getCho = (takeOutStartedHangleCharCode: number) => CHO[Math.floor(takeOutS
 const getJung = (takeOutStartedHangleCharCode: number) => JUNG[Math.floor(takeOutStartedHangleCharCode % 588 / 28)]
 const getJong = (takeOutStartedHangleCharCode: number) => JONG[Math.floor(takeOutStartedHangleCharCode % 28)]
 
-const resolveAll = (s: string): ResolveHangle => {
+const resolveAll = (s: string): ResolveHangul => {
   const takeOutStartedHangleCharCode = s.charCodeAt(0) - 0xAC00
-  if (takeOutStartedHangleCharCode < 0) { return { cho: s, jung: '', jong: '' } }
+  if (takeOutStartedHangleCharCode < 0) { return { cho: s, jung: '', jong: '', origin: s } }
 
   return {
     cho: getCho(takeOutStartedHangleCharCode),
     jung: getJung(takeOutStartedHangleCharCode),
-    jong: getJong(takeOutStartedHangleCharCode)
+    jong: getJong(takeOutStartedHangleCharCode),
+    origin: s
   }
 }
 

@@ -42,31 +42,27 @@ export default function useCommandInput(
       matchedItems.value = items
       return false
     }
-    function searchAlgorhythm(itemText: string, querys: ResolveHangle[]) {
-      const matchResult = querys.filter(query => {
-        const { cho: qCho } = query
+    function searchAlgorhythm(itemText: string, choJungJongs: ResolveHangul[]) {
+      const matchResult = choJungJongs.filter(choJungJong => {
+        const { cho: qCho, jung: qJung, origin: qOrigin } = choJungJong
 
-        return itemText.split('').find(s => {
-          const { cho } = resolveHangul(s)
+        return itemText.split('').find(itemTextOrigin => {
+          const { cho } = resolveHangul(itemTextOrigin)
 
-          return cho === qCho
+          return qJung? qOrigin === itemTextOrigin : cho === qCho
         })
       })
 
-      return matchResult.length === querys.length
+      return matchResult.length === choJungJongs.length
     }
 
     const foundItems: commandItem[] = []
 
-    // 여기 한정으로 아이템엔 한글 + 숫자만 있으니까 거르기 ( 무겁게 만들 필요가 없다고 생각한다. )
-    if (query.match(/[ㄱ-ㅎ가-힣0-9]/)) {
-
-      const resolveQuery = query.split('').map(s => resolveHangul(s))
-      items.forEach(section => {
-        const foundSectionItems = section.items.filter(s => searchAlgorhythm(s.text, resolveQuery))
-        if (foundSectionItems.length) foundItems.push({ title: section.title, items: foundSectionItems })
-      })
-    }
+    const resolveQuery = query.split('').map(s => resolveHangul(s))
+    items.forEach(section => {
+      const foundSectionItems = section.items.filter(s => searchAlgorhythm(s.text, resolveQuery))
+      if (foundSectionItems.length) foundItems.push({ title: section.title, items: foundSectionItems })
+    })
 
     matchedItems.value = foundItems
   }
