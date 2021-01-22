@@ -7,12 +7,14 @@ yarn install
 
 ### Compiles and hot-reloads for development
 ```
-yarn serve
+yarn serve:prod => production server env
+yarn serve:dev => dev server env
 ```
 
 ### Compiles and minifies for production
 ```
-yarn build
+yarn build:prod => production server env
+yarn build:dev => dev server env
 ```
 
 ### Run your unit tests
