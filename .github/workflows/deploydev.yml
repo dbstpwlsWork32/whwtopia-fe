@@ -27,13 +27,15 @@ jobs:
           mkdir distZip
           mv buildZip.zip distZip
 
-      - name: deploy to s3
-        uses: jakejarvis/s3-sync-action@master
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          args: --acl public-read --follow-symlinks --delete
-        env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_NAME }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
-          AWS_REGION: ${{ secrets.AWS_S3_REGION }}
-          SOURCE_DIR: 'distZip'
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: deploy to s3
+        run: aws s3 sync distZip/ s3://${{ secrets.AWS_S3_BUCKET_NAME }}
+
+      - name: Code Deploy
+        run: aws deploy create-deployment --application-name whwtopia-dev --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name fe --s3-location bucket=${{ secrets.AWS_S3_BUCKET_NAME }},bundleType=zip,key=buildZip.zip
