@@ -22,15 +22,18 @@ jobs:
         run: npm run build:dev
 
       - name: Zip
-        run: zip -r buildZip dist/*
+        run:
+          - zip -r buildZip dist/*
+          - mkdir distZip
+          - mv buildZip.zip distZip
 
       - name: deploy to s3
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl public-read --follow-symlinks --delete
         env:
-          AWS_S3_BUCKET: whwtopia.cf
+          AWS_S3_BUCKET: whwtopia-web-bucket
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
           AWS_REGION: ap-northeast-2
-          SOURCE_DIR: 'buildZip.zip'
+          SOURCE_DIR: 'distZip'
