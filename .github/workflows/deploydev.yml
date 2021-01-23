@@ -21,13 +21,6 @@ jobs:
       - name: Build
         run: npm run build:dev
 
-      - name: Zip
-        run: |
-          zip -r buildZip dist/*
-          mkdir distZip
-          mv buildZip.zip distZip
-          chomd 777 -R distZip
-
       - name: deploy to s3
         uses: jakejarvis/s3-sync-action@master
         with:
