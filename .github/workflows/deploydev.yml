@@ -23,7 +23,7 @@ jobs:
 
       - name: Zip
         run: |
-          zip -r buildZip dist/*
+          zip -r buildZip dist/* AppSpec.yml
           mkdir distZip
           mv buildZip.zip distZip
 
