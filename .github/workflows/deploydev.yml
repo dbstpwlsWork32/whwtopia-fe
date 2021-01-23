@@ -25,7 +25,7 @@ jobs:
 
       - name: Zip
         run: |
-          zip ${{env.BUILD_ZIP_NAME}} dist/* AppSpec.yml
+          zip ${{env.BUILD_ZIP_NAME}} dist/* appSpec.yml
           mkdir distZip
           mv ${{env.BUILD_ZIP_NAME}}.zip distZip
 
