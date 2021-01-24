@@ -21,14 +21,11 @@ jobs:
         run: npm install
 
       - name: Build
-        run: npm run build:prod
-
-      - name: set appspec file
-        run: mv AppSpec/prod.yml appspec.yml
+        run: npm run build
 
       - name: Zip
         run: |
-          zip -r ${{env.BUILD_ZIP_NAME}} dist/* appspec.yml AppSpec/scripts/*
+          zip -r ${{env.BUILD_ZIP_NAME}} dist/* appspec.yml
           mkdir distZip
           mv ${{env.BUILD_ZIP_NAME}}.zip distZip
 
