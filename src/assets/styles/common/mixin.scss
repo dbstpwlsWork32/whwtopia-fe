@@ -1,0 +1,20 @@
+@mixin media($media) {
+  @if $media == until-m {
+    @media all and (max-width: $untilMobile) { @content; }
+  }
+  @else if $media == until-t {
+    @media all and (max-width: $untilTablet) { @content; }
+  }
+  @else if $media == over-t {
+    @media all and (min-width: $untilTablet + 1px) { @content; }
+  }
+}
+
+%s_img-fit {
+  overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

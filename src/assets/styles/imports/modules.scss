@@ -1,0 +1,70 @@
+.m_ct {
+  &, &-indent {
+    padding: var(--ct-indent-vert) var(--ct-indent);
+  }
+  &, &-width {
+    max-width: var(--ct-max-width);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.m_modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  &__cover {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, .6);
+  }
+}
+
+.m_text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.m_profile {
+  @extend %s_img-fit;
+  border-radius: 50%;
+}
+
+.m_youtube-wrap {
+  position: relative;
+  padding-bottom: 56.25%;
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.m_ripple-btn {
+  position: relative;
+  overflow: hidden;
+  .js_ripple {
+    contain: strict;
+    transform: scale(.8);
+    border-radius: 50%;
+    position: absolute;
+    background: currentcolor;
+    animation: default-ripple var(--ani-6, .6s) both;
+    opacity: .4;
+  }
+
+  @keyframes default-ripple {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+}

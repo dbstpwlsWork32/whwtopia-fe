@@ -3,13 +3,14 @@
    License: none (public domain)
 */
 
-%font-color {
+%font-reset {
 	font: inherit;
+	line-height: inherit;
 	color: inherit;
 }
-
-a {
-	text-decoration: none;
+%placeholder {
+	@extend %font-reset;
+	opacity: .7;
 }
 
 html, body, div, span, applet, object, iframe,
@@ -29,30 +30,51 @@ time, mark, audio, video, input, button, select {
 	padding: 0;
 	border: 0;
 	box-sizing: border-box;
-	font-size: 100%;
 	vertical-align: baseline;
-	line-height: inherit;
-	@extend %font-color;
+	@extend %font-reset;
 }
-
 svg {
-	@extend %font-color;
+	@extend %font-reset;
 }
 
+a {
+	text-decoration: none;
+}
 button {
 	cursor: pointer;
-	outline: none;
+}
+button, a, input {
+	-webkit-tap-highlight-color: transparent;
 }
 
-input, select {
+a, button {
+  transition: box-shadow var(--ani-2);
+  &:focus-visible {
+    box-shadow: var(--btn-focus-shadow);
+  }
+}
+
+input {
 	width: 100%;
 	&::placeholder {
-		@extend %font-color;
-		opacity: .7;
+		@extend %placeholder;
 	}
 }
 
-input, select, button {
+[contenteditable="true"], [contenteditable] {
+	cursor: text;
+	outline: none;
+	&:empty:before {
+		content: attr(aria-label);
+		@extend %placeholder;
+	}
+}
+
+input, button, a {
 	background: none;
 	outline: none;
+}
+
+ul, ol {
+	list-style: none;
 }

@@ -1,37 +1,111 @@
-@import './reset.scss';
+@import './imports/reset.scss';
+
+@mixin palette-dark {
+  --ft-cl-base: #e9e9e9;
+  --ft-cl-sub: #8899a6;
+  --br-cl: #38444d;
+  --bg-base: #16212c;
+  --bg-sub: #192734;
+  --bg-sub-2: #253341;
+
+  --btn-cl-base: #e9e9e9;
+
+  --shaodw-base: 0px 3px 20px -5px rgba(255, 255, 255, .3);
+}
+%palette-light {
+  --ft-cl-base: #000;
+  --ft-cl-sub: #5b7083;
+  --br-cl: #ebeef0;
+  --bg-base: #fff;
+  --bg-sub: #f7f9fa;
+  --bg-sub-2: #ebeef0;
+
+  --btn-cl-base: #fff;
+
+  --shaodw-base: 0px 3px 20px -5px rgba(0, 0, 0, .5);
+}
 
 :root {
-  --black: #000;
-  --primary: #7776FF;
-  --primary-1: #4E41DB;
-  --white: #fff;
-  --white-1: #E5E5E5;
-  --white-2: #999;
+  --ft-si-root: #{$root * 1px};
+  --ft-si-base: #{rem(16)};
+  --ft-si-down-1: .9em;
+  --ft-si-up-1: 1.1em;
+  --ft-si-up-2: 1.15em;
+  --ft-si-up-3: 1.3em;
 
-  --bg-base: var(--white-1);
-  --bg-primary: var(--primary-1);
-  --ft-cl-base: var(--black);
-  --ft-cl-primary: var(--primary);
-  --ft-cl-sub: var(--white-2);
-  --ft-cl-white: var(--white);
+  --flag-cl-red: #e0245e;
+  --flag-cl-primary: #1da1f2;
+  --flag-cl-primary-rgb: 29, 161, 242;
+
+  --btn-bg-base: var(--flag-cl-primary);
+
+  --bg-hover: rgba(255, 255, 255, .01);
+  --btn-focus-shadow: 0 0 0 3px rgba(29, 161, 242, .3);
+
+  @extend %palette-light;
+
+  // content
+  --ct-max-width: 1400px;
+  --ct-indent: 20px;
+  --ct-indent-vert: 10px;
+
+  // gap
+  --gap-20-15: 20px;
+  --gap-20-10: 20px;
+
+  // animation
+  --ani-6: .6s;
+  --ani-4: .4s;
+  --ani-3: .3s;
+  --ani-2: .2s;
+
+  @include media(until-m) {
+    --ct-indent-vert: 10px;
+    --ct-indent: 15px;
+    --ft-si-base: #{rem(15)};
+
+    --gap-20-15: 15px;
+    --gap-20-10: 10px;
+  }
 }
 
 html {
-  font-size: $root * 1px;
+  font-size: var(--ft-si-root);
 }
-
 body {
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: rem(16);
-  font-weight: 400;
-  line-height: 1.4em;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: var(--ft-si-base);
+  line-height: 1.4;
+  font-weight: $ft-normal;
   color: var(--ft-cl-base);
-  background: var(--white-2);
+
+  background: var(--bg-base);
+  &.sc-lock {
+    height: 100vh;
+    overflow: hidden;
+  }
+}
+a {
+  color: var(--flag-cl-primary);
 }
 
-.s_radius-4 {
-  border-radius: 4px;
+button:disabled {
+  opacity: .5;
 }
-.s_radius-10 {
-  border-radius: 10px;
+
+@import './imports/modules.scss';
+@import './imports/styles.scss';
+@import './imports/sideEffect.scss';
+
+// user color mode
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include palette-dark;
+  }
+}
+html.dark {
+  @include palette-dark;
+}
+html.light {
+  @extend %palette-light;
 }

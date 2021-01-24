@@ -1,23 +1,25 @@
 {
-  "name": "whwtopia-fe",
+  "name": "whwtopia",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
+    "serve:dev": "vue-cli-service serve --mode dev",
+    "serve:prod": "vue-cli-service serve --mode prod",
+    "build:prod": "vue-cli-service build --mode prod",
+    "build:dev": "vue-cli-service build --mode dev",
+    "test:unit": "vue-cli-service test:unit ./tests/unit/*.ts",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/vue-fontawesome": "^3.0.0-3",
     "normalize.css": "^8.0.1",
     "register-service-worker": "^1.7.1",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0",
-    "vuex": "^4.0.0-0"
+    "vue-router": "^4.0.0-0"
   },
   "devDependencies": {
     "@types/chai": "^4.2.11",

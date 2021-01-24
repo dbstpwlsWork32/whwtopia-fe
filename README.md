@@ -7,12 +7,14 @@ yarn install
 
 ### Compiles and hot-reloads for development
 ```
-yarn serve
+yarn serve:prod => production server env
+yarn serve:dev => dev server env
 ```
 
 ### Compiles and minifies for production
 ```
-yarn build
+yarn build:prod => production server env
+yarn build:dev => dev server env
 ```
 
 ### Run your unit tests
@@ -32,3 +34,18 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+## z-index
+
+#or_header: 2
+#or_alert_bottom: 11
+
+.m_modal: 10
+  &__cover: -1
+
+.post-write__floating-menu: 3
+
+## Uniqueness
+
+1. gap is not apply at samsung browser ssibal
