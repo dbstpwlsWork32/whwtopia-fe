@@ -5,7 +5,7 @@ files:
     destination: /var/www/whwtopia.kro.kr
 hooks:
   BeforeInstall:
-    - location: ../../../prod_beforeinstall.sh
+    - location: ../../../../prod_beforeinstall.sh
       timeout: 10000
       runas: root
   ValidateService:
