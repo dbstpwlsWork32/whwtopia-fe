@@ -4,11 +4,7 @@ files:
   - source: /dist
     destination: /var/www/whwtopia.kro.kr
 hooks:
-  BeforeInstall:
-    - location: ../../../../prod_beforeinstall.sh
-      timeout: 10000
-      runas: root
   ValidateService:
-    - location: scripts/validateservice.sh
+    - location: AppSpec/scripts/validateservice.sh
       timeout: 10000
       runas: root
