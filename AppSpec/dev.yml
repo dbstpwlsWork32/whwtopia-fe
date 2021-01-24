@@ -3,12 +3,3 @@ os: linux
 files:
   - source: /dist
     destination: /var/www/dev.whwtopia.kro.kr
-hooks:
-  BeforeInstall:
-    - location: AppSpec/scripts/beforeinstall_dev.sh
-      timeout: 10000
-      runas: root
-  ValidateService:
-    - location: AppSpec/scripts/validateservice.sh
-      timeout: 10000
-      runas: root
