@@ -5,6 +5,6 @@ files:
     destination: /var/www/whwtopia.kro.kr
 hooks:
   BeforeInstall:
-    - location: /scripts/fe_beforeinstall.sh
-      timeout: 300
+    - location: /scripts/prod_beforeinstall.sh
+      timeout: 10000
       runas: root

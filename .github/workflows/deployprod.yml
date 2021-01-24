@@ -26,6 +26,9 @@ jobs:
       - name: set appspec file
         run: mv AppSpec/prod.yml appspec.yml
 
+      - name: set script file
+        run: mv AppSpec/scripts/* .
+
       - name: Zip
         run: |
           zip -r ${{env.BUILD_ZIP_NAME}} dist/* appspec.yml
