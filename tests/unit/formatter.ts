@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { numberFlag as formatNumber } from '@/globals/formatter'
+import { numberFlag as formatNumber } from '@/globals/plugins/formatter'
 
 describe('number flag Format', () => {
   it('0 to 0', () => {

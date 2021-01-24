@@ -1,8 +1,8 @@
-name: DEPLOY_DEV
+name: DEPLOY_PROD
 on: 
   push:
     branches:
-      - dev
+      - master
 
 jobs:
   deploy:
@@ -24,7 +24,7 @@ jobs:
         run: npm run build:dev
 
       - name: set appspec file
-        run: mv AppSpec/dev.yml appspec.yml
+        run: mv AppSpec/prod.yml appspec.yml
 
       - name: Zip
         run: |

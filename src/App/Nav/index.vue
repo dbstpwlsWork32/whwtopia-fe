@@ -97,13 +97,13 @@ function useNavigation(dispaly: boolean, emit: NavEmit) {
   }
 }
 
-function useNavGesture(isOpenRef: boolean, emit: NavEmit, navDomRef: Ref<HTMLElement | undefined>) {
+function useNavGesture(props: { navDisplay: boolean }, emit: NavEmit, navDomRef: Ref<HTMLElement | undefined>) {
   const startPos = reactive({
     x: 0,
     y: 0
   })
   window.addEventListener('touchmove', e => {
-    if (isOpenRef) {
+    if (props.navDisplay) {
       const navDom = navDomRef.value as HTMLElement
       const move = e.touches[0].clientX - startPos.x
       if (move < 0) navDom.style.transform = `translateX(${move}px)`
@@ -120,7 +120,7 @@ function useNavGesture(isOpenRef: boolean, emit: NavEmit, navDomRef: Ref<HTMLEle
     const navDom = navDomRef.value as HTMLElement
 
     // when side nav swape cancelled
-    if (isOpenRef && navDom.style.transform) {
+    if (props.navDisplay && navDom.style.transform) {
       const matchPx = navDom.style.transform.match(/\d+/)
       let moved = parseInt(matchPx? '-' + matchPx[0] : '0')
 
@@ -129,7 +129,7 @@ function useNavGesture(isOpenRef: boolean, emit: NavEmit, navDomRef: Ref<HTMLEle
           moved += 2
           navDom.style.transform = `translateX(${moved > 0 ? 0 : moved}px)`
 
-          if (moved < 0 && isOpenRef) requestAnimationFrame(_do)
+          if (moved < 0 && props.navDisplay) requestAnimationFrame(_do)
         }
 
         _do()
@@ -160,7 +160,7 @@ export default defineComponent({
       updateBottomAlert('복사 완료!')
     }
 
-    if (isMobile()) useNavGesture(props.navDisplay, emit, navDom)
+    if (isMobile()) useNavGesture(props, emit, navDom)
 
     return {
       uidCopy,
