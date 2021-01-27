@@ -25,7 +25,7 @@
 <script lang="ts">
 import type { Ref } from 'vue'
 import { defineComponent, onBeforeUnmount, onMounted, ref } from 'vue'
-import { updateBottomAlert } from '@/hooks/bottomAlert'
+import { updateBottomAlert } from '@/Store/bottomAlert'
 import makeUniqueKey from '@/utils/makeUniqueKey'
 import isMobile from '@/utils/isMobile'
 

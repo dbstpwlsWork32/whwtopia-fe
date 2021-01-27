@@ -64,7 +64,7 @@
 import type { Ref } from 'vue'
 import { defineComponent, defineAsyncComponent, ref, watch, reactive  } from 'vue'
 import { isMobile, overTabletWidth } from '@/utils/isMobile'
-import { updateBottomAlert } from '@/hooks/bottomAlert'
+import { updateBottomAlert } from '@/Store/bottomAlert'
 
 import Modal from '@/components/Modal.vue'
 /**

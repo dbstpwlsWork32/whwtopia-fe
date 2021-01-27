@@ -32,10 +32,10 @@
 <script lang="ts">
 import type { Ref } from 'vue'
 import { defineComponent, ref } from 'vue'
-import { bottomAlert } from '@/hooks/bottomAlert'
-import headerTitle from '@/hooks/title'
+import { bottomAlert } from '@/Store/bottomAlert'
+import headerTitle from '@/Store/title'
 import { overTabletWidth } from '@/utils/isMobile'
-import { updateBottomAlert } from '@/hooks/bottomAlert'
+import { updateBottomAlert } from '@/Store/bottomAlert'
 
 import Nav from './Nav/index.vue'
 
