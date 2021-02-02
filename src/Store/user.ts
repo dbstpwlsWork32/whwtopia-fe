@@ -46,7 +46,7 @@ function useLogin() {
       const res = await AUTH.socialLogin({
         token: googleAccessToken,
         social: 'google',
-        rememberDevice: rememberDevice.value
+        remember: rememberDevice.value
       })
       console.log(res)
     }
