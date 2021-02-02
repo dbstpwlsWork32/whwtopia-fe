@@ -3,3 +3,6 @@ interface UserPostInfo {
   name: string;
   imgUrl?: string;
 }
+
+interface UserStore extends UserPostInfo {
+}

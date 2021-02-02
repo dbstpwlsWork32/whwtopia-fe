@@ -14,10 +14,11 @@ import useMountedFocus from '@/globals/directives/mountedFocus'
 
 // font awesome
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faBars, faCog, faHeart as farHeart, faComment, faEye, faFeatherAlt } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faCog, faHeart as farHeart, faComment, faEye, faFeatherAlt, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { faStickyNote, faBookmark, faAddressBook, faPaperPlane, faNewspaper, faImages, faHeart } from '@fortawesome/free-regular-svg-icons'
+import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faBars, faStickyNote, faBookmark, faAddressBook, faCog, faPaperPlane, faNewspaper, faImages, faHeart, faComment, faEye, farHeart, faFeatherAlt)
+library.add(faBars, faStickyNote, faBookmark, faAddressBook, faCog, faPaperPlane, faNewspaper, faImages, faHeart, faComment, faEye, farHeart, faFeatherAlt, faGoogle, faCheck)
 
 const app = createApp(App)
 app.use(router).use(formatter)
