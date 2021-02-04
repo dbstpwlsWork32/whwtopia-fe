@@ -29,9 +29,7 @@ export default class {
       ? baseUrl + queryMaker(query)
       : baseUrl
 
-    const initOverride: RequestInit = process.env.NODE_ENV === 'development'
-      ? { ...init, credentials: 'include' }
-      : { ...init }
+    const initOverride: RequestInit = { ...init, credentials: 'include' }
 
     if (token) initOverride.headers = { 'Authorization': `Bearer ${token === true ? protectAccessToken('decode', user.access_token) : token}` }
 
