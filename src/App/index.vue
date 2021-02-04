@@ -30,12 +30,13 @@
 </template>
 
 <script lang="ts">
-import type { Ref } from 'vue'
+import { onMounted, Ref } from 'vue'
 import { defineComponent, ref } from 'vue'
 import { bottomAlert } from '@/Store/bottomAlert'
 import headerTitle from '@/Store/title'
 import { overTabletWidth } from '@/utils/isMobile'
 import { updateBottomAlert } from '@/Store/bottomAlert'
+import { firstInitHomepage } from '@/Store/user'
 
 import Nav from './Nav/index.vue'
 
@@ -56,8 +57,11 @@ export default defineComponent({
   name: 'App',
   setup() {
     const navDisplay = ref(false)
-
     useNavResizeEv(navDisplay)
+
+    onMounted(() => {
+      firstInitHomepage()
+    })
 
     return {
       bottomAlert,

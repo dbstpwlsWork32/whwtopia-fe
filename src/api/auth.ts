@@ -10,13 +10,14 @@ const AUTH = {
     auth.fetch<ResponseUserLogin>({
       subInput: '/social_login',
       init: {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+        method: 'GET'
       },
-      query: { social, remember: remember }
-    })
+      query: { social, remember: remember },
+      token
+    }),
+  logout: () => auth.fetch<Responselogout>({ subInput: '/logout' }),
+  getAccessToken: () => auth.fetch<ResponseAccessToken>({subInput: '/access_token' }),
+  test: () => auth.fetch({ subInput: '/test', token: true })
 } as const
 
 export default AUTH

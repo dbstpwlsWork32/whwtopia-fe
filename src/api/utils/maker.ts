@@ -1,3 +1,5 @@
+import { user, protectAccessToken } from '@/Store/user'
+
 type QueryData = {
   [k: string]: string | number | boolean;
 }
@@ -18,8 +20,8 @@ export default class {
   }
 
   fetch<ReturenT>(
-    { subInput, init, query }:
-    { subInput?: string; init?: RequestInit; query?: QueryData}
+    { subInput, init, query, token }:
+    { subInput?: string; init?: RequestInit; query?: QueryData; token?: string | true }
     = { subInput: '' }
   ): Promise<ReturenT> {
     const baseUrl = subInput? this.input + subInput : this.input
@@ -27,6 +29,12 @@ export default class {
       ? baseUrl + queryMaker(query)
       : baseUrl
 
-    return fetch(requestUrl, init).then(res => res.json())
+    const initOverride: RequestInit = process.env.NODE_ENV === 'development'
+      ? { ...init, credentials: 'include' }
+      : { ...init }
+
+    if (token) initOverride.headers = { 'Authorization': `Bearer ${token === true ? protectAccessToken('decode', user.access_token) : token}` }
+
+    return fetch(requestUrl, initOverride).then(res => res.json())
   }
 }

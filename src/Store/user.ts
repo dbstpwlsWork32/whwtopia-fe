@@ -1,18 +1,34 @@
-import { computed, shallowReactive, ref } from 'vue'
+import { ref, shallowReactive } from 'vue'
+import { updateBottomAlert } from '@/Store/bottomAlert'
 import AUTH from '@/api/auth'
+import { access_token_key } from '@/config.json'
 
-const getValueAtStorage = (key: keyof UserStore) => localStorage.getItem(key) || sessionStorage.getItem(key)
+function protectAccessToken (flag: 'encode' | 'decode', token: string) {
+  if (flag === 'encode') {
+    return token.split('.').map((val, index) => (index === 2) ? access_token_key + val + access_token_key : val).join('.')
+  } else {
+    const removeTrashRegExp = new RegExp(`(${access_token_key}$|^${access_token_key})`, 'g')
+    return token.split('.').map((val, index) => (index === 2) ? val.replace(removeTrashRegExp, '') : val).join('.')
+  }
+}
+const getValueFromStorage = (key: keyof UserStore) => localStorage.getItem(key) || sessionStorage.getItem(key) || ''
+const saveValueAtStorage = (userObj: UserStore, at: 'sessionStorage' | 'localStorage') => {
+  for (const [key, val] of Object.entries(userObj)) {
+    const saveVal  = (key === 'access_token')? protectAccessToken('encode', val) : val
+    window[at].setItem(key, saveVal)
+  }
+}
 
 let user = shallowReactive<UserStore>({
-  id: parseInt(getValueAtStorage('id') || '-1'),
-  name: getValueAtStorage('name') || '',
-  imgUrl: getValueAtStorage('imgUrl') || ''
+  id: parseInt(getValueFromStorage('id') || '-1'),
+  name: getValueFromStorage('name'),
+  imgUrl: getValueFromStorage('imgUrl'),
+  access_token: getValueFromStorage('access_token'),
+  type: getValueFromStorage('type')
 })
+const isSignedIn = ref(false)
 
-const isSignedIn = computed<boolean>((): boolean => (user.id !== -1))
-
-// ================ arrow function is utils, default function is mutation
-
+// ================ arrow functions are utils, default function is mutation
 const getGoogleAuth = () => {
   return new Promise(res => {
     gapi.load('auth2', () => {
@@ -24,6 +40,15 @@ const getGoogleAuth = () => {
   })
 }
 
+const getTokenPayload = (token: string) => JSON.parse(atob(token.split('.')[1])) as TokenPayload
+const getAccessTokenRemainTime = (payload: TokenPayload) => {
+  const nowDate = (new Date()).valueOf()
+  const exp = (new Date(payload.exp * 1000)).valueOf()
+
+  return exp - nowDate
+}
+
+// ================ mutation functions
 function useLogin() {
   const rememberDevice = ref(false)
 
@@ -48,7 +73,15 @@ function useLogin() {
         social: 'google',
         remember: rememberDevice.value
       })
-      console.log(res)
+
+      user.id = res.user.id
+      user.name = res.user.name
+      user.imgUrl = res.user.imgUrl
+      user.access_token = res.accessToken
+      user.type = 'google'
+      isSignedIn.value = true
+
+      saveValueAtStorage(user, rememberDevice.value ? 'localStorage' : 'sessionStorage')
     }
   }
 
@@ -57,14 +90,57 @@ function useLogin() {
     login
   }
 }
-
-async function logout() {
+async function logout(infoText = '로그아웃 처리되었습니다!') {
   const googleAuth = await getGoogleAuth() as gapi.auth2.GoogleAuth
-
+  user = { id: -1, name: '', imgUrl: '', access_token: '', type: '' }
   sessionStorage.clear()
   localStorage.clear()
-  user = { id: -1, name: '', imgUrl: '' }
+  isSignedIn.value = false
   googleAuth.signOut()
+  await AUTH.logout()
+
+  updateBottomAlert(infoText)
+}
+
+// ================ cycle
+const getAccessToken = async () => {
+  const res = await AUTH.getAccessToken()
+  if (!res.access_token) {
+    logout('세션이 만료되었습니다 다시 로그인해주세요!')
+    return false
+  }
+
+  user.access_token = res.access_token
+  const payload = getTokenPayload(res.access_token)
+
+  if (user.id !== payload.ui) {
+    logout('잘못된 토큰입니다. 다시 로그인해주세요!')
+    return false
+  }
+
+  const remainTime = getAccessTokenRemainTime(payload)
+  isSignedIn.value = true
+  console.log(`request access_token after ${remainTime} ms`)
+  setTimeout(getAccessToken, remainTime)
+}
+function firstInitHomepage() {
+  if (!user.access_token) return false
+
+  const payload = getTokenPayload(user.access_token)
+  const remainTime = getAccessTokenRemainTime(payload)
+
+  if (user.id !== payload.ui) {
+    logout('잘못된 토큰입니다. 다시 로그인해주세요!')
+    return false
+  }
+
+  if (remainTime < 0) {
+    getAccessToken()
+  } else {
+    isSignedIn.value = true
+    console.log(`request access_token after ${remainTime} ms`)
+    setTimeout(getAccessToken, remainTime)
+  }
 }
 
 export {
@@ -72,5 +148,7 @@ export {
   user,
   isSignedIn,
   useLogin,
-  logout
+  logout,
+  firstInitHomepage,
+  protectAccessToken
 }

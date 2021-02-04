@@ -1,7 +1,19 @@
-interface ResponseUserLogin {
-  id: number;
-  name: string;
-  imgUrl: string;
-  access_token: string;
-  refresh_token: string;
+type ResponseException = {
+  statusCode: number;
+  message: string
+}
+
+type ResponseUserLogin = {
+  user: {
+    id: number;
+    imgUrl: string;
+    name: string;
+  },
+  accessToken: string;
+}
+
+type Responselogout = ResponseException
+
+type ResponseAccessToken = {
+  access_token?: string;
 }
