@@ -138,7 +138,10 @@ const getAccessToken = async () => {
   refreshTimer = setTimeout(getAccessToken, remainTime)
 }
 function firstInitHomepage() {
-  if (!user.access_token) return false
+  if (!user.access_token) {
+    getAccessToken()
+    return false
+  }
 
   const payload = getTokenPayload(user.access_token)
   const remainTime = getAccessTokenRemainTime(payload)
