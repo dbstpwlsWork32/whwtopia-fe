@@ -49,7 +49,7 @@ import useCommandInput from './useCommandInput'
 import { useContenteditableMedia, makeMediaWrapper } from './useContentiableMedia'
 
 import Modal from '@/components/Modal.vue'
-import { updateBottomAlert } from '@/hooks/bottomAlert'
+import { updateBottomAlert } from '@/Store/bottomAlert'
 
 const contentDomRef = ref<HTMLElement>() as Ref<HTMLElement>
 const floatingMenuDomRef = ref<HTMLElement>() as Ref<HTMLElement>
