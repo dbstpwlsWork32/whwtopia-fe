@@ -28,6 +28,8 @@ let user = shallowReactive<UserStore>({
 })
 const isSignedIn = ref(false)
 
+let refreshTimer = -1
+
 // ================ arrow functions are utils, default function is mutation
 const getGoogleAuth = () => {
   return new Promise(res => {
@@ -51,8 +53,11 @@ const getAccessTokenRemainTime = (payload: TokenPayload) => {
 // ================ mutation functions
 function useLogin() {
   const rememberDevice = ref(false)
+  const processing = ref(false)
 
   const login = async (type: 'google') => {
+    processing.value = true
+
     if (type === 'google') {
       const googleAuth = await getGoogleAuth() as gapi.auth2.GoogleAuth
       const currentUser = googleAuth.currentUser.get()
@@ -82,15 +87,24 @@ function useLogin() {
       isSignedIn.value = true
 
       saveValueAtStorage(user, rememberDevice.value ? 'localStorage' : 'sessionStorage')
+
+      updateBottomAlert(`어서오세요 ${user.name}님!`)
     }
+
+    processing.value = false
   }
 
   return {
+    processing,
     rememberDevice,
     login
   }
 }
-async function logout(infoText = '로그아웃 처리되었습니다!') {
+async function logout(infoText: string) {
+  if (typeof infoText !== 'string') infoText = `담에봐요 ${user.name}님!`
+
+  clearTimeout(refreshTimer)
+
   const googleAuth = await getGoogleAuth() as gapi.auth2.GoogleAuth
   user = { id: -1, name: '', imgUrl: '', access_token: '', type: '' }
   sessionStorage.clear()
@@ -121,7 +135,7 @@ const getAccessToken = async () => {
   const remainTime = getAccessTokenRemainTime(payload)
   isSignedIn.value = true
   console.log(`request access_token after ${remainTime} ms`)
-  setTimeout(getAccessToken, remainTime)
+  refreshTimer = setTimeout(getAccessToken, remainTime)
 }
 function firstInitHomepage() {
   if (!user.access_token) return false
@@ -139,7 +153,7 @@ function firstInitHomepage() {
   } else {
     isSignedIn.value = true
     console.log(`request access_token after ${remainTime} ms`)
-    setTimeout(getAccessToken, remainTime)
+    refreshTimer = setTimeout(getAccessToken, remainTime)
   }
 }
 
