@@ -119,18 +119,10 @@ async function logout(infoText: string) {
 // ================ cycle
 const getAccessToken = async () => {
   const res = await AUTH.getAccessToken()
-  if (!res.access_token) {
-    logout('세션이 만료되었습니다 다시 로그인해주세요!')
-    return false
-  }
+  if (!res.access_token) return false
 
   user.access_token = res.access_token
   const payload = getTokenPayload(res.access_token)
-
-  if (user.id !== payload.ui) {
-    logout('잘못된 토큰입니다. 다시 로그인해주세요!')
-    return false
-  }
 
   const remainTime = getAccessTokenRemainTime(payload)
   isSignedIn.value = true
