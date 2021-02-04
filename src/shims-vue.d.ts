@@ -15,6 +15,7 @@ declare namespace NodeJS {
   }
   interface ProcessEnv {
     VUE_APP_API_URL: string;
+    NODE_ENV: 'development' | 'production';
     [key: string]: string;
   }
 }

@@ -6,17 +6,24 @@
   >
     <div class="m_modal" id="or_nav-modal" v-show="navDisplay">
       <nav id="or_nav" ref="navDom">
-        <div class="_profile">
-          <router-link :to="`/user/${0}`" v-ripple-effect="{selfAddClass: true}" class="m_ripple-btn" v-click-sync="closeNav" aria-label="go my page">
+        <div class="_profile _head" v-if="isSignedIn">
+          <router-link :to="`/user/${user.id}`" v-ripple-effect="{selfAddClass: true}" class="m_ripple-btn" v-click-sync="closeNav" aria-label="go my page">
             <div class="_profile__img m_profile">
-              <img src="https://pbs.twimg.com/profile_images/1297591729218916352/XSeEV90C_normal.jpg" alt="profile image" />
+              <img :src="user.imgUrl" alt="profile image" />
             </div>
-            <p class="s_ft-si-up-2">프로필 이름</p>
+            <p class="s_ft-si-up-2">{{ user.name }}</p>
           </router-link>
-          <button class="s_ft-cl-sub" @mousedown="uidCopy" aria-label="uid copy">UID: 1234123</button>
+          <button class="s_ft-cl-sub" @mousedown="uidCopy" aria-label="uid copy">UID: {{user.id}}</button>
         </div>
+        <div class="_head" v-else>
+          <button class="or_nav__login-btn s_btn-base" v-ripple-effect @click="login('google')"><font-awesome-icon :icon="['fab', 'google']" aria-label="google" /> 로그인</button>
+
+          <check-box v-model:value="rememberDevice" class="_check">장치 기억</check-box>
+        </div>
+
         <div class="_links" @mousedown="closeNav">
-          <div class="_wrap">
+          <div class="_wrap" v-if="isSignedIn">
+            <button @click="testsafdsf">token auth 테스트</button>
             <router-link to="/">
               <font-awesome-icon :icon="['far', 'bookmark']" />
               <span>즐겨찾기 갤러리</span>
@@ -64,9 +71,13 @@
 import type { Ref } from 'vue'
 import { defineComponent, defineAsyncComponent, ref, watch, reactive  } from 'vue'
 import { isMobile, overTabletWidth } from '@/utils/isMobile'
-import { updateBottomAlert } from '@/hooks/bottomAlert'
+import { updateBottomAlert } from '@/Store/bottomAlert'
+import { isSignedIn, user } from  '@/Store/user'
+import { useLogin } from '@/Store/user'
 
+import CheckBox from '@/components/atoms/CheckBox.vue'
 import Modal from '@/components/Modal.vue'
+import AUTH from '@/api/auth'
 /**
  * Setting component have to get html font-size
  * but even if use getComputedStyle api, it can't get real rendered font-size.
@@ -162,17 +173,25 @@ export default defineComponent({
 
     if (isMobile()) useNavGesture(props, emit, navDom)
 
+    const { login, rememberDevice } = useLogin()
+
     return {
       uidCopy,
       openNav,
       closeNav,
       navDom,
-      settingModalDisplay
+      settingModalDisplay,
+      isSignedIn,
+      user,
+      login,
+      rememberDevice,
+      testsafdsf: AUTH.test
     }
   },
   components: {
     Modal,
-    Setting
+    Setting,
+    CheckBox
   }
 })
 </script>
@@ -221,8 +240,19 @@ export default defineComponent({
   z-index: 10;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  & > ._profile {
+
+  .or_nav__login-btn {
+    display: block;
+    width: 100%;
+  }
+
+  & > ._head {
     padding: var(--ct-indent-vert) var(--ct-indent);
+    & > ._check {
+      margin-top: .5em;
+    }
+  }
+  & > ._profile {
     & > a {
       color: var(--ft-cl-base);
     }
