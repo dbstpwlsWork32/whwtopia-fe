@@ -16,8 +16,7 @@ const AUTH = {
       token
     }),
   logout: () => auth.fetch<Responselogout>({ subInput: '/logout' }),
-  getAccessToken: () => auth.fetch<ResponseAccessToken>({subInput: '/access_token' }),
-  test: () => auth.fetch({ subInput: '/test', token: true })
+  getAccessToken: () => auth.fetch<ResponseAccessToken>({subInput: '/access_token' })
 } as const
 
 export default AUTH

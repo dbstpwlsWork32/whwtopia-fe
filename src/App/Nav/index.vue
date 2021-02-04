@@ -13,17 +13,19 @@
             </div>
             <p class="s_ft-si-up-2">{{ user.name }}</p>
           </router-link>
-          <button class="s_ft-cl-sub" @mousedown="uidCopy" aria-label="uid copy">UID: {{user.id}}</button>
+          <div class="_profile__btn-wrap">
+            <button class="s_ft-cl-sub" @mousedown="uidCopy" aria-label="uid copy">UID: {{user.id}}</button>
+            <button class="s_btn-base-border s_ft-si-down-1" @mousedown="logout">로그아웃</button>
+          </div>
         </div>
         <div class="_head" v-else>
-          <button class="or_nav__login-btn s_btn-base" v-ripple-effect @click="login('google')"><font-awesome-icon :icon="['fab', 'google']" aria-label="google" /> 로그인</button>
+          <button class="or_nav__login-btn s_btn-base" v-ripple-effect v-click-sync="() => login('google')" :disabled="loginProcess"><font-awesome-icon :icon="['fab', 'google']" aria-label="google" /> 로그인</button>
 
           <check-box v-model:value="rememberDevice" class="_check">장치 기억</check-box>
         </div>
 
         <div class="_links" @mousedown="closeNav">
           <div class="_wrap" v-if="isSignedIn">
-            <button @click="testsafdsf">token auth 테스트</button>
             <router-link to="/">
               <font-awesome-icon :icon="['far', 'bookmark']" />
               <span>즐겨찾기 갤러리</span>
@@ -73,11 +75,10 @@ import { defineComponent, defineAsyncComponent, ref, watch, reactive  } from 'vu
 import { isMobile, overTabletWidth } from '@/utils/isMobile'
 import { updateBottomAlert } from '@/Store/bottomAlert'
 import { isSignedIn, user } from  '@/Store/user'
-import { useLogin } from '@/Store/user'
+import { useLogin, logout } from '@/Store/user'
 
 import CheckBox from '@/components/atoms/CheckBox.vue'
 import Modal from '@/components/Modal.vue'
-import AUTH from '@/api/auth'
 /**
  * Setting component have to get html font-size
  * but even if use getComputedStyle api, it can't get real rendered font-size.
@@ -167,13 +168,13 @@ export default defineComponent({
 
     const { openNav, closeNav } = useNavigation(props.navDisplay, emit)
     async function uidCopy() {
-      await window.navigator.clipboard.writeText('asdasd')
+      await window.navigator.clipboard.writeText(`UID: ${user.id}`)
       updateBottomAlert('복사 완료!')
     }
 
     if (isMobile()) useNavGesture(props, emit, navDom)
 
-    const { login, rememberDevice } = useLogin()
+    const { login, rememberDevice, processing: loginProcess } = useLogin()
 
     return {
       uidCopy,
@@ -184,8 +185,9 @@ export default defineComponent({
       isSignedIn,
       user,
       login,
-      rememberDevice,
-      testsafdsf: AUTH.test
+      loginProcess,
+      logout,
+      rememberDevice
     }
   },
   components: {
@@ -255,9 +257,13 @@ export default defineComponent({
   & > ._profile {
     & > a {
       color: var(--ft-cl-base);
-    }
-    & > button, & > a {
       display: block;
+    }
+
+    ._profile__btn-wrap {
+      margin-top: .5em;
+      display: flex;
+      justify-content: space-between;
     }
     ._profile__img {
       width: 60px;
