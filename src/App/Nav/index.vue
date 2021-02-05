@@ -44,7 +44,7 @@
               <font-awesome-icon :icon="['far', 'paper-plane']" />
               <span>인기글</span>
             </router-link>
-            <router-link to="/">
+            <router-link to="/gallery">
               <font-awesome-icon :icon="['far', 'newspaper']" />
               <span>갤러리 탐색</span>
             </router-link>

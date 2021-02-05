@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/PostWrite/index.vue')
   },
   {
-    path: '/gallery/:id',
+    path: '/gallery',
     name: 'Gallery',
     component: Gallery
   },
