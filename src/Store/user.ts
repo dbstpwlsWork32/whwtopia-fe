@@ -143,14 +143,17 @@ const getAccessTokenWhenEixstAccessToken = async () => {
 
   isSignedIn.value = true
   user.access_token = res.access_token
-  localStorage.setItem('access_token' as keyof UserStore, res.access_token)
+  localStorage.setItem('access_token' as keyof UserStore, protectAccessToken('encode', res.access_token))
   setGetAccessTokenTimer(getAccessTokenRemainTime(newATPayload) - 1, getAccessTokenWhenEixstAccessToken)
   floatWellcomeText()
 }
 
 function firstInitHomepage() {
   if (!user.access_token) return false
-  if (user.id === -1) return false
+  if (user.id === -1) {
+    logout()
+    return false
+  }
 
   const payload = getTokenPayload(user.access_token)
   const remainTime = getAccessTokenRemainTime(payload)
