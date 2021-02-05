@@ -11,11 +11,11 @@ function protectAccessToken (flag: 'encode' | 'decode', token: string) {
     return token.split('.').map((val, index) => (index === 2) ? val.replace(removeTrashRegExp, '') : val).join('.')
   }
 }
-const getValueFromStorage = (key: keyof UserStore) => localStorage.getItem(key) || sessionStorage.getItem(key) || ''
-const saveValueAtStorage = (userObj: UserStore, at: 'sessionStorage' | 'localStorage') => {
+const getValueFromStorage = (key: keyof UserStore) => localStorage.getItem(key) || ''
+const saveValueAtLocalStorage = (userObj: UserStore) => {
   for (const [key, val] of Object.entries(userObj)) {
     const saveVal  = (key === 'access_token')? protectAccessToken('encode', val) : val
-    window[at].setItem(key, saveVal)
+    localStorage.setItem(key, saveVal)
   }
 }
 
@@ -41,7 +41,6 @@ const getGoogleAuth = () => {
     })
   })
 }
-
 const getTokenPayload = (token: string) => JSON.parse(atob(token.split('.')[1])) as TokenPayload
 const getAccessTokenRemainTime = (payload: TokenPayload) => {
   const nowDate = (new Date()).valueOf()
@@ -49,6 +48,8 @@ const getAccessTokenRemainTime = (payload: TokenPayload) => {
 
   return exp - nowDate
 }
+
+const floatWellcomeText = () => updateBottomAlert(`어서오세요 ${user.name}님!`)
 
 // ================ mutation functions
 function useLogin() {
@@ -86,9 +87,8 @@ function useLogin() {
       user.type = 'google'
       isSignedIn.value = true
 
-      saveValueAtStorage(user, rememberDevice.value ? 'localStorage' : 'sessionStorage')
-
-      updateBottomAlert(`어서오세요 ${user.name}님!`)
+      saveValueAtLocalStorage(user)
+      floatWellcomeText()
     }
 
     processing.value = false
@@ -100,14 +100,12 @@ function useLogin() {
     login
   }
 }
-async function logout(infoText: string) {
+async function logout(infoText?: string) {
   if (typeof infoText !== 'string') infoText = `담에봐요 ${user.name}님!`
 
   clearTimeout(refreshTimer)
-
   const googleAuth = await getGoogleAuth() as gapi.auth2.GoogleAuth
   user = { id: -1, name: '', imgUrl: '', access_token: '', type: '' }
-  sessionStorage.clear()
   localStorage.clear()
   isSignedIn.value = false
   googleAuth.signOut()
@@ -117,38 +115,55 @@ async function logout(infoText: string) {
 }
 
 // ================ cycle
-const getAccessToken = async () => {
-  const res = await AUTH.getAccessToken()
-  if (!res.access_token) return false
+const setGetAccessTokenTimer = (nextMS: number, cb: Function) => {
+  if (refreshTimer !== -1) clearTimeout(refreshTimer)
 
-  user.access_token = res.access_token
-  const payload = getTokenPayload(res.access_token)
-
-  const remainTime = getAccessTokenRemainTime(payload)
-  isSignedIn.value = true
-  console.log(`request access_token after ${remainTime} ms`)
-  refreshTimer = setTimeout(getAccessToken, remainTime)
+  console.log(`request access_token after ${nextMS} ms`)
+  refreshTimer = setTimeout(() => {
+    cb()
+    refreshTimer = -1
+  }, nextMS)
 }
+const getAccessTokenWhenEixstAccessToken = async () => {
+  if (!user.access_token) return false
+
+  const res = await AUTH.getAccessToken()
+  if (!res.access_token) {
+    logout('세션이 만료되었습니다. 다시 로그인해주세요')
+    return false
+  }
+
+  const newATPayload = getTokenPayload(res.access_token)
+  const prevATPayload = getTokenPayload(user.access_token)
+
+  if (newATPayload.ui !== prevATPayload.ui) {
+    logout('유효하지 않은 토큰, 다시 로그인해주세요')
+    return false
+  }
+
+  isSignedIn.value = true
+  user.access_token = res.access_token
+  localStorage.setItem('access_token' as keyof UserStore, protectAccessToken('encode', res.access_token))
+  setGetAccessTokenTimer(getAccessTokenRemainTime(newATPayload) - 1, getAccessTokenWhenEixstAccessToken)
+  floatWellcomeText()
+}
+
 function firstInitHomepage() {
-  if (!user.access_token) {
-    getAccessToken()
+  if (!user.access_token) return false
+  if (user.id === -1) {
+    logout()
     return false
   }
 
   const payload = getTokenPayload(user.access_token)
   const remainTime = getAccessTokenRemainTime(payload)
-
-  if (user.id !== payload.ui) {
-    logout('잘못된 토큰입니다. 다시 로그인해주세요!')
-    return false
-  }
+  floatWellcomeText()
+  isSignedIn.value = true
 
   if (remainTime < 0) {
-    getAccessToken()
+    getAccessTokenWhenEixstAccessToken()
   } else {
-    isSignedIn.value = true
-    console.log(`request access_token after ${remainTime} ms`)
-    refreshTimer = setTimeout(getAccessToken, remainTime)
+    setGetAccessTokenTimer(remainTime - 1, getAccessTokenWhenEixstAccessToken)
   }
 }
 
