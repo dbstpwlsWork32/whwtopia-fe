@@ -40,11 +40,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 #or_header: 2
 #or_alert_bottom: 11
+#or_floating-btn: 3
 
 .m_modal: 10
   &__cover: -1
-
-.post-write__floating-menu: 3
 
 ## Uniqueness
 

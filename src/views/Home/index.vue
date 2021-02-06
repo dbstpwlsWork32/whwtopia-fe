@@ -7,13 +7,15 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import PostPreview from '@/components/PostPreview/index.vue'
+import { updateFLOATINGMENU } from '@/Store/floatingMenu'
+import { useRouter } from 'vue-router'
 
 const samplePosts: WhwPostPreviewItem[] = [
   {
     id: 0,
     userInfo: {
       id: 1,
-      imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
+      thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
       name: '츠바사'
     },
     title: '제목',
@@ -34,7 +36,7 @@ const samplePosts: WhwPostPreviewItem[] = [
     content: '컨텐츠2',
     userInfo: {
       id: 1,
-      imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
+      thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
       name: '츠바사'
     },
     comments: 20000,
@@ -46,6 +48,12 @@ const samplePosts: WhwPostPreviewItem[] = [
 export default defineComponent({
   name: 'viewsHome',
   setup() {
+    const router = useRouter()
+    updateFLOATINGMENU({
+      cb() { router.push('/newpost') },
+      label: 'write post',
+      role: 'link'
+    })
     return {
       posts: samplePosts
     }
@@ -58,6 +66,9 @@ export default defineComponent({
 
 <style lang="scss">
 #view-home {
+  @include media(over-t) {
+    padding: 0 10px;
+  }
   & > ._whw-post {
     margin-bottom: 10px;
   }

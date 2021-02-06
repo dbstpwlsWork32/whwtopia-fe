@@ -1,7 +1,7 @@
 interface UserPostInfo {
   id: number;
   name: string;
-  imgUrl: string;
+  thumbnail: string;
 }
 
 interface UserStore extends UserPostInfo {

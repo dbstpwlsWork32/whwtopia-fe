@@ -22,7 +22,7 @@ const saveValueAtLocalStorage = (userObj: UserStore) => {
 let user = shallowReactive<UserStore>({
   id: parseInt(getValueFromStorage('id') || '-1'),
   name: getValueFromStorage('name'),
-  imgUrl: getValueFromStorage('imgUrl'),
+  thumbnail: getValueFromStorage('thumbnail'),
   access_token: getValueFromStorage('access_token'),
   type: getValueFromStorage('type')
 })
@@ -82,7 +82,7 @@ function useLogin() {
 
       user.id = res.user.id
       user.name = res.user.name
-      user.imgUrl = res.user.imgUrl
+      user.thumbnail = res.user.thumbnail
       user.access_token = res.accessToken
       user.type = 'google'
       isSignedIn.value = true
@@ -105,7 +105,7 @@ async function logout(infoText?: string) {
 
   clearTimeout(refreshTimer)
   const googleAuth = await getGoogleAuth() as gapi.auth2.GoogleAuth
-  user = { id: -1, name: '', imgUrl: '', access_token: '', type: '' }
+  user = { id: -1, name: '', thumbnail: '', access_token: '', type: '' }
   localStorage.clear()
   isSignedIn.value = false
   googleAuth.signOut()

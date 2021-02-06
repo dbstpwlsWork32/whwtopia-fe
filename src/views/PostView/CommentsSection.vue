@@ -52,7 +52,7 @@ const commentsSample: UserComment[] = [
     userInfo: {
       id: 0,
       name: '이름',
-      imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
+      thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
     },
     date: new Date(),
     content: 'adsdsaasdsda',
@@ -64,7 +64,7 @@ const commentsSample: UserComment[] = [
     userInfo: {
       id: 231,
       name: '이름2',
-      imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
+      thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
     },
     date: new Date(),
     content: 'adsdsaasdsdasdasdasd12123aasdasdasddassadasddasdasdasasddasdassadasdasdasddasdsaasddsa',
@@ -75,7 +75,7 @@ const commentsSample: UserComment[] = [
         userInfo: {
           id: 123,
           name: '답글',
-          imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
+          thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
         },
         date: new Date(),
         content: '답글 답글 ㅁㄴㅇ ㅁㄴㅇ ㅁㄴㅇㅁㄴ ㅇㅁㄴ asd klsadkl; asd kl;sad ;kldas kl;das kl;asd kl; das kl;sad jklsad kjlsad ljkdas jkl sad ljk dasdhasj das hujkwed uh wqedf gjhkl wqer hkjl qwer hkjl qwer hjkl qwer hkjl qwer hkjl qwer hjkl qwer hkjl qwer lhjk werhjklqwer qwerjhkl  qwerjhkl'
@@ -85,7 +85,7 @@ const commentsSample: UserComment[] = [
         userInfo: {
           id: 123,
           name: '답글2',
-          imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
+          thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
         },
         date: new Date(),
         content: '답글 답글 ㅁㄴㅇ ㅁㄴㅇ ㅁㄴㅇㅁㄴ ㅇㅁㄴ asd klsadkl; asd kl;sad ;kldas kl;das kl;asd kl; das kl;sad jklsad kjlsad ljkdas jkl sad ljk dasdhasj das hujkwed uh wqedf gjhkl wqer hkjl qwer hkjl qwer hjkl qwer hkjl qwer hkjl qwer hjkl qwer hkjl qwer lhjk werhjklqwer qwerjhkl  qwerjhkl'

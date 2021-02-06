@@ -9,7 +9,7 @@
         <div class="_profile _head" v-if="isSignedIn">
           <router-link :to="`/user/${user.id}`" v-ripple-effect="{selfAddClass: true}" class="m_ripple-btn" v-click-sync="closeNav" aria-label="go my page">
             <div class="_profile__img m_profile">
-              <img :src="user.imgUrl" alt="profile image" />
+              <img :src="user.thumbnail" alt="profile image" />
             </div>
             <p class="s_ft-si-up-2">{{ user.name }}</p>
           </router-link>
@@ -44,7 +44,7 @@
               <font-awesome-icon :icon="['far', 'paper-plane']" />
               <span>인기글</span>
             </router-link>
-            <router-link to="/">
+            <router-link to="/gallery">
               <font-awesome-icon :icon="['far', 'newspaper']" />
               <span>갤러리 탐색</span>
             </router-link>

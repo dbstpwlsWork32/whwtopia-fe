@@ -6,7 +6,7 @@ type ResponseException = {
 type ResponseUserLogin = {
   user: {
     id: number;
-    imgUrl: string;
+    thumbnail: string;
     name: string;
   },
   accessToken: string;
