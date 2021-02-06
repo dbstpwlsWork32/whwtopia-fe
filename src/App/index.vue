@@ -1,6 +1,6 @@
 <template>
   <header id="or_header">
-    <div class="m_ct _wrap">
+    <div class="_wrap m_ct-indent">
       <button v-ripple-effect class="_nav-btn" v-click-sync="() => navDisplay = true" aria-label="open navigation" aria-haspopup aria-controls="or_nav" :aria-expanded="navDisplay">
         <font-awesome-icon icon="bars" />
       </button>
@@ -13,6 +13,17 @@
   <main>
     <router-view/>
   </main>
+
+  <div id="or_floating-btn" class="m_ct-width" v-show="FLOATINGMENU.display">
+    <div v-click-sync="() => FLOATINGMENU.cb()" class="_btn" :role="FLOATINGMENU.role" :aria-label="FLOATINGMENU.label">
+      <div class="_view-port">
+        <div class="_wrap" :style="{ transform: FLOATINGMENUTransform }">
+          <font-awesome-icon icon="feather-alt" />
+          <font-awesome-icon icon="plus" />
+        </div>
+      </div>
+    </div>
+  </div>
   <div id="or_alert_bottom">
     <transition
       name="fade"
@@ -30,13 +41,16 @@
 </template>
 
 <script lang="ts">
-import { onMounted, Ref } from 'vue'
+import { onMounted, Ref, watch } from 'vue'
 import { defineComponent, ref } from 'vue'
+import { useRoute } from 'vue-router'
+
 import { bottomAlert } from '@/Store/bottomAlert'
 import headerTitle from '@/Store/title'
 import { overTabletWidth } from '@/utils/isMobile'
 import { updateBottomAlert } from '@/Store/bottomAlert'
 import { firstInitHomepage } from '@/Store/user'
+import { FLOATINGMENU, FLOATINGMENUTransform } from '@/Store/floatingMenu'
 
 import Nav from './Nav/index.vue'
 
@@ -53,11 +67,31 @@ function useNavResizeEv(navDisplay: Ref<boolean>) {
   })
 }
 
+function useFloatingMenu() {
+  const DISPLAY = ['/', /^\/gallery(\/\d+)?$/]
+
+  const route = useRoute()
+
+  // if path is root when first enter homepage, watch doesn't work
+  if (route.path === '/') FLOATINGMENU.display = true
+  watch(() => route.path,
+    path => {
+      const exist = DISPLAY.find(displayPath => {
+        if (displayPath instanceof RegExp) return path.match(displayPath)
+        return path === displayPath
+      })
+      if (!exist && FLOATINGMENU.display) FLOATINGMENU.display = false
+      else if (exist && !FLOATINGMENU.display) FLOATINGMENU.display = true
+    }
+  )
+}
+
 export default defineComponent({
   name: 'App',
   setup() {
     const navDisplay = ref(false)
     useNavResizeEv(navDisplay)
+    useFloatingMenu()
 
     onMounted(() => {
       firstInitHomepage()
@@ -67,7 +101,9 @@ export default defineComponent({
       bottomAlert,
       headerTitle,
       navDisplay,
-      updateBottomAlert
+      updateBottomAlert,
+      FLOATINGMENU,
+      FLOATINGMENUTransform
     }
   },
   components: {
@@ -81,12 +117,6 @@ $nav-pc-width: 250px;
 body {
   @include media(over-t) {
     padding-left: $nav-pc-width !important;
-  }
-}
-main {
-  @include media(over-t) {
-    padding-left: 10px !important;
-    padding-right: 10px !important;
   }
 }
 #or_header {
@@ -116,9 +146,11 @@ main {
       }
     }
     & > h1 {
-      padding-left: 5px;
       flex-grow: 1;
       text-align: center;
+      @include media(until-t) {
+        padding-left: 5px;
+      }
     }
   }
 }
@@ -156,6 +188,41 @@ main {
     &.fade-leave-to {
       opacity: 0;
     }
+  }
+}
+
+#or_floating-btn {
+  text-align: right;
+  padding: 0 var(--ct-indent);
+  & > ._btn {
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    position: fixed;
+    bottom: 5px;
+    transform: translateX(-100%);
+    z-index: 3;
+    text-align: center;
+    display: inline-block;
+    box-shadow: var(--shaodw-base);
+    color: #fff;
+    font-size: rem(35);
+    background: var(--flag-cl-primary);
+    border-radius: 50%;
+
+    & > ._view-port {
+      width: 1.8em;
+      height: 1.8em;
+      overflow: hidden;
+      ._wrap {
+        transition: transform var(--ani-3);
+        line-height: 1.8em;
+        transform: translateY(0);
+      }
+    }
+  }
+
+  @include media(until-m) {
+    font-size: rem(23);
   }
 }
 </style>

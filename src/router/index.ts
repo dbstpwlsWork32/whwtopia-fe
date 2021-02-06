@@ -28,6 +28,11 @@ const routes: Array<RouteRecordRaw> = [
     component: Gallery
   },
   {
+    path: '/gallery/:id',
+    name: 'GallerySpecific',
+    component: Gallery
+  },
+  {
     path: '/user/:id',
     name: 'UserDetail',
     component: UserDetail

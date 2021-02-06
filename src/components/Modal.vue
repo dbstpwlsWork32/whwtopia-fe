@@ -52,6 +52,7 @@ $time: var(--ani-3);
   height: 100vh;
   transition: none $time;
   transition-duration: $time;
+  outline: none;
   & > ._content {
     contain: paint;
     outline: none;

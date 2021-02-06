@@ -22,6 +22,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { updateFLOATINGMENU } from '@/Store/floatingMenu'
 
 interface Gallery {
   id: number;
@@ -106,6 +107,12 @@ const sampleData: { title: string; items: Gallery[] }[] = [
 export default defineComponent({
   name: 'v-gallery',
   setup() {
+    updateFLOATINGMENU({
+      cb() { console.log('gallery cb') },
+      label: 'write post',
+      role: 'link',
+      iconFlag: 'new'
+    })
     return {
       categorys: sampleData
     }

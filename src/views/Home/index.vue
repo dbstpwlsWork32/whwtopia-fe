@@ -7,6 +7,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import PostPreview from '@/components/PostPreview/index.vue'
+import { updateFLOATINGMENU } from '@/Store/floatingMenu'
 
 const samplePosts: WhwPostPreviewItem[] = [
   {
@@ -46,6 +47,12 @@ const samplePosts: WhwPostPreviewItem[] = [
 export default defineComponent({
   name: 'viewsHome',
   setup() {
+    updateFLOATINGMENU({
+      cb() { console.log('home cb') },
+      label: 'write post',
+      role: 'link',
+      iconFlag: 'write'
+    })
     return {
       posts: samplePosts
     }
@@ -58,6 +65,9 @@ export default defineComponent({
 
 <style lang="scss">
 #view-home {
+  @include media(over-t) {
+    padding: 0 10px;
+  }
   & > ._whw-post {
     margin-bottom: 10px;
   }
