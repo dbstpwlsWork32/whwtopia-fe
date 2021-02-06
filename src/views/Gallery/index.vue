@@ -109,9 +109,8 @@ export default defineComponent({
   setup() {
     updateFLOATINGMENU({
       cb() { console.log('gallery cb') },
-      label: 'write post',
-      role: 'link',
-      iconFlag: 'new'
+      label: 'create gallery',
+      role: 'button'
     })
     return {
       categorys: sampleData

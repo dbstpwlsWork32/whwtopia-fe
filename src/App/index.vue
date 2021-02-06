@@ -17,7 +17,7 @@
   <div id="or_floating-btn" class="m_ct-width" v-show="FLOATINGMENU.display">
     <div v-click-sync="() => FLOATINGMENU.cb()" class="_btn" :role="FLOATINGMENU.role" :aria-label="FLOATINGMENU.label">
       <div class="_view-port">
-        <div class="_wrap" :style="{ transform: FLOATINGMENUTransform }">
+        <div class="_wrap" :style="{ transform: FLOATINGMENUTransform, transition: 'transform var(--ani-3)' }">
           <font-awesome-icon icon="feather-alt" />
           <font-awesome-icon icon="plus" />
         </div>
@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts">
-import { onMounted, Ref, watch } from 'vue'
+import { onMounted, onUpdated, Ref, watch } from 'vue'
 import { defineComponent, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -51,6 +51,7 @@ import { overTabletWidth } from '@/utils/isMobile'
 import { updateBottomAlert } from '@/Store/bottomAlert'
 import { firstInitHomepage } from '@/Store/user'
 import { FLOATINGMENU, FLOATINGMENUTransform } from '@/Store/floatingMenu'
+import type { IconFlag } from '@/Store/floatingMenu'
 
 import Nav from './Nav/index.vue'
 
@@ -68,20 +69,38 @@ function useNavResizeEv(navDisplay: Ref<boolean>) {
 }
 
 function useFloatingMenu() {
-  const DISPLAY = ['/', /^\/gallery(\/\d+)?$/]
+  const DISPLAY = [
+    {
+      path: '/',
+      iconFlag: 'write'
+    },
+    {
+      path: /^\/gallery(\/\d+)?$/,
+      iconFlag: 'new'
+    }
+  ] as { path: RegExp | string; iconFlag: IconFlag }[]
 
   const route = useRoute()
 
-  // if path is root when first enter homepage, watch doesn't work
-  if (route.path === '/') FLOATINGMENU.display = true
+  /*
+    if path is root when first enter homepage, watch doesn't work
+    and even if use route.path onMounted, if always return '/' even if it isn't
+    so use setTimeout
+  */
+  setTimeout(() => {
+    if (route.path === '/') FLOATINGMENU.display = true
+  }, 0)
   watch(() => route.path,
     path => {
-      const exist = DISPLAY.find(displayPath => {
+      const exist = DISPLAY.find(({ path: displayPath }) => {
         if (displayPath instanceof RegExp) return path.match(displayPath)
         return path === displayPath
       })
       if (!exist && FLOATINGMENU.display) FLOATINGMENU.display = false
-      else if (exist && !FLOATINGMENU.display) FLOATINGMENU.display = true
+      else if (exist) {
+        FLOATINGMENU.display = true
+        FLOATINGMENU.iconFlag = exist.iconFlag
+      }
     }
   )
 }
@@ -214,9 +233,7 @@ body {
       height: 1.8em;
       overflow: hidden;
       ._wrap {
-        transition: transform var(--ani-3);
         line-height: 1.8em;
-        transform: translateY(0);
       }
     }
   }

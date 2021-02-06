@@ -50,8 +50,7 @@ export default defineComponent({
     updateFLOATINGMENU({
       cb() { console.log('home cb') },
       label: 'write post',
-      role: 'link',
-      iconFlag: 'write'
+      role: 'link'
     })
     return {
       posts: samplePosts

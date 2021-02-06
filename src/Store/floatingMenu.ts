@@ -1,11 +1,12 @@
-import { computed, shallowReactive, watch } from 'vue'
+import { computed, shallowReactive } from 'vue'
 
+export type IconFlag = 'new' | 'write'
 type Display = {
   display: boolean;
   cb: () => void;
   role: 'button' | 'link';
   label: string;
-  iconFlag: 'new' | 'write';
+  iconFlag: IconFlag;
 }
 
 const FLOATINGMENU = shallowReactive<Display>({
@@ -21,11 +22,12 @@ const FLOATINGMENUTransform = computed(
   () => `translateY(${ -50 * ['write', 'new'].indexOf(FLOATINGMENU.iconFlag)}%)`
 )
 
-function updateFLOATINGMENU(newAttr: Omit<Display, 'display'>) {
+
+// display, iconFlag is maintained at App.vue
+function updateFLOATINGMENU(newAttr: Omit<Omit<Display, 'display'>, 'iconFlag'>) {
   FLOATINGMENU.cb = newAttr.cb
   FLOATINGMENU.role = newAttr.role
   FLOATINGMENU.label = newAttr.label
-  FLOATINGMENU.iconFlag = newAttr.iconFlag
 }
 
 export {
