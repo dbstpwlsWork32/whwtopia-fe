@@ -1,4 +1,25 @@
 <template>
+  <modal cover v-model:display="createGalleryDisplay">
+    <article id="v-gallery__modal-create" class="m_ct">
+      <h2 class="s_ft-si-up-2 _title">갤러리 창설</h2>
+
+      <input type="text" maxlength="20" v-mounted-focus placeholder="갤러리 이름" />
+      <input type="text" maxlength="10" placeholder="갤러리 카테고리" />
+
+      <div class="_list-wrap">
+        <h3 class="s_ft-si-up-1">갤러리를 창설하신 운영자님께는 다음과 같은 권한이 있습니다^^</h3>
+        <ol class="s_ft-cl-sub _list">
+          <li>갤러리 내 게시글 삭제</li>
+          <li>갤러리 내 댓글 삭제</li>
+          <li>갤러리 내 공지 등록</li>
+        </ol>
+        <p class="s_ft-si-down-1">위와같은 권한을 얻는만큼 책임감을 갖고 운영해주시길 바라며 PC방등의 공용시설에 로그인할때 장치기억을 해제해주시길... 화이팅!</p>
+      </div>
+
+      <button class="s_btn-base" v-ripple-effect v-click-sync="register">등록</button>
+    </article>
+  </modal>
+
   <section
     class="v-gallery__category"
     v-for="(category, index) in categorys"
@@ -21,8 +42,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { updateFLOATINGMENU } from '@/Store/floatingMenu'
+import Modal from '@/components/Modal.vue'
 
 interface Gallery {
   id: number;
@@ -104,22 +126,95 @@ const sampleData: { title: string; items: Gallery[] }[] = [
   }
 ]
 
+function useCreateGalleryModal() {
+  const createGalleryDisplay = ref(false)
+
+  async function register() {
+    createGalleryDisplay.value = false
+  }
+
+  return {
+    createGalleryDisplay,
+    register
+  }
+}
+
 export default defineComponent({
   name: 'v-gallery',
   setup() {
+    const { createGalleryDisplay, register } = useCreateGalleryModal()
+
     updateFLOATINGMENU({
-      cb() { console.log('gallery cb') },
+      cb() { createGalleryDisplay.value = true },
       label: 'create gallery',
       role: 'button'
     })
+
     return {
-      categorys: sampleData
+      categorys: sampleData,
+      createGalleryDisplay,
+      register
     }
+  },
+  components: {
+    Modal
   }
 })
 </script>
 
 <style lang="scss">
+#v-gallery__modal-create {
+  max-width: 800px;
+  border-radius: 8px;
+  background: var(--bg-sub);
+
+  & > ._title {
+    color: var(--flag-cl-primary);
+    margin-bottom: 1em;
+  }
+
+  & > ._list-wrap {
+    border-top: 1px solid var(--br-cl);
+    border-bottom: 1px solid var(--br-cl);
+    padding: .5em;
+    margin-bottom: 1em;
+
+    & > ._list {
+      margin: .5em 0;
+      li {
+        padding-left: 8px;
+        position: relative;
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          left: 0;
+          top: 50%;
+          width: 5px;
+          height: 5px;
+          margin-top: -1.5px;
+          background: var(--ft-cl-sub);
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+  button, input {
+    border-radius: 5px;
+  }
+
+  input {
+    padding: var(--ct-indent-vert) var(--ct-indent);
+    background: var(--bg-sub-2);
+    margin-bottom: 1em;
+  }
+  button {
+    display: block;
+    width: 100%;
+  }
+}
+
 .v-gallery__category {
   padding: 0 var(--ct-indent);
   padding-bottom: 2em;

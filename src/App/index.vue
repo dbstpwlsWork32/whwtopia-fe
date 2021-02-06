@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts">
-import { onMounted, onUpdated, Ref, watch } from 'vue'
+import { onMounted, Ref, watch } from 'vue'
 import { defineComponent, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -217,7 +217,7 @@ body {
     -webkit-tap-highlight-color: transparent;
     cursor: pointer;
     position: fixed;
-    bottom: 5px;
+    bottom: 20px;
     transform: translateX(-100%);
     z-index: 3;
     text-align: center;
@@ -240,6 +240,9 @@ body {
 
   @include media(until-m) {
     font-size: rem(23);
+    & > ._btn {
+      bottom: 5px;
+    }
   }
 }
 </style>

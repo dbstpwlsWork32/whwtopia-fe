@@ -8,13 +8,14 @@
 import { defineComponent } from 'vue'
 import PostPreview from '@/components/PostPreview/index.vue'
 import { updateFLOATINGMENU } from '@/Store/floatingMenu'
+import { useRouter } from 'vue-router'
 
 const samplePosts: WhwPostPreviewItem[] = [
   {
     id: 0,
     userInfo: {
       id: 1,
-      imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
+      thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
       name: '츠바사'
     },
     title: '제목',
@@ -35,7 +36,7 @@ const samplePosts: WhwPostPreviewItem[] = [
     content: '컨텐츠2',
     userInfo: {
       id: 1,
-      imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
+      thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
       name: '츠바사'
     },
     comments: 20000,
@@ -47,8 +48,9 @@ const samplePosts: WhwPostPreviewItem[] = [
 export default defineComponent({
   name: 'viewsHome',
   setup() {
+    const router = useRouter()
     updateFLOATINGMENU({
-      cb() { console.log('home cb') },
+      cb() { router.push('/newpost') },
       label: 'write post',
       role: 'link'
     })
