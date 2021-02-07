@@ -144,6 +144,10 @@ const getAccessTokenWhenEixstAccessToken = async () => {
   localStorage.setItem('access_token' as keyof UserStore, protectAccessToken('encode', res.access_token))
 
   if (!isSignedIn.value) isSignedIn.value = true
+  else {
+    const nextMS = getAccessTokenRemainTime(newATPayload)
+    setGetAccessTokenTimer(nextMS, getAccessTokenWhenEixstAccessToken)
+  }
 }
 
 function firstInitHomepage() {
