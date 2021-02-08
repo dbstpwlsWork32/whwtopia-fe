@@ -2,6 +2,12 @@ import Maker from './utils/maker'
 
 const auth = new Maker(process.env.VUE_APP_API_URL + '/auth')
 
+type SocialLoginDto = {
+  token: string;
+  social: 'google';
+  remember: boolean;
+}
+
 const AUTH = {
   socialLogin: (
     { token, social, remember }:

@@ -10,7 +10,7 @@
       </div>
       <router-link :to="`/user/${post.userInfo.id}`" class="_writer">
         <div class="com_post_preview_item__writer-pr m_profile">
-          <img :src="post.userInfo.imgUrl" alt="writer profile">
+          <img :src="post.userInfo.thumbnail" alt="writer profile">
         </div>
       </router-link>
     </div>

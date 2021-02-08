@@ -7,7 +7,7 @@
   <ul class="post-view__comment-sec__list">
     <li v-for="comment in comments" :key="`comment-${comment.id}`">
       <router-link class="m_profile" :to="`/user/${comment.userInfo.id}`">
-        <img :src="comment.userInfo.imgUrl" alt="profile">
+        <img :src="comment.userInfo.thumbnail" alt="profile">
       </router-link>
       <div class="post-view__comment-sec__list__side">
         <div class="_top s_ft-si-down-1 s_ft-cl-sub">
@@ -25,7 +25,7 @@
         <ul class="post-view__comment-sec__list">
           <li v-for="reply in comment.reply" :key="`reply-${reply.id}`">
             <router-link class="m_profile" :to="`/user/${comment.userInfo.id}`">
-              <img :src="reply.userInfo.imgUrl" alt="profile">
+              <img :src="reply.userInfo.thumbnail" alt="profile">
             </router-link>
             <div class="post-view__comment-sec__list__side">
               <div class="_top s_ft-si-down-1 s_ft-cl-sub">

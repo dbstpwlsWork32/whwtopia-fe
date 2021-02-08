@@ -1,4 +1,4 @@
-import { ref, shallowReactive } from 'vue'
+import { ref, shallowReactive, watch } from 'vue'
 import { updateBottomAlert } from '@/Store/bottomAlert'
 import AUTH from '@/api/auth'
 import { access_token_key } from '@/config.json'
@@ -49,8 +49,6 @@ const getAccessTokenRemainTime = (payload: TokenPayload) => {
   return exp - nowDate
 }
 
-const floatWellcomeText = () => updateBottomAlert(`어서오세요 ${user.name}님!`)
-
 // ================ mutation functions
 function useLogin() {
   const rememberDevice = ref(false)
@@ -88,7 +86,6 @@ function useLogin() {
       isSignedIn.value = true
 
       saveValueAtLocalStorage(user)
-      floatWellcomeText()
     }
 
     processing.value = false
@@ -115,8 +112,10 @@ async function logout(infoText?: string) {
 }
 
 // ================ cycle
-const setGetAccessTokenTimer = (nextMS: number, cb: Function) => {
+const setGetAccessTokenTimer = (willExpiredMS: number, cb: Function) => {
   if (refreshTimer !== -1) clearTimeout(refreshTimer)
+
+  const nextMS = willExpiredMS - 1000
 
   console.log(`request access_token after ${nextMS} ms`)
   refreshTimer = setTimeout(() => {
@@ -141,31 +140,41 @@ const getAccessTokenWhenEixstAccessToken = async () => {
     return false
   }
 
-  isSignedIn.value = true
   user.access_token = res.access_token
   localStorage.setItem('access_token' as keyof UserStore, protectAccessToken('encode', res.access_token))
-  setGetAccessTokenTimer(getAccessTokenRemainTime(newATPayload) - 1, getAccessTokenWhenEixstAccessToken)
-  floatWellcomeText()
+
+  if (!isSignedIn.value) isSignedIn.value = true
+  else {
+    const nextMS = getAccessTokenRemainTime(newATPayload)
+    setGetAccessTokenTimer(nextMS, getAccessTokenWhenEixstAccessToken)
+  }
 }
 
 function firstInitHomepage() {
   if (!user.access_token) return false
-  if (user.id === -1) {
+
+  const payload = getTokenPayload(user.access_token)
+  if (user.id === -1 || payload.ui !== user.id) {
     logout()
     return false
   }
-
-  const payload = getTokenPayload(user.access_token)
   const remainTime = getAccessTokenRemainTime(payload)
-  floatWellcomeText()
-  isSignedIn.value = true
 
   if (remainTime < 0) {
     getAccessTokenWhenEixstAccessToken()
   } else {
-    setGetAccessTokenTimer(remainTime - 1, getAccessTokenWhenEixstAccessToken)
+    isSignedIn.value = true
   }
 }
+
+watch(() => isSignedIn.value, newIsSignedIn => {
+  if (!newIsSignedIn) return false
+  updateBottomAlert(`어서오세요 ${user.name}님!`)
+  
+  const nextMS = getAccessTokenRemainTime(getTokenPayload(user.access_token))
+  setGetAccessTokenTimer(nextMS, getAccessTokenWhenEixstAccessToken)
+})
+
 
 export {
   user as default,
