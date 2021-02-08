@@ -1,10 +1,10 @@
 import { user, protectAccessToken } from '@/Store/user'
 
-type QueryData = {
+type JsonData = {
   [k: string]: string | number | boolean;
 }
 
-const queryMaker = (obj: QueryData) => {
+const queryMaker = (obj: JsonData) => {
   let query = "?"
   for (const [key, value] of Object.entries(obj)) {
     query += `${key}=${encodeURIComponent(value)}&`
@@ -20,8 +20,8 @@ export default class {
   }
 
   fetch<ReturenT>(
-    { subInput, init, query, token }:
-    { subInput?: string; init?: RequestInit; query?: QueryData; token?: string | true }
+    { subInput, init, query, token, body }:
+    { subInput?: string; init?: RequestInit; query?: JsonData; token?: string | true; body?: JsonData }
     = { subInput: '' }
   ): Promise<ReturenT> {
     const baseUrl = subInput? this.input + subInput : this.input
@@ -29,10 +29,24 @@ export default class {
       ? baseUrl + queryMaker(query)
       : baseUrl
 
-    const initOverride: RequestInit = { ...init, credentials: 'include' }
+    const defaultInit: RequestInit = {
+      headers: {
+        ...(
+          token
+            ? { 'Authorization': `Bearer ${token === true ? protectAccessToken('decode', user.access_token) : token}` }
+            : undefined
+        ),
+        ...(
+          body
+            ? { 'Content-Type': 'application/json;charset=utf-8' }
+            : undefined
+        )
+      },
+      credentials: 'include'
+    }
 
-    if (token) initOverride.headers = { 'Authorization': `Bearer ${token === true ? protectAccessToken('decode', user.access_token) : token}` }
+    if (body) defaultInit.body = JSON.stringify(body)
 
-    return fetch(requestUrl, initOverride).then(res => res.json())
+    return fetch(requestUrl, { ...defaultInit, ...init }).then(res => res.json())
   }
 }
