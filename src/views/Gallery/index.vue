@@ -46,6 +46,8 @@ import { defineComponent, ref } from 'vue'
 import { updateFLOATINGMENU } from '@/Store/floatingMenu'
 import Modal from '@/components/Modal.vue'
 
+import CATEGORY from '@/api/category'
+
 interface Gallery {
   id: number;
   name: string;
@@ -130,7 +132,8 @@ function useCreateGalleryModal() {
   const createGalleryDisplay = ref(false)
 
   async function register() {
-    createGalleryDisplay.value = false
+    const a = await CATEGORY.getAll()
+    console.log(a)
   }
 
   return {
@@ -164,7 +167,8 @@ export default defineComponent({
 
 <style lang="scss">
 #v-gallery__modal-create {
-  max-width: 800px;
+  max-width: 100%;
+  width: 800px;
   border-radius: 8px;
   background: var(--bg-sub);
 

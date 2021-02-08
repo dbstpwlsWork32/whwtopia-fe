@@ -60,7 +60,6 @@ $time: var(--ani-3);
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 100%;
     max-width: calc(100% - var(--ct-indent) * 2);
     max-height: 90vh;
     overflow-y: auto;
