@@ -9,7 +9,7 @@
       <p aria-label="comment count"><font-awesome-icon icon="comment"/> {{$formatNumberFlag(200)}}</p>
     </div>
     <router-link to="/user/0" class="_profile m_profile" aria-label="go writer profile page">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU" alt="writer profile">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtDwIUB0ZRuUktCXXGzHiQNKAuAQbfbsuQ2Q&usqp=CAU" alt="writer profile">
     </router-link>
   </div>
   <div class="m_ct-indent">

@@ -17,3 +17,7 @@ type Responselogout = ResponseException
 type ResponseAccessToken = {
   access_token?: string;
 }
+
+type ResponseGetCategory = {
+  data: string[]
+}

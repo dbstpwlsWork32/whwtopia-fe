@@ -296,9 +296,9 @@ export default defineComponent({
 }
 
 .post-write__youtube-popup {
-  background: var(--bg-sub-2);
-  width: 500px;
   max-width: 100%;
+  width: 500px;
+  background: var(--bg-sub-2);
   border: 2px solid var(--br-cl);
   input {
     background: var(--btn-bg-base);

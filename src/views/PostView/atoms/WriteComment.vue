@@ -1,7 +1,7 @@
 <template>
   <div class="post-view__write-comment" role="article" aria-label="write comment section">
     <div class="m_profile">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU" alt="my profile">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtDwIUB0ZRuUktCXXGzHiQNKAuAQbfbsuQ2Q&usqp=CAU" alt="my profile">
     </div>
 
     <div class="_wrap">

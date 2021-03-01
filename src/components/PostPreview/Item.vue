@@ -15,7 +15,7 @@
       </router-link>
     </div>
     <div class="se_post-content-base">
-      <img src="https://storage.matsurihi.me/mltd_ko/card_bg/016tsu0034_0.png" alt="">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtDwIUB0ZRuUktCXXGzHiQNKAuAQbfbsuQ2Q&usqp=CAU" alt="">
       asdkl;dsalk;sad;lkdskl;dsa;kldsa;kldaskl;dsa;lkdsa;kldsakl;das;lkdask;ldsa;kldas;kldas;kldas;klasdkl;dsalk;sad;lkdskl;dsa;kldsa;kldaskl;dsa;lkdsa;kldsakl;das;lkdask;ldsa;kldas;kldas;kldas;klasdkl;dsalk;sad;lkdskl;dsa;kldsa;kldaskl;dsa;lkdsa;kldsakl;das;lkdask;ldsa;kldas;kldas;kldas;klasdkl;dsalk;sad;lkdskl;dsa;kldsa;kldaskl;dsa;lkdsa;kldsakl;das;lkdask;ldsa;kldas;kldas;kldas;klasdkl;dsalk;sad;lkdskl;dsa;kldsa;kldaskl;dsa;lkdsa;kldsakl;das;lkdask;ldsa;kldas;kldas;kldas;kl
     </div>
     <div class="_user-handle m_text-ellipsis">
