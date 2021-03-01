@@ -15,8 +15,8 @@ const samplePosts: WhwPostPreviewItem[] = [
     id: 0,
     userInfo: {
       id: 1,
-      thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
-      name: '츠바사'
+      thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyeuBaTW1dzHWLBe21HwCvOYbsBfKsGEkslA&usqp=CAU',
+      name: 'rornfl'
     },
     title: '제목',
     date: new Date(),
@@ -36,8 +36,8 @@ const samplePosts: WhwPostPreviewItem[] = [
     content: '컨텐츠2',
     userInfo: {
       id: 1,
-      thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65_ARqKLQleKu_6hTso1N96evuUKOUZrFDw&usqp=CAU',
-      name: '츠바사'
+      thumbnail: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyeuBaTW1dzHWLBe21HwCvOYbsBfKsGEkslA&usqp=CAU',
+      name: 'rornfl'
     },
     comments: 20000,
     likes: 2000,

@@ -63,7 +63,7 @@ const sampleData: { title: string; items: Gallery[] }[] = [
         id: 0,
         name: '갤러리1',
         member: 2000,
-        imgUrl: 'https://t1.daumcdn.net/cfile/tistory/25501850583EFF4322'
+        imgUrl: 'https://img2.quasarzone.com/editor/2020/08/27/3c7730ec6494a62db81f3bd3abae0a5c.jpg'
       },
       {
         id: 1,
@@ -80,47 +80,47 @@ const sampleData: { title: string; items: Gallery[] }[] = [
         id: 2,
         name: '갤러리123',
         member: 2000,
-        imgUrl: 'https://t1.daumcdn.net/cfile/tistory/25501850583EFF4322'
+        imgUrl: 'https://img2.quasarzone.com/editor/2020/08/27/3c7730ec6494a62db81f3bd3abae0a5c.jpg'
       },
       {
         id: 3,
-        name: '프라이데이 나이트 펌프킨 채널',
+        name: '불금의 불금불금 불금 금요일 나이스',
         member: 20000,
         imgUrl: ''
       },
       {
         id: 31,
-        name: '프라이데이 나이트 펌프킨 채널',
+        name: '불금의 불금불금 불금 금요일 나이스',
         member: 20000,
         imgUrl: ''
       },
       {
         id: 35,
-        name: '프라이데이 나이트 펌프킨 채널',
+        name: '불금의 불금불금 불금 금요일 나이스',
         member: 20000,
         imgUrl: ''
       },
       {
         id: 312,
-        name: '아이돌 마스터 밀리언 라이브 스탈렛 시즌',
+        name: '안녕하세요 갤러리 입니다',
         member: 20000,
         imgUrl: ''
       },
       {
         id: 341,
-        name: '프라이데이 나이트 펌프킨 채널',
+        name: '불금의 불금불금 불금 금요일 나이스',
         member: 20000,
         imgUrl: ''
       },
       {
         id: 341123,
-        name: '프라이데이 나이트 펌프킨 채널',
+        name: '불금의 불금불금 불금 금요일 나이스',
         member: 20000,
         imgUrl: ''
       },
       {
         id: 3411255,
-        name: '프라이데이 나이트 펌프킨 채널',
+        name: '불금의 불금불금 불금 금요일 나이스',
         member: 20000,
         imgUrl: ''
       }
